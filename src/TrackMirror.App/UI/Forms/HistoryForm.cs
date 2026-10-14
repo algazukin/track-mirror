@@ -1186,7 +1186,7 @@ public sealed class HistoryForm : Form
             {
                 var categories = PrivacyCoverage.Selected(privacySettings);
 
-                if ((force || categories.Count == 0) && privacyResults.TryGetValue(id, out var saved))
+                if (categories.Count == 0 && privacyResults.TryGetValue(id, out var saved))
                 {
                     categories = saved.Categories.Select(category => category.Category).ToList();
                 }
