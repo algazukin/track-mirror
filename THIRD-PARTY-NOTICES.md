@@ -7,8 +7,8 @@ portable inference runtime are not checked into the repository.
 | --- | --- | --- |
 | .NET 10 Core and Windows Desktop runtime (self-contained release) | [dotnet](https://github.com/dotnet/runtime) | MIT and bundled third-party notices |
 | Inno Setup (setup/uninstall runtime) | [Inno Setup](https://jrsoftware.org/) | Inno Setup License; bundled in `licenses/Inno-Setup-LICENSE.txt` |
-| Microsoft.Data.Sqlite / Microsoft.Data.Sqlite.Core | [10.0.12](https://github.com/dotnet/efcore) | MIT |
-| SQLitePCLRaw | [2.1.12](https://github.com/ericsink/SQLitePCL.raw) | Apache-2.0 |
+| Microsoft.Data.Sqlite / Microsoft.Data.Sqlite.Core | [10.0.13](https://github.com/dotnet/efcore) | MIT |
+| SQLitePCLRaw | [2.1.13](https://github.com/ericsink/SQLitePCL.raw) | Apache-2.0 |
 | SQLite | [SQLite](https://sqlite.org/copyright.html), bundled by SQLitePCLRaw | Public domain |
 | RapidOcrNet | [4.2.0](https://github.com/BobLd/RapidOcrNet) | Apache-2.0 |
 | RapidOCR model conversion | [RapidAI/RapidOCR](https://github.com/RapidAI/RapidOCR) | Apache-2.0 |
