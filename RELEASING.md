@@ -86,6 +86,9 @@ git push origin v1.0.0
 A version tag `v<MAJOR>.<MINOR>.<PATCH>` with an optional prerelease suffix starts Release. The workflow
 validates and checks out the exact tag, restores/builds/tests, builds the installer, both ZIPs and SHA256SUMS.txt,
 and uploads a draft. Manual dispatch accepts an existing tag and never creates one implicitly.
+Both triggers require the tagged commit to be part of `origin/main` history. Tags on unmerged feature
+or develop commits are rejected before the build. Older commits already contained in `main` are allowed.
+Pull requests and branch pushes never create a release; merge changes into `main`, then push a version tag.
 The archive/assembly version comes from the validated tag. Prerelease suffixes mark prerelease drafts.
 
 A rerun replaces assets only in an existing draft; a published Release fails safely. Review notes,
