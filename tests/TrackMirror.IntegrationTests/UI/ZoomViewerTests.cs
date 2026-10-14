@@ -7,9 +7,12 @@ using TrackMirror.UI.Controls;
 using System.Reflection;
 using Xunit;
 using TrackMirror.IntegrationTests.Infrastructure.Windows;
+using TrackMirror.IntegrationTests.Localization;
+using System.Globalization;
 
 namespace TrackMirror.IntegrationTests.UI;
 
+[Collection(nameof(LocalizationCollection))]
 public sealed class ZoomViewerTests
 {
     [Fact]
@@ -41,12 +44,16 @@ public sealed class ZoomViewerTests
         });
     }
 
-    [Fact]
-    public void Native_size_can_be_selected_and_fit_restores_all_edges_after_resize()
+    [Theory]
+    [InlineData("en-US")]
+    [InlineData("ru-RU")]
+    public void Native_size_can_be_selected_and_fit_restores_all_edges_after_resize(string language)
     {
         StaThread.Run(() =>
         {
             // Arrange
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+
             using var form = new ZoomForm("fixture", new Bitmap(2200, 1300), DateTime.UtcNow)
             {
                 Opacity = 0, ShowInTaskbar = false
@@ -69,7 +76,7 @@ public sealed class ZoomViewerTests
             // Act
             form.ClientSize = new Size(640, 420);
 
-            buttons.Single(button => button.Text == "Вписать").PerformClick();
+            UiControls.Field<Button>(form, "_fit").PerformClick();
 
             var picture = ImageControl(form);
 
