@@ -1,0 +1,123 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag (for example v1.0.0)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: windows-2025
+    timeout-minutes: 35
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+    env:
+      REQUESTED_TAG: ${{ inputs.tag || github.ref_name }}
+    steps:
+      - name: Validate version tag
+        id: version
+        shell: pwsh
+        run: |
+          $tag = $env:REQUESTED_TAG
+          if ($tag -notmatch '^v\d+\.\d+\.\d+(?:-[0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*)?$') {
+            throw 'Expected an existing version tag such as v1.0.0 or v1.0.0-beta.1.'
+          }
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+          "version=$($tag.Substring(1))" >> $env:GITHUB_OUTPUT
+          "prerelease=$($tag.Contains('-').ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ steps.version.outputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify exact existing tag
+        shell: pwsh
+        run: |
+          $tagCommit = git rev-parse --verify "refs/tags/$env:REQUESTED_TAG^{commit}"
+          if ($LASTEXITCODE -ne 0) { throw 'The requested tag does not exist.' }
+          $headCommit = git rev-parse HEAD
+          if ($LASTEXITCODE -ne 0 -or $tagCommit -ne $headCommit) { throw 'Checkout does not match the requested tag.' }
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.x
+      - name: Check public repository
+        shell: pwsh
+        run: ./scripts/Test-Repository.ps1
+      - name: Restore locked dependencies
+        shell: pwsh
+        run: dotnet restore TrackMirror.sln --locked-mode -m:1 -nr:false
+      - name: Build
+        shell: pwsh
+        run: dotnet build TrackMirror.sln --no-restore -c Release -p:ContinuousIntegrationBuild=true -m:1 -nr:false
+      - name: Run synthetic integration tests
+        shell: pwsh
+        run: dotnet test TrackMirror.sln --no-build --no-restore -c Release --logger "trx;LogFileName=integration.trx" --results-directory TestResults -m:1 -nr:false
+      - name: Build installer, portable application and corresponding source
+        shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          $output = Join-Path $env:RUNNER_TEMP 'release-assets'
+          ./scripts/Build-Release.ps1 -Version $env:RELEASE_VERSION -BuildInstaller -OutputDirectory $output
+          ./scripts/Export-Source.ps1 -Version $env:RELEASE_VERSION -OutputDirectory $output
+          Get-Content -LiteralPath (Get-ChildItem -LiteralPath $output -Filter '*.sha256').FullName |
+            Set-Content -LiteralPath (Join-Path $output 'SHA256SUMS.txt') -Encoding utf8NoBOM
+      - name: Upload release assets
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-assets
+          path: |
+            ${{ runner.temp }}/release-assets/*.zip
+            ${{ runner.temp }}/release-assets/*-setup.exe
+            ${{ runner.temp }}/release-assets/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 7
+  draft:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ needs.build.outputs.tag }}
+      IS_PRERELEASE: ${{ needs.build.outputs.prerelease }}
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-assets
+          path: release-assets
+      - name: Create or update a draft Release
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd release-assets
+          sha256sum --check SHA256SUMS.txt
+          printf '%s\n' 'Windows x64 installer, self-contained portable ZIP and matching MPL-2.0 source.' \
+            'Run the setup EXE or extract the application ZIP into a writable folder.' \
+            'Preview binaries are unsigned. Verify downloaded files against SHA256SUMS.txt.' \
+            'Optional AI models download separately. Uninstalling preserves personal data and models.' \
+            'Review CHANGELOG.md, PRIVACY.md and THIRD-PARTY-NOTICES.md before publishing.' > "$RUNNER_TEMP/release-notes.md"
+          release_id=$(gh api "repos/$GH_REPO/releases" --paginate --jq ".[] | select(.tag_name == \"$RELEASE_TAG\") | .id")
+          if [ -n "$release_id" ]; then
+            is_draft=$(gh api "repos/$GH_REPO/releases/$release_id" --jq '.draft')
+            if [ "$is_draft" != 'true' ]; then
+              echo 'Refusing to replace assets of a published Release.' >&2
+              exit 1
+            fi
+          else
+            options=(--draft --verify-tag --title "TrackMirror $RELEASE_TAG" --notes-file "$RUNNER_TEMP/release-notes.md")
+            if [ "$IS_PRERELEASE" = 'true' ]; then options+=(--prerelease); fi
+            gh release create "$RELEASE_TAG" "${options[@]}"
+          fi
+          gh release upload "$RELEASE_TAG" ./*.zip ./*-setup.exe SHA256SUMS.txt --clobber

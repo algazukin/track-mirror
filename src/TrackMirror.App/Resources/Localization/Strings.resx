@@ -1,0 +1,1070 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="ActivityText.Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="ActivityText.AccountScroll" xml:space="preserve">
+    <value>Scroll accounts</value>
+  </data>
+  <data name="ActivityText.ArchiveHint" xml:space="preserve">
+    <value>History is saved locally; previous days are not downloaded from the server.</value>
+  </data>
+  <data name="ActivityText.Chart" xml:space="preserve">
+    <value>Activity throughout the day</value>
+  </data>
+  <data name="ActivityText.Day" xml:space="preserve">
+    <value>Activity day</value>
+  </data>
+  <data name="ActivityText.Description" xml:space="preserve">
+    <value>Locally received records · updates while the viewer is running</value>
+  </data>
+  <data name="ActivityText.DurationFormat" xml:space="preserve">
+    <value>{0:0} h {1:00} min {2:00} s</value>
+  </data>
+  <data name="ActivityText.Empty" xml:space="preserve">
+    <value>No records received for this day</value>
+  </data>
+  <data name="ActivityText.Heading" xml:space="preserve">
+    <value>Hubstaff activity history</value>
+  </data>
+  <data name="ActivityText.Hint" xml:space="preserve">
+    <value>Empty sections mean no data. Intervals belong to the day they start in local time.</value>
+  </data>
+  <data name="ActivityText.IntervalFormat" xml:space="preserve">
+    <value>{0:MM-dd HH:mm:ss}–{1:MM-dd HH:mm:ss} · {2} s
+Overall: {3:0}% · Mouse: {4:0}% · Keyboard: {5:0}%</value>
+  </data>
+  <data name="ActivityText.Keyboard" xml:space="preserve">
+    <value>Keyboard</value>
+  </data>
+  <data name="ActivityText.Mouse" xml:space="preserve">
+    <value>Mouse</value>
+  </data>
+  <data name="ActivityText.NextDay" xml:space="preserve">
+    <value>Next day</value>
+  </data>
+  <data name="ActivityText.Overall" xml:space="preserve">
+    <value>Overall</value>
+  </data>
+  <data name="ActivityText.PreviousDay" xml:space="preserve">
+    <value>Previous day</value>
+  </data>
+  <data name="ActivityText.RecordsFormat" xml:space="preserve">
+    <value>Intervals: {0} · Last received: {1:yyyy-MM-dd HH:mm:ss}</value>
+  </data>
+  <data name="ActivityText.SelectDay" xml:space="preserve">
+    <value>Select a day</value>
+  </data>
+  <data name="ActivityText.SummaryFormat" xml:space="preserve">
+    <value>{0} · Overall: {1:0}% · Mouse: {2:0}% · Keyboard: {3:0}%</value>
+  </data>
+  <data name="ActivityText.Tab" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="ActivityText.Tracked" xml:space="preserve">
+    <value>Tracked</value>
+  </data>
+  <data name="ActivityText.Waiting" xml:space="preserve">
+    <value>History will appear when Hubstaff activity is received</value>
+  </data>
+  <data name="CalendarText.AllDates" xml:space="preserve">
+    <value>All dates</value>
+  </data>
+  <data name="CalendarText.DateFilter" xml:space="preserve">
+    <value>Screenshot period</value>
+  </data>
+  <data name="CalendarText.NextMonth" xml:space="preserve">
+    <value>Next month</value>
+  </data>
+  <data name="CalendarText.NoMatchesFormat" xml:space="preserve">
+    <value>No matching screenshots for {0:yyyy-MM-dd}</value>
+  </data>
+  <data name="CalendarText.NoMatchesHint" xml:space="preserve">
+    <value>Choose another date or clear the filters</value>
+  </data>
+  <data name="CalendarText.NoRangeMatchesFormat" xml:space="preserve">
+    <value>No matching screenshots for {0:yyyy-MM-dd} – {1:yyyy-MM-dd}</value>
+  </data>
+  <data name="CalendarText.PreviousMonth" xml:space="preserve">
+    <value>Previous month</value>
+  </data>
+  <data name="CalendarText.RangeFormat" xml:space="preserve">
+    <value>{0:yyyy-MM-dd} – {1:yyyy-MM-dd}</value>
+  </data>
+  <data name="CalendarText.ResetDate" xml:space="preserve">
+    <value>Clear the date filter</value>
+  </data>
+  <data name="CalendarText.SelectEnd" xml:space="preserve">
+    <value>Select the end date (or the same date)</value>
+  </data>
+  <data name="CalendarText.SelectStart" xml:space="preserve">
+    <value>Select the start date</value>
+  </data>
+  <data name="CalendarText.Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="DataManagementText.ArchiveFilter" xml:space="preserve">
+    <value>TrackMirror backup (*.zip)|*.zip</value>
+  </data>
+  <data name="DataManagementText.Backup" xml:space="preserve">
+    <value>Create backup…</value>
+  </data>
+  <data name="DataManagementText.BackupHint" xml:space="preserve">
+    <value>Backups include the database, settings and screenshots. Installed models are stored separately.</value>
+  </data>
+  <data name="DataManagementText.Busy" xml:space="preserve">
+    <value>Wait for the current data or model operation to finish.</value>
+  </data>
+  <data name="DataManagementText.Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="DataManagementText.Cancelled" xml:space="preserve">
+    <value>Operation cancelled. Current data has been kept.</value>
+  </data>
+  <data name="DataManagementText.Checking" xml:space="preserve">
+    <value>Verifying the copy…</value>
+  </data>
+  <data name="DataManagementText.Cleaning" xml:space="preserve">
+    <value>Removing old screenshots…</value>
+  </data>
+  <data name="DataManagementText.Cleanup" xml:space="preserve">
+    <value>Clean now</value>
+  </data>
+  <data name="DataManagementText.CleanupCancelled" xml:space="preserve">
+    <value>Cleanup stopped. Records already removed will not be restored.</value>
+  </data>
+  <data name="DataManagementText.CleanupConfirmation" xml:space="preserve">
+    <value>Old local screenshots ({0}) and their AI results will be deleted. Continue?</value>
+  </data>
+  <data name="DataManagementText.CleanupFormat" xml:space="preserve">
+    <value>Screenshots removed: {0}. Files pending deletion: {1}.</value>
+  </data>
+  <data name="DataManagementText.Completed" xml:space="preserve">
+    <value>Done.</value>
+  </data>
+  <data name="DataManagementText.Copying" xml:space="preserve">
+    <value>Copying data…</value>
+  </data>
+  <data name="DataManagementText.Days" xml:space="preserve">
+    <value>Keep screenshots for at least</value>
+  </data>
+  <data name="DataManagementText.DaysUnit" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="DataManagementText.EmptyTarget" xml:space="preserve">
+    <value>Select an empty folder. Existing files will not be overwritten.</value>
+  </data>
+  <data name="DataManagementText.FailedPrefix" xml:space="preserve">
+    <value>Could not complete the operation: </value>
+  </data>
+  <data name="DataManagementText.Folder" xml:space="preserve">
+    <value>Data folder</value>
+  </data>
+  <data name="DataManagementText.Heading" xml:space="preserve">
+    <value>Data and backups</value>
+  </data>
+  <data name="DataManagementText.InvalidArchive" xml:space="preserve">
+    <value>The archive is damaged or is not a backup from this application.</value>
+  </data>
+  <data name="DataManagementText.InvalidDatabase" xml:space="preserve">
+    <value>Could not verify the backed-up database.</value>
+  </data>
+  <data name="DataManagementText.InvalidFile" xml:space="preserve">
+    <value>The settings or data file is damaged. The original file has been kept.</value>
+  </data>
+  <data name="DataManagementText.InvalidRedirect" xml:space="preserve">
+    <value>Could not verify the moved data folder. Original data has been kept.</value>
+  </data>
+  <data name="DataManagementText.InvalidRetention" xml:space="preserve">
+    <value>Invalid retention period. Automatic cleanup is disabled; the period is reset to 30 days.</value>
+  </data>
+  <data name="DataManagementText.KeepFlagged" xml:space="preserve">
+    <value>Keep flagged screenshots</value>
+  </data>
+  <data name="DataManagementText.KeepUnread" xml:space="preserve">
+    <value>Keep unread screenshots</value>
+  </data>
+  <data name="DataManagementText.LocalFolderOnly" xml:space="preserve">
+    <value>Select a local folder without links to other directories.</value>
+  </data>
+  <data name="DataManagementText.Move" xml:space="preserve">
+    <value>Move data…</value>
+  </data>
+  <data name="DataManagementText.NothingToClean" xml:space="preserve">
+    <value>No screenshots are eligible for cleanup with the selected settings.</value>
+  </data>
+  <data name="DataManagementText.Overlap" xml:space="preserve">
+    <value>The new folder must not be the current folder, contain it or be inside it.</value>
+  </data>
+  <data name="DataManagementText.Packing" xml:space="preserve">
+    <value>Creating the archive…</value>
+  </data>
+  <data name="DataManagementText.Preparing" xml:space="preserve">
+    <value>Preparing data…</value>
+  </data>
+  <data name="DataManagementText.ProgressFormat" xml:space="preserve">
+    <value>{0}  {1:0.#} / {2:0.#} MB</value>
+  </data>
+  <data name="DataManagementText.ProtectedFolder" xml:space="preserve">
+    <value>The data folder must not overlap Hubstaff or application files.</value>
+  </data>
+  <data name="DataManagementText.RedirectCycle" xml:space="preserve">
+    <value>A circular data-folder redirect was found.</value>
+  </data>
+  <data name="DataManagementText.Restore" xml:space="preserve">
+    <value>Restore…</value>
+  </data>
+  <data name="DataManagementText.Restoring" xml:space="preserve">
+    <value>Restoring data…</value>
+  </data>
+  <data name="DataManagementText.Retention" xml:space="preserve">
+    <value>Automatically delete old screenshots</value>
+  </data>
+  <data name="DataManagementText.RetentionHint" xml:space="preserve">
+    <value>Checks at startup and hourly. Activity history and backups are kept.</value>
+  </data>
+  <data name="DataManagementText.SelectTarget" xml:space="preserve">
+    <value>Select an empty local data folder</value>
+  </data>
+  <data name="DataManagementText.SelectedFolderBusy" xml:space="preserve">
+    <value>This folder is already in use by another viewer instance.</value>
+  </data>
+  <data name="DataManagementText.UnavailableFolder" xml:space="preserve">
+    <value>The selected data folder is unavailable. Check the drive and path.</value>
+  </data>
+  <data name="DataManagementText.UncommittedCopy" xml:space="preserve">
+    <value>The verified copy remains in the selected folder; the original folder is still active. Choose another empty folder to retry.</value>
+  </data>
+  <data name="DataManagementText.UnsafePath" xml:space="preserve">
+    <value>A file path is outside the data folder or contains a link.</value>
+  </data>
+  <data name="DataManagementText.Unsaved" xml:space="preserve">
+    <value>Resolve the current history save error first.</value>
+  </data>
+  <data name="DatabaseText.LegacyFailedFormat" xml:space="preserve">
+    <value>Could not migrate {0} to SQLite. The original file has been kept; fix it and restart.</value>
+  </data>
+  <data name="DatabaseText.MigrationOrder" xml:space="preserve">
+    <value>Database updates are out of sequence.</value>
+  </data>
+  <data name="DatabaseText.NewerSchema" xml:space="preserve">
+    <value>This database was created by a newer application version. Install that version or a later one.</value>
+  </data>
+  <data name="DatabaseText.SkippedFormat" xml:space="preserve">
+    <value>Invalid records skipped during migration: {0}. Original JSON files have been kept.</value>
+  </data>
+  <data name="DatabaseText.Unavailable" xml:space="preserve">
+    <value>Could not open the history database. Keep a backup and check folder access.</value>
+  </data>
+  <data name="DatabaseText.WriteFailed" xml:space="preserve">
+    <value>Could not save history to SQLite. Check folder access and free disk space.</value>
+  </data>
+  <data name="DateFormats.CalendarDate" xml:space="preserve">
+    <value>yyyy-MM-dd</value>
+  </data>
+  <data name="DateFormats.FullDateTime" xml:space="preserve">
+    <value>yyyy-MM-dd HH:mm:ss</value>
+  </data>
+  <data name="DateFormats.HistoryDetails" xml:space="preserve">
+    <value>yyyy-MM-dd  ·  HH:mm:ss</value>
+  </data>
+  <data name="DateFormats.HistoryRow" xml:space="preserve">
+    <value>MM-dd  HH:mm:ss</value>
+  </data>
+  <data name="LanguageText.Choose" xml:space="preserve">
+    <value>Choose the interface language.</value>
+  </data>
+  <data name="LanguageText.English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageText.InvalidSaved" xml:space="preserve">
+    <value>The saved language is unsupported. English has been selected.</value>
+  </data>
+  <data name="LanguageText.Language" xml:space="preserve">
+    <value>Interface language</value>
+  </data>
+  <data name="LanguageText.Restart" xml:space="preserve">
+    <value>Restart the application to apply the selected language.</value>
+  </data>
+  <data name="LanguageText.Russian" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="LanguageText.Scroll" xml:space="preserve">
+    <value>Scroll languages</value>
+  </data>
+  <data name="Messages.ActivityCacheFailedPrefix" xml:space="preserve">
+    <value>Could not save activity history: </value>
+  </data>
+  <data name="Messages.ActivityHistoryUnreadable" xml:space="preserve">
+    <value>Activity history is unavailable or damaged. New records are still being collected.</value>
+  </data>
+  <data name="Messages.AlreadyRunning" xml:space="preserve">
+    <value>The viewer is already running. Open history from its tray icon.</value>
+  </data>
+  <data name="Messages.CopyFailedPrefix" xml:space="preserve">
+    <value>Could not save screenshot </value>
+  </data>
+  <data name="Messages.IconResourceMissing" xml:space="preserve">
+    <value>The embedded application icon could not be found.</value>
+  </data>
+  <data name="Messages.ImageUnavailable" xml:space="preserve">
+    <value>The image copy is unavailable</value>
+  </data>
+  <data name="Messages.ImageUnavailablePrefix" xml:space="preserve">
+    <value>Copy unavailable: </value>
+  </data>
+  <data name="Messages.IncompleteImage" xml:space="preserve">
+    <value>The file is still being written.</value>
+  </data>
+  <data name="Messages.IndexSaveFailedPrefix" xml:space="preserve">
+    <value>Copies were saved, but history and flags could not be written: </value>
+  </data>
+  <data name="Messages.InvalidOptionPrefix" xml:space="preserve">
+    <value>Unknown or incomplete option: </value>
+  </data>
+  <data name="Messages.MissingCopiesFormat" xml:space="preserve">
+    <value>Missing local screenshot copies: {0}. Files may have been moved or deleted.</value>
+  </data>
+  <data name="Messages.MonitoringAccountsFormat" xml:space="preserve">
+    <value>Monitoring enabled · accounts: {0}</value>
+  </data>
+  <data name="Messages.OpenFailedPrefix" xml:space="preserve">
+    <value>Could not open the copy: </value>
+  </data>
+  <data name="Messages.PreviewUnavailablePrefix" xml:space="preserve">
+    <value>The copy was saved, but its preview is unavailable: </value>
+  </data>
+  <data name="Messages.RecoveredHistory" xml:space="preserve">
+    <value>History was recovered from image files; saved flags may have been lost.</value>
+  </data>
+  <data name="Messages.RestoringMonitor" xml:space="preserve">
+    <value>Restoring folder monitoring…</value>
+  </data>
+  <data name="Messages.SaveFailedPrefix" xml:space="preserve">
+    <value>Screenshot save error: </value>
+  </data>
+  <data name="Messages.SourceUnavailablePrefix" xml:space="preserve">
+    <value>Could not read the Hubstaff folder: </value>
+  </data>
+  <data name="Messages.StartupFailedPrefix" xml:space="preserve">
+    <value>Could not start the application:
+</value>
+  </data>
+  <data name="Messages.WaitingForScreens" xml:space="preserve">
+    <value>Waiting for Hubstaff screens folders.</value>
+  </data>
+  <data name="Messages.WaitingForSource" xml:space="preserve">
+    <value>Waiting for the Hubstaff folder. Monitoring will start automatically.</value>
+  </data>
+  <data name="PrivacyInstallText.ArchiveError" xml:space="preserve">
+    <value>The Ollama archive is damaged or contains unsupported files.</value>
+  </data>
+  <data name="PrivacyInstallText.BusyError" xml:space="preserve">
+    <value>Installation is already running in another viewer instance.</value>
+  </data>
+  <data name="PrivacyInstallText.Cancel" xml:space="preserve">
+    <value>Cancel download</value>
+  </data>
+  <data name="PrivacyInstallText.CancelOperation" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="PrivacyInstallText.Cancelled" xml:space="preserve">
+    <value>Operation cancelled. You can retry it.</value>
+  </data>
+  <data name="PrivacyInstallText.DownloadError" xml:space="preserve">
+    <value>Could not download files. Check your internet connection and try again.</value>
+  </data>
+  <data name="PrivacyInstallText.DownloadHint" xml:space="preserve">
+    <value>Model sizes exclude Ollama. Screenshots are processed locally.</value>
+  </data>
+  <data name="PrivacyInstallText.Failed" xml:space="preserve">
+    <value>Installation incomplete</value>
+  </data>
+  <data name="PrivacyInstallText.Gemma4B" xml:space="preserve">
+    <value>Gemma 3 4B · 3.4 GB</value>
+  </data>
+  <data name="PrivacyInstallText.Install" xml:space="preserve">
+    <value>Download and install</value>
+  </data>
+  <data name="PrivacyInstallText.Installed" xml:space="preserve">
+    <value>Selected model installed</value>
+  </data>
+  <data name="PrivacyInstallText.IntegrityError" xml:space="preserve">
+    <value>Downloaded files failed integrity checks.</value>
+  </data>
+  <data name="PrivacyInstallText.InvalidSavedModel" xml:space="preserve">
+    <value>The saved model is unsupported. Qwen3-VL 4B Instruct has been selected.</value>
+  </data>
+  <data name="PrivacyInstallText.Missing" xml:space="preserve">
+    <value>Selected model not installed</value>
+  </data>
+  <data name="PrivacyInstallText.Model" xml:space="preserve">
+    <value>Screenshot analysis model</value>
+  </data>
+  <data name="PrivacyInstallText.ModelDownload" xml:space="preserve">
+    <value>Downloading the model</value>
+  </data>
+  <data name="PrivacyInstallText.ModelError" xml:space="preserve">
+    <value>Could not install the selected model. Try downloading it again.</value>
+  </data>
+  <data name="PrivacyInstallText.ModelScroll" xml:space="preserve">
+    <value>Scroll models</value>
+  </data>
+  <data name="PrivacyInstallText.ModelVerify" xml:space="preserve">
+    <value>Verifying model files</value>
+  </data>
+  <data name="PrivacyInstallText.NoModel" xml:space="preserve">
+    <value>Select a model</value>
+  </data>
+  <data name="PrivacyInstallText.ProgressFormat" xml:space="preserve">
+    <value>{0} · {1:N1} / {2:N1} GB</value>
+  </data>
+  <data name="PrivacyInstallText.Qwen2B" xml:space="preserve">
+    <value>Qwen3-VL 2B Instruct · 1.9 GB</value>
+  </data>
+  <data name="PrivacyInstallText.Qwen4B" xml:space="preserve">
+    <value>Qwen3-VL 4B Instruct · 3.3 GB</value>
+  </data>
+  <data name="PrivacyInstallText.Qwen8B" xml:space="preserve">
+    <value>Qwen3-VL 8B Instruct · 6.1 GB</value>
+  </data>
+  <data name="PrivacyInstallText.Ready" xml:space="preserve">
+    <value>Model ready</value>
+  </data>
+  <data name="PrivacyInstallText.RemovalIncomplete" xml:space="preserve">
+    <value>Removal is incomplete. Click Remove model.</value>
+  </data>
+  <data name="PrivacyInstallText.Remove" xml:space="preserve">
+    <value>Remove model</value>
+  </data>
+  <data name="PrivacyInstallText.RemoveError" xml:space="preserve">
+    <value>Could not remove the model. Try again.</value>
+  </data>
+  <data name="PrivacyInstallText.Removed" xml:space="preserve">
+    <value>Model removed. You can download it again.</value>
+  </data>
+  <data name="PrivacyInstallText.Removing" xml:space="preserve">
+    <value>Removing the selected model</value>
+  </data>
+  <data name="PrivacyInstallText.RuntimeDownload" xml:space="preserve">
+    <value>Downloading Ollama</value>
+  </data>
+  <data name="PrivacyInstallText.RuntimeExtract" xml:space="preserve">
+    <value>Extracting Ollama</value>
+  </data>
+  <data name="PrivacyInstallText.RuntimeVerify" xml:space="preserve">
+    <value>Verifying the Ollama archive</value>
+  </data>
+  <data name="PrivacyInstallText.StorageError" xml:space="preserve">
+    <value>Could not write files. Check free disk space and application folder access.</value>
+  </data>
+  <data name="PrivacyText.Acknowledge" xml:space="preserve">
+    <value>Confirm risk</value>
+  </data>
+  <data name="PrivacyText.Acknowledged" xml:space="preserve">
+    <value>Risk confirmed</value>
+  </data>
+  <data name="PrivacyText.AutoScan" xml:space="preserve">
+    <value>Automatically scan new screenshots</value>
+  </data>
+  <data name="PrivacyText.Cancel" xml:space="preserve">
+    <value>Cancel scan</value>
+  </data>
+  <data name="PrivacyText.Cancelled" xml:space="preserve">
+    <value>Scan cancelled</value>
+  </data>
+  <data name="PrivacyText.Completed" xml:space="preserve">
+    <value>Scanned</value>
+  </data>
+  <data name="PrivacyText.ConfidentialData" xml:space="preserve">
+    <value>Confidential data</value>
+  </data>
+  <data name="PrivacyText.Context" xml:space="preserve">
+    <value>Detected in the screenshot content</value>
+  </data>
+  <data name="PrivacyText.CopyUnavailable" xml:space="preserve">
+    <value>The screenshot copy is unavailable or exceeds the size limit.</value>
+  </data>
+  <data name="PrivacyText.Credentials" xml:space="preserve">
+    <value>Secrets / passwords</value>
+  </data>
+  <data name="PrivacyText.Disabled" xml:space="preserve">
+    <value>Not selected in settings</value>
+  </data>
+  <data name="PrivacyText.Dismissed" xml:space="preserve">
+    <value>Marked as a false positive</value>
+  </data>
+  <data name="PrivacyText.Failed" xml:space="preserve">
+    <value>Scan failed</value>
+  </data>
+  <data name="PrivacyText.FalsePositive" xml:space="preserve">
+    <value>False positive</value>
+  </data>
+  <data name="PrivacyText.FoundFormat" xml:space="preserve">
+    <value>AI: {0} · {1}</value>
+  </data>
+  <data name="PrivacyText.Game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="PrivacyText.Heading" xml:space="preserve">
+    <value>AI Privacy Scanner · local</value>
+  </data>
+  <data name="PrivacyText.Hint" xml:space="preserve">
+    <value>OCR + selected model. Screenshots are processed on this computer.</value>
+  </data>
+  <data name="PrivacyText.Incomplete" xml:space="preserve">
+    <value>This saved result has no detailed completeness reason. Recheck the remaining categories.</value>
+  </data>
+  <data name="PrivacyText.InvalidEvidence" xml:space="preserve">
+    <value>The model referenced invalid text regions. Those findings were not saved.</value>
+  </data>
+  <data name="PrivacyText.InvalidResponse" xml:space="preserve">
+    <value>The model response does not match the scan format. Try scanning again.</value>
+  </data>
+  <data name="PrivacyText.LegacyFailure" xml:space="preserve">
+    <value>The detailed cause of the previous failure was not saved. Try scanning again.</value>
+  </data>
+  <data name="PrivacyText.Limitations" xml:space="preserve">
+    <value>Experimental scanning can miss risks or make mistakes.</value>
+  </data>
+  <data name="PrivacyText.LoadUnavailable" xml:space="preserve">
+    <value>AI history is unavailable. Reading will be retried before the next write.</value>
+  </data>
+  <data name="PrivacyText.MissingRuntime" xml:space="preserve">
+    <value>The selected model is not installed. Download it in Settings.</value>
+  </data>
+  <data name="PrivacyText.ModelConnection" xml:space="preserve">
+    <value>Could not get a response from the local model. Try scanning again.</value>
+  </data>
+  <data name="PrivacyText.ModelContext" xml:space="preserve">
+    <value>The screenshot has too much text for a complete AI scan. Findings from processed sections have been saved.</value>
+  </data>
+  <data name="PrivacyText.ModelMemory" xml:space="preserve">
+    <value>The model ran out of memory. Close resource-intensive applications and retry the scan.</value>
+  </data>
+  <data name="PrivacyText.ModelRequest" xml:space="preserve">
+    <value>The model rejected the request. Retry the scan; report the problem if it persists.</value>
+  </data>
+  <data name="PrivacyText.ModelServer" xml:space="preserve">
+    <value>The local model returned a server error. Try scanning again.</value>
+  </data>
+  <data name="PrivacyText.ModelTimeout" xml:space="preserve">
+    <value>The model did not respond within 2 minutes. Retry the scan or close resource-intensive applications.</value>
+  </data>
+  <data name="PrivacyText.ModelUnavailable" xml:space="preserve">
+    <value>The selected model was not found or does not match the installed version.</value>
+  </data>
+  <data name="PrivacyText.NoCategories" xml:space="preserve">
+    <value>Select at least one category to scan.</value>
+  </data>
+  <data name="PrivacyText.NoFindings" xml:space="preserve">
+    <value>No risks found in the selected categories; this does not guarantee the screenshot is risk-free.</value>
+  </data>
+  <data name="PrivacyText.NoRiskMatches" xml:space="preserve">
+    <value>No AI findings match these filters</value>
+  </data>
+  <data name="PrivacyText.NoRiskMatchesHint" xml:space="preserve">
+    <value>Scan the screenshot or period manually, or change the filters.</value>
+  </data>
+  <data name="PrivacyText.NotChecked" xml:space="preserve">
+    <value>Not checked</value>
+  </data>
+  <data name="PrivacyText.OcrFailed" xml:space="preserve">
+    <value>Could not recognise text. Check the screenshot file and OCR installation.</value>
+  </data>
+  <data name="PrivacyText.Outdated" xml:space="preserve">
+    <value>Rescan required</value>
+  </data>
+  <data name="PrivacyText.Partial" xml:space="preserve">
+    <value>Incomplete scan</value>
+  </data>
+  <data name="PrivacyText.PartialHint" xml:space="preserve">
+    <value>The scan is incomplete. Only confirmed stage results have been saved.</value>
+  </data>
+  <data name="PrivacyText.Password" xml:space="preserve">
+    <value>Password visible</value>
+  </data>
+  <data name="PrivacyText.PersonalChat" xml:space="preserve">
+    <value>Personal chat</value>
+  </data>
+  <data name="PrivacyText.PersonalData" xml:space="preserve">
+    <value>Personal data</value>
+  </data>
+  <data name="PrivacyText.PrivateKey" xml:space="preserve">
+    <value>Private key visible</value>
+  </data>
+  <data name="PrivacyText.QueueFormat" xml:space="preserve">
+    <value>AI: {0} queued · {1}</value>
+  </data>
+  <data name="PrivacyText.Queued" xml:space="preserve">
+    <value>Queued</value>
+  </data>
+  <data name="PrivacyText.Readiness" xml:space="preserve">
+    <value>Model installed. The first scan may take about a minute.</value>
+  </data>
+  <data name="PrivacyText.RecoveryError" xml:space="preserve">
+    <value>AI history is damaged. A backup will be kept before creating a new history.</value>
+  </data>
+  <data name="PrivacyText.RescanSelected" xml:space="preserve">
+    <value>Rescan</value>
+  </data>
+  <data name="PrivacyText.ResetDisposition" xml:space="preserve">
+    <value>Reset decision</value>
+  </data>
+  <data name="PrivacyText.ResultsAction" xml:space="preserve">
+    <value>AI results</value>
+  </data>
+  <data name="PrivacyText.Risk" xml:space="preserve">
+    <value>Possible risk</value>
+  </data>
+  <data name="PrivacyText.RiskFilter" xml:space="preserve">
+    <value>AI risks</value>
+  </data>
+  <data name="PrivacyText.RuntimePortUnavailable" xml:space="preserve">
+    <value>Could not open the local AI port. Restart the application.</value>
+  </data>
+  <data name="PrivacyText.RuntimeStopped" xml:space="preserve">
+    <value>The local model process stopped unexpectedly. Try scanning again.</value>
+  </data>
+  <data name="PrivacyText.RuntimeUnavailable" xml:space="preserve">
+    <value>Local model unavailable. Check its installation.</value>
+  </data>
+  <data name="PrivacyText.ScanRange" xml:space="preserve">
+    <value>Check date range</value>
+  </data>
+  <data name="PrivacyText.ScanSelected" xml:space="preserve">
+    <value>Check remaining</value>
+  </data>
+  <data name="PrivacyText.Scanning" xml:space="preserve">
+    <value>Scanning</value>
+  </data>
+  <data name="PrivacyText.SearchConfidentialData" xml:space="preserve">
+    <value>Detect confidential data</value>
+  </data>
+  <data name="PrivacyText.SearchGames" xml:space="preserve">
+    <value>Detect games</value>
+  </data>
+  <data name="PrivacyText.SearchPersonalChats" xml:space="preserve">
+    <value>Detect personal chats</value>
+  </data>
+  <data name="PrivacyText.SensitiveDocument" xml:space="preserve">
+    <value>Private document</value>
+  </data>
+  <data name="PrivacyText.Stale" xml:space="preserve">
+    <value>Selected categories need additional checks</value>
+  </data>
+  <data name="PrivacyText.StaleBadge" xml:space="preserve">
+    <value>More checks needed</value>
+  </data>
+  <data name="PrivacyText.StorageError" xml:space="preserve">
+    <value>Could not save AI status. Check access to the data folder.</value>
+  </data>
+  <data name="PrivacyText.Token" xml:space="preserve">
+    <value>Token format detected</value>
+  </data>
+  <data name="PrivacyText.TruncatedResponse" xml:space="preserve">
+    <value>The model response reached its length limit. The full scan did not finish.</value>
+  </data>
+  <data name="PrivacyText.Unscanned" xml:space="preserve">
+    <value>AI: not scanned</value>
+  </data>
+  <data name="PrivacyText.VisionFailed" xml:space="preserve">
+    <value>AI analysis failed. Retry the scan; a detailed cause is unavailable.</value>
+  </data>
+  <data name="SettingsText.Description" xml:space="preserve">
+    <value>Startup, notifications, language and AI scanning</value>
+  </data>
+  <data name="SettingsText.Heading" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsText.HistoryTab" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="SettingsText.LoadFailed" xml:space="preserve">
+    <value>Could not read settings. Default values are being used.</value>
+  </data>
+  <data name="SettingsText.NotificationsEnabled" xml:space="preserve">
+    <value>Show preview notifications</value>
+  </data>
+  <data name="SettingsText.NotificationsHint" xml:space="preserve">
+    <value>Copies are kept in history even when notifications are disabled.</value>
+  </data>
+  <data name="SettingsText.SaveFailedPrefix" xml:space="preserve">
+    <value>Settings could not be saved: </value>
+  </data>
+  <data name="SettingsText.Saved" xml:space="preserve">
+    <value>Changes are saved automatically.</value>
+  </data>
+  <data name="SettingsText.Seconds" xml:space="preserve">
+    <value>seconds</value>
+  </data>
+  <data name="SettingsText.SessionDisabled" xml:space="preserve">
+    <value>Notifications are disabled by --no-previews for this session.</value>
+  </data>
+  <data name="SettingsText.SettingsTab" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsText.StartWithHubstaff" xml:space="preserve">
+    <value>Start with Hubstaff</value>
+  </data>
+  <data name="SettingsText.StartupFailedPrefix" xml:space="preserve">
+    <value>Could not configure automatic startup: </value>
+  </data>
+  <data name="SettingsText.StartupHint" xml:space="preserve">
+    <value>Open the viewer in the tray automatically when Hubstaff starts.</value>
+  </data>
+  <data name="SettingsText.Timeout" xml:space="preserve">
+    <value>Automatically hide after</value>
+  </data>
+  <data name="SettingsText.TimeoutHint" xml:space="preserve">
+    <value>The countdown restarts when the next screenshot arrives.</value>
+  </data>
+  <data name="UiText.ActivityDetailsFormat" xml:space="preserve">
+    <value>Last record: {0:MM-dd HH:mm:ss}–{1:HH:mm:ss} · {2} s · Received: {3:HH:mm:ss}</value>
+  </data>
+  <data name="UiText.ActivityFormat" xml:space="preserve">
+    <value>Hubstaff · Overall: {0:0}% · Mouse: {1:0}% · Keyboard: {2:0}%</value>
+  </data>
+  <data name="UiText.ActivityUnavailable" xml:space="preserve">
+    <value>Hubstaff: no data for the selected account</value>
+  </data>
+  <data name="UiText.ActivityWaiting" xml:space="preserve">
+    <value>Hubstaff: waiting for activity data</value>
+  </data>
+  <data name="UiText.ActivityWaitingDetails" xml:space="preserve">
+    <value>Activity will appear after a local Hubstaff record is received</value>
+  </data>
+  <data name="UiText.AllFilter" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="UiText.BackToGallery" xml:space="preserve">
+    <value>← Back to gallery</value>
+  </data>
+  <data name="UiText.CaptureScrollBar" xml:space="preserve">
+    <value>Scroll screenshots</value>
+  </data>
+  <data name="UiText.CapturesHeading" xml:space="preserve">
+    <value>Screenshots</value>
+  </data>
+  <data name="UiText.CopiesFolder" xml:space="preserve">
+    <value>Copies folder</value>
+  </data>
+  <data name="UiText.Exit" xml:space="preserve">
+    <value>Exit application</value>
+  </data>
+  <data name="UiText.Flag" xml:space="preserve">
+    <value>Flag</value>
+  </data>
+  <data name="UiText.FlaggedCapturesPlaceholder" xml:space="preserve">
+    <value>Flag an important screenshot to find it quickly later</value>
+  </data>
+  <data name="UiText.FlaggedFilter" xml:space="preserve">
+    <value>Flagged</value>
+  </data>
+  <data name="UiText.FlaggedSuffix" xml:space="preserve">
+    <value> · Flagged</value>
+  </data>
+  <data name="UiText.FullSizeTitleSuffix" xml:space="preserve">
+    <value> — screenshot viewer</value>
+  </data>
+  <data name="UiText.Gallery" xml:space="preserve">
+    <value>Screenshot gallery</value>
+  </data>
+  <data name="UiText.GalleryDescription" xml:space="preserve">
+    <value>Choose a filter and date range, then open a screenshot</value>
+  </data>
+  <data name="UiText.HistoryCountsFormat" xml:space="preserve">
+    <value>New: {0}  ·  Total: {1}</value>
+  </data>
+  <data name="UiText.HistoryDescription" xml:space="preserve">
+    <value>Review new screenshots and flag important moments</value>
+  </data>
+  <data name="UiText.HistoryFilters" xml:space="preserve">
+    <value>Screenshot filter</value>
+  </data>
+  <data name="UiText.HistoryHeading" xml:space="preserve">
+    <value>Screenshot history</value>
+  </data>
+  <data name="UiText.HistoryWindowTitle" xml:space="preserve">
+    <value>TrackMirror</value>
+  </data>
+  <data name="UiText.HorizontalScroll" xml:space="preserve">
+    <value>Horizontal scroll</value>
+  </data>
+  <data name="UiText.LoadingThumbnail" xml:space="preserve">
+    <value>Loading thumbnail…</value>
+  </data>
+  <data name="UiText.MarkReviewed" xml:space="preserve">
+    <value>Reviewed</value>
+  </data>
+  <data name="UiText.New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="UiText.NewCapturesPlaceholder" xml:space="preserve">
+    <value>New screenshots will appear here automatically</value>
+  </data>
+  <data name="UiText.NoCaptures" xml:space="preserve">
+    <value>No screenshots yet</value>
+  </data>
+  <data name="UiText.NoFlaggedCaptures" xml:space="preserve">
+    <value>No flagged screenshots</value>
+  </data>
+  <data name="UiText.NoUnreadCaptures" xml:space="preserve">
+    <value>No unread screenshots</value>
+  </data>
+  <data name="UiText.Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="UiText.OpenFullSize" xml:space="preserve">
+    <value>Open full size</value>
+  </data>
+  <data name="UiText.PreviewHeading" xml:space="preserve">
+    <value>New screenshot</value>
+  </data>
+  <data name="UiText.PreviewUnreadFormat" xml:space="preserve">
+    <value>  ·  Unread: {0}</value>
+  </data>
+  <data name="UiText.PreviewWindowTitle" xml:space="preserve">
+    <value>TrackMirror — new screenshot</value>
+  </data>
+  <data name="UiText.Reviewed" xml:space="preserve">
+    <value>Reviewed</value>
+  </data>
+  <data name="UiText.SelectCapture" xml:space="preserve">
+    <value>Select a screenshot</value>
+  </data>
+  <data name="UiText.SelectedCapturePlaceholder" xml:space="preserve">
+    <value>The selected screenshot will appear here</value>
+  </data>
+  <data name="UiText.TrayHistory" xml:space="preserve">
+    <value>Screenshot history</value>
+  </data>
+  <data name="UiText.TrayUnreadFormat" xml:space="preserve">
+    <value>TrackMirror: unread screenshots — {0}</value>
+  </data>
+  <data name="UiText.TrayWaiting" xml:space="preserve">
+    <value>TrackMirror: waiting for screenshots</value>
+  </data>
+  <data name="UiText.TrayWarningFormat" xml:space="preserve">
+    <value>TrackMirror: warning · new screenshots: {0}</value>
+  </data>
+  <data name="UiText.Unflag" xml:space="preserve">
+    <value>Unflag</value>
+  </data>
+  <data name="UiText.UnreadFilter" xml:space="preserve">
+    <value>Unread</value>
+  </data>
+  <data name="UiText.VerticalScroll" xml:space="preserve">
+    <value>Vertical scroll</value>
+  </data>
+  <data name="UiText.WaitingForCaptures" xml:space="preserve">
+    <value>Waiting for screenshots…</value>
+  </data>
+  <data name="UiText.WaitingForFirstCapture" xml:space="preserve">
+    <value>Waiting for the first screenshot</value>
+  </data>
+  <data name="UiText.WarningTitle" xml:space="preserve">
+    <value>TrackMirror</value>
+  </data>
+  <data name="ZoomText.ActualSizeHint" xml:space="preserve">
+    <value>Original screenshot size (Ctrl + 1)</value>
+  </data>
+  <data name="ZoomText.Fit" xml:space="preserve">
+    <value>Fit</value>
+  </data>
+  <data name="ZoomText.FitHint" xml:space="preserve">
+    <value>Fit the entire screenshot (Ctrl + 0)</value>
+  </data>
+  <data name="ZoomText.Hint" xml:space="preserve">
+    <value>Ctrl + wheel · drag to pan</value>
+  </data>
+  <data name="ZoomText.Image" xml:space="preserve">
+    <value>Screenshot viewer</value>
+  </data>
+  <data name="ZoomText.ZoomInHint" xml:space="preserve">
+    <value>Zoom in (Ctrl + plus)</value>
+  </data>
+  <data name="ZoomText.ZoomInName" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
+  <data name="ZoomText.ZoomOutHint" xml:space="preserve">
+    <value>Zoom out (Ctrl + minus)</value>
+  </data>
+  <data name="ZoomText.ZoomOutName" xml:space="preserve">
+    <value>Zoom out</value>
+  </data>
+  <data name="PrivacyText.OcrIncomplete" xml:space="preserve">
+    <value>OCR did not cover the entire image. Confirmed findings have been saved.</value>
+  </data>
+  <data name="PrivacyText.ModelUncertain" xml:space="preserve">
+    <value>The model is uncertain about part of this image. Confirmed findings have been saved.</value>
+  </data>
+  <data name="PrivacyText.AnalysisLimit" xml:space="preserve">
+    <value>The scan reached its safety limit before all batches finished. Confirmed findings have been saved.</value>
+  </data>
+  <data name="PrivacyText.DiagnosticsFormat" xml:space="preserve">
+    <value>Requests: {0} · Request data: {1:N0} bytes · Prompt tokens: {2} · Reply tokens: {3}</value>
+  </data>
+  <data name="PrivacyText.MetricUnavailable" xml:space="preserve">
+    <value>unavailable</value>
+  </data>
+  <data name="HubstaffControlText.Heading" xml:space="preserve">
+    <value>Hubstaff timer control</value>
+  </data>
+  <data name="HubstaffControlText.Enabled" xml:space="preserve">
+    <value>Enable idle-triggered timer control</value>
+  </data>
+  <data name="HubstaffControlText.Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="HubstaffControlText.PauseMode" xml:space="preserve">
+    <value>Pause until activity returns</value>
+  </data>
+  <data name="HubstaffControlText.RestartMode" xml:space="preserve">
+    <value>Periodic stop/resume while idle</value>
+  </data>
+  <data name="HubstaffControlText.PauseHint" xml:space="preserve">
+    <value>Stops tracking after the idle threshold; resumes only a pause made by this viewer session.</value>
+  </data>
+  <data name="HubstaffControlText.RestartHint" xml:space="preserve">
+    <value>Starts the countdown after the idle threshold. Input resets it; stopped timers stay stopped.</value>
+  </data>
+  <data name="HubstaffControlText.IdleSeconds" xml:space="preserve">
+    <value>Idle threshold, seconds</value>
+  </data>
+  <data name="HubstaffControlText.RestartSeconds" xml:space="preserve">
+    <value>Restart interval, seconds</value>
+  </data>
+  <data name="HubstaffControlText.CliPath" xml:space="preserve">
+    <value>Hubstaff CLI executable</value>
+  </data>
+  <data name="HubstaffControlText.AutomaticPath" xml:space="preserve">
+    <value>Automatic detection; or select the executable</value>
+  </data>
+  <data name="HubstaffControlText.Browse" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="HubstaffControlText.Detect" xml:space="preserve">
+    <value>Detect installed CLI</value>
+  </data>
+  <data name="HubstaffControlText.FileFilter" xml:space="preserve">
+    <value>Hubstaff CLI (HubstaffCLI.exe)|HubstaffCLI.exe|Executable files (*.exe)|*.exe</value>
+  </data>
+  <data name="HubstaffControlText.PermissionHint" xml:space="preserve">
+    <value>Enable Scripted control in Hubstaff and choose Always allow at the first prompt. This feature works while the viewer is running. Disabling it does not resume an existing pause.</value>
+  </data>
+  <data name="HubstaffControlText.Retry" xml:space="preserve">
+    <value>Retry control</value>
+  </data>
+  <data name="HubstaffControlText.Disabled" xml:space="preserve">
+    <value>Timer control is disabled.</value>
+  </data>
+  <data name="HubstaffControlText.WaitingForIdle" xml:space="preserve">
+    <value>Waiting for idle: {0} s remaining.</value>
+  </data>
+  <data name="HubstaffControlText.WaitingForTracking" xml:space="preserve">
+    <value>Hubstaff is stopped. Waiting for tracking to be started manually.</value>
+  </data>
+  <data name="HubstaffControlText.WaitingForRestart" xml:space="preserve">
+    <value>Idle detected. Next stop/resume in {0} s.</value>
+  </data>
+  <data name="HubstaffControlText.Paused" xml:space="preserve">
+    <value>Paused by this viewer. Resume when activity returns.</value>
+  </data>
+  <data name="HubstaffControlText.Working" xml:space="preserve">
+    <value>Sending timer command…</value>
+  </data>
+  <data name="HubstaffControlText.InvalidSettings" xml:space="preserve">
+    <value>Timer settings are invalid. Use positive intervals and an absolute executable path, or leave it empty.</value>
+  </data>
+  <data name="HubstaffControlText.MissingCli" xml:space="preserve">
+    <value>Hubstaff CLI was not found. Select its executable or start Hubstaff and try detection again.</value>
+  </data>
+  <data name="HubstaffControlText.InvalidStatus" xml:space="preserve">
+    <value>The CLI returned an unsupported status. No further commands will be sent; check the Hubstaff version.</value>
+  </data>
+  <data name="HubstaffControlText.CommandFailed" xml:space="preserve">
+    <value>The CLI command failed. Check Scripted control and Always allow in Hubstaff, then retry.</value>
+  </data>
+  <data name="HubstaffControlText.TimedOut" xml:space="preserve">
+    <value>The CLI did not respond in time. Check Hubstaff and its permission prompt, then retry.</value>
+  </data>
+  <data name="HubstaffControlText.InputUnavailable" xml:space="preserve">
+    <value>Windows idle time is unavailable. Timer control is suspended.</value>
+  </data>
+  <data name="HubstaffControlText.SelectionChanged" xml:space="preserve">
+    <value>The selected Hubstaff project/task changed. Resume was skipped; check the timer and retry.</value>
+  </data>
+  <data name="HubstaffControlText.StopUnconfirmed" xml:space="preserve">
+    <value>Hubstaff did not confirm the stop. Timer control is suspended; check Hubstaff and retry.</value>
+  </data>
+  <data name="HubstaffControlText.ResumeUnconfirmed" xml:space="preserve">
+    <value>Hubstaff did not confirm resume. Check the timer before retrying.</value>
+  </data>
+  <data name="GalleryText.SelectAllFormat" xml:space="preserve">
+    <value>Select all results ({0})</value>
+  </data>
+  <data name="GalleryText.SelectedFormat" xml:space="preserve">
+    <value>{0} of {1} selected</value>
+  </data>
+  <data name="GalleryText.SelectCapture" xml:space="preserve">
+    <value>Select screenshot</value>
+  </data>
+  <data name="GalleryText.MarkRead" xml:space="preserve">
+    <value>Mark as read</value>
+  </data>
+  <data name="GalleryText.Scan" xml:space="preserve">
+    <value>AI scan</value>
+  </data>
+  <data name="GalleryText.Clear" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="GalleryText.More" xml:space="preserve">
+    <value>More actions</value>
+  </data>
+  <data name="GalleryText.Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="GalleryText.ReadFormat" xml:space="preserve">
+    <value>Marked as read: {0}</value>
+  </data>
+  <data name="GalleryText.UndoCompleted" xml:space="preserve">
+    <value>Read status restored</value>
+  </data>
+  <data name="GalleryText.ScanTitleFormat" xml:space="preserve">
+    <value>AI scan · {0} screenshots</value>
+  </data>
+  <data name="GalleryText.ScanHint" xml:space="preserve">
+    <value>Choose categories for this run. Saved settings stay unchanged.</value>
+  </data>
+  <data name="GalleryText.Recheck" xml:space="preserve">
+    <value>Recheck completed categories</value>
+  </data>
+  <data name="GalleryText.MissingOnly" xml:space="preserve">
+    <value>Completed checks are reused by default.</value>
+  </data>
+  <data name="GalleryText.StartScan" xml:space="preserve">
+    <value>Start scan</value>
+  </data>
+  <data name="GalleryText.OpenSettings" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
+  <data name="GalleryText.NoCategories" xml:space="preserve">
+    <value>Select at least one category.</value>
+  </data>
+  <data name="GalleryText.SelectHint" xml:space="preserve">
+    <value>Use checkboxes or Space to select screenshots. Enter opens the focused screenshot.</value>
+  </data>
+</root>

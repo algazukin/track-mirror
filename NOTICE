@@ -1,0 +1,12 @@
+TrackMirror
+Copyright (c) 2026 Alexander Gazukin and contributors.
+
+First-party source is subject to the Mozilla Public License, version 2.0.
+See LICENSE. Corresponding source is supplied as the matching release asset
+TrackMirror-v<VERSION>-source.zip.
+Download that ZIP from the same release page as the application archive.
+release-info.json records the version, source commit when available and whether the checkout has changes.
+
+Third-party libraries, OCR assets, runtime components and optional AI models
+retain upstream licenses. See THIRD-PARTY-NOTICES.md and licenses/.
+This project is not affiliated with or endorsed by Hubstaff.

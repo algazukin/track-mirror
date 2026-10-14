@@ -1,0 +1,61 @@
+# Build output and release artifacts
+**/bin/
+**/obj/
+/publish/
+/artifacts/
+/TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Internal plans, specifications and agent work
+/docs/
+/plans/
+/specs/
+/.superpowers/
+/.agents/
+/.codex/
+/work/
+
+# Local data, diagnostics and backups
+**/data/
+**/captures/
+**/viewer.db
+**/viewer.db-*
+**/settings.json
+**/index.json
+**/privacy-results.json
+**/activity-history.json
+**/hubstaff-activity-history.json
+**/hubstaff-activity.json
+**/data-location.json
+**/.viewer-data*.json
+**/.viewer-data.lock
+**/.viewer-stage-*/
+*.zip
+*.7z
+.env
+.env.*
+!.env.example
+
+# Downloaded AI assets
+**/privacy-runtime/
+**/privacy-downloads/
+**/privacy-runtime-installing-*/
+**/privacy-install.lock
+
+# IDE and temporary files
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.DotSettings.user
+*.log
+*.tmp
+*.part
+startup-error.txt
+Thumbs.db
+Desktop.ini
+.DS_Store

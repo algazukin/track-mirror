@@ -1,0 +1,14 @@
+# Normalize text files while preserving the conventional solution format.
+* text=auto eol=lf
+*.sln text eol=crlf
+
+# Local internal files are never part of public archives.
+/docs export-ignore
+/plans export-ignore
+/specs export-ignore
+/.superpowers export-ignore
+/.agents export-ignore
+/.codex export-ignore
+/work export-ignore
+/artifacts export-ignore
+/publish export-ignore

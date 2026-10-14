@@ -1,0 +1,1070 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="ActivityText.Account" xml:space="preserve">
+    <value>Аккаунт</value>
+  </data>
+  <data name="ActivityText.AccountScroll" xml:space="preserve">
+    <value>Прокрутка аккаунтов</value>
+  </data>
+  <data name="ActivityText.ArchiveHint" xml:space="preserve">
+    <value>История сохраняется локально; прошлые дни не загружаются с сервера.</value>
+  </data>
+  <data name="ActivityText.Chart" xml:space="preserve">
+    <value>Активность в течение дня</value>
+  </data>
+  <data name="ActivityText.Day" xml:space="preserve">
+    <value>День активности</value>
+  </data>
+  <data name="ActivityText.Description" xml:space="preserve">
+    <value>Полученные локальные записи · обновляется во время работы программы</value>
+  </data>
+  <data name="ActivityText.DurationFormat" xml:space="preserve">
+    <value>{0:0} ч {1:00} мин {2:00} сек</value>
+  </data>
+  <data name="ActivityText.Empty" xml:space="preserve">
+    <value>За этот день нет полученных записей</value>
+  </data>
+  <data name="ActivityText.Heading" xml:space="preserve">
+    <value>История активности Hubstaff</value>
+  </data>
+  <data name="ActivityText.Hint" xml:space="preserve">
+    <value>Пустые участки — нет данных. Интервалы относятся ко дню начала по местному времени.</value>
+  </data>
+  <data name="ActivityText.IntervalFormat" xml:space="preserve">
+    <value>{0:dd.MM HH:mm:ss}–{1:dd.MM HH:mm:ss} · {2} сек
+Общая: {3:0}% · Мышь: {4:0}% · Клавиатура: {5:0}%</value>
+  </data>
+  <data name="ActivityText.Keyboard" xml:space="preserve">
+    <value>Клавиатура</value>
+  </data>
+  <data name="ActivityText.Mouse" xml:space="preserve">
+    <value>Мышь</value>
+  </data>
+  <data name="ActivityText.NextDay" xml:space="preserve">
+    <value>Следующий день</value>
+  </data>
+  <data name="ActivityText.Overall" xml:space="preserve">
+    <value>Общая</value>
+  </data>
+  <data name="ActivityText.PreviousDay" xml:space="preserve">
+    <value>Предыдущий день</value>
+  </data>
+  <data name="ActivityText.RecordsFormat" xml:space="preserve">
+    <value>Интервалов: {0} · Последнее получение: {1:dd.MM.yyyy HH:mm:ss}</value>
+  </data>
+  <data name="ActivityText.SelectDay" xml:space="preserve">
+    <value>Выберите день</value>
+  </data>
+  <data name="ActivityText.SummaryFormat" xml:space="preserve">
+    <value>{0} · Общая: {1:0}% · Мышь: {2:0}% · Клавиатура: {3:0}%</value>
+  </data>
+  <data name="ActivityText.Tab" xml:space="preserve">
+    <value>Активность</value>
+  </data>
+  <data name="ActivityText.Tracked" xml:space="preserve">
+    <value>Отслежено</value>
+  </data>
+  <data name="ActivityText.Waiting" xml:space="preserve">
+    <value>История начнёт появляться после получения данных Hubstaff</value>
+  </data>
+  <data name="CalendarText.AllDates" xml:space="preserve">
+    <value>Все даты</value>
+  </data>
+  <data name="CalendarText.DateFilter" xml:space="preserve">
+    <value>Период снимков</value>
+  </data>
+  <data name="CalendarText.NextMonth" xml:space="preserve">
+    <value>Следующий месяц</value>
+  </data>
+  <data name="CalendarText.NoMatchesFormat" xml:space="preserve">
+    <value>Нет подходящих снимков за {0:dd.MM.yyyy}</value>
+  </data>
+  <data name="CalendarText.NoMatchesHint" xml:space="preserve">
+    <value>Выберите другую дату или сбросьте фильтры</value>
+  </data>
+  <data name="CalendarText.NoRangeMatchesFormat" xml:space="preserve">
+    <value>Нет подходящих снимков за {0:dd.MM.yyyy} – {1:dd.MM.yyyy}</value>
+  </data>
+  <data name="CalendarText.PreviousMonth" xml:space="preserve">
+    <value>Предыдущий месяц</value>
+  </data>
+  <data name="CalendarText.RangeFormat" xml:space="preserve">
+    <value>{0:dd.MM.yyyy} – {1:dd.MM.yyyy}</value>
+  </data>
+  <data name="CalendarText.ResetDate" xml:space="preserve">
+    <value>Сбросить фильтр по дате</value>
+  </data>
+  <data name="CalendarText.SelectEnd" xml:space="preserve">
+    <value>Выберите конец (или ту же дату)</value>
+  </data>
+  <data name="CalendarText.SelectStart" xml:space="preserve">
+    <value>Выберите начало периода</value>
+  </data>
+  <data name="CalendarText.Today" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
+  <data name="DataManagementText.ArchiveFilter" xml:space="preserve">
+    <value>Резервная копия TrackMirror (*.zip)|*.zip</value>
+  </data>
+  <data name="DataManagementText.Backup" xml:space="preserve">
+    <value>Создать копию…</value>
+  </data>
+  <data name="DataManagementText.BackupHint" xml:space="preserve">
+    <value>Копия включает базу, настройки и снимки. Установленные модели хранятся отдельно.</value>
+  </data>
+  <data name="DataManagementText.Busy" xml:space="preserve">
+    <value>Дождитесь завершения текущей операции с данными или моделью.</value>
+  </data>
+  <data name="DataManagementText.Cancel" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="DataManagementText.Cancelled" xml:space="preserve">
+    <value>Операция отменена. Текущие данные сохранены.</value>
+  </data>
+  <data name="DataManagementText.Checking" xml:space="preserve">
+    <value>Проверка копии…</value>
+  </data>
+  <data name="DataManagementText.Cleaning" xml:space="preserve">
+    <value>Очистка старых снимков…</value>
+  </data>
+  <data name="DataManagementText.Cleanup" xml:space="preserve">
+    <value>Очистить сейчас</value>
+  </data>
+  <data name="DataManagementText.CleanupCancelled" xml:space="preserve">
+    <value>Очистка прервана. Уже удалённые записи не восстанавливаются.</value>
+  </data>
+  <data name="DataManagementText.CleanupConfirmation" xml:space="preserve">
+    <value>Будут удалены старые локальные снимки ({0}) и связанные результаты AI. Продолжить?</value>
+  </data>
+  <data name="DataManagementText.CleanupFormat" xml:space="preserve">
+    <value>Удалено снимков: {0}. Ожидают удаления файлов: {1}.</value>
+  </data>
+  <data name="DataManagementText.Completed" xml:space="preserve">
+    <value>Готово.</value>
+  </data>
+  <data name="DataManagementText.Copying" xml:space="preserve">
+    <value>Копирование данных…</value>
+  </data>
+  <data name="DataManagementText.Days" xml:space="preserve">
+    <value>Хранить снимки не менее</value>
+  </data>
+  <data name="DataManagementText.DaysUnit" xml:space="preserve">
+    <value>дней</value>
+  </data>
+  <data name="DataManagementText.EmptyTarget" xml:space="preserve">
+    <value>Выберите пустую папку. Существующие файлы не перезаписываются.</value>
+  </data>
+  <data name="DataManagementText.FailedPrefix" xml:space="preserve">
+    <value>Не удалось выполнить операцию: </value>
+  </data>
+  <data name="DataManagementText.Folder" xml:space="preserve">
+    <value>Папка данных</value>
+  </data>
+  <data name="DataManagementText.Heading" xml:space="preserve">
+    <value>Данные и резервные копии</value>
+  </data>
+  <data name="DataManagementText.InvalidArchive" xml:space="preserve">
+    <value>Архив повреждён или не является резервной копией этой программы.</value>
+  </data>
+  <data name="DataManagementText.InvalidDatabase" xml:space="preserve">
+    <value>Не удалось проверить базу данных в копии.</value>
+  </data>
+  <data name="DataManagementText.InvalidFile" xml:space="preserve">
+    <value>Файл настроек или данных повреждён. Исходный файл сохранён.</value>
+  </data>
+  <data name="DataManagementText.InvalidRedirect" xml:space="preserve">
+    <value>Не удалось проверить перенесённую папку. Исходные данные сохранены.</value>
+  </data>
+  <data name="DataManagementText.InvalidRetention" xml:space="preserve">
+    <value>Некорректный срок хранения. Автоочистка отключена; установлен срок 30 дней.</value>
+  </data>
+  <data name="DataManagementText.KeepFlagged" xml:space="preserve">
+    <value>Сохранять отмеченные</value>
+  </data>
+  <data name="DataManagementText.KeepUnread" xml:space="preserve">
+    <value>Сохранять непросмотренные</value>
+  </data>
+  <data name="DataManagementText.LocalFolderOnly" xml:space="preserve">
+    <value>Выберите локальную папку без ссылок на другие каталоги.</value>
+  </data>
+  <data name="DataManagementText.Move" xml:space="preserve">
+    <value>Перенести данные…</value>
+  </data>
+  <data name="DataManagementText.NothingToClean" xml:space="preserve">
+    <value>Нет снимков для очистки с выбранными настройками.</value>
+  </data>
+  <data name="DataManagementText.Overlap" xml:space="preserve">
+    <value>Новая папка не должна совпадать с текущей, содержать её или находиться внутри неё.</value>
+  </data>
+  <data name="DataManagementText.Packing" xml:space="preserve">
+    <value>Создание архива…</value>
+  </data>
+  <data name="DataManagementText.Preparing" xml:space="preserve">
+    <value>Подготовка данных…</value>
+  </data>
+  <data name="DataManagementText.ProgressFormat" xml:space="preserve">
+    <value>{0}  {1:0.#} / {2:0.#} МБ</value>
+  </data>
+  <data name="DataManagementText.ProtectedFolder" xml:space="preserve">
+    <value>Папка данных не должна пересекаться с Hubstaff или файлами программы.</value>
+  </data>
+  <data name="DataManagementText.RedirectCycle" xml:space="preserve">
+    <value>Обнаружена циклическая ссылка на папку данных.</value>
+  </data>
+  <data name="DataManagementText.Restore" xml:space="preserve">
+    <value>Восстановить…</value>
+  </data>
+  <data name="DataManagementText.Restoring" xml:space="preserve">
+    <value>Восстановление данных…</value>
+  </data>
+  <data name="DataManagementText.Retention" xml:space="preserve">
+    <value>Автоматически удалять старые снимки</value>
+  </data>
+  <data name="DataManagementText.RetentionHint" xml:space="preserve">
+    <value>Проверка при запуске и раз в час. История активности и резервные копии сохраняются.</value>
+  </data>
+  <data name="DataManagementText.SelectTarget" xml:space="preserve">
+    <value>Выберите пустую локальную папку для данных</value>
+  </data>
+  <data name="DataManagementText.SelectedFolderBusy" xml:space="preserve">
+    <value>Эта папка уже используется другим экземпляром программы.</value>
+  </data>
+  <data name="DataManagementText.UnavailableFolder" xml:space="preserve">
+    <value>Выбранная папка данных недоступна. Проверьте диск и путь.</value>
+  </data>
+  <data name="DataManagementText.UncommittedCopy" xml:space="preserve">
+    <value>Проверенная копия осталась в выбранной папке; исходная папка активна. Для повторения выберите другую пустую папку.</value>
+  </data>
+  <data name="DataManagementText.UnsafePath" xml:space="preserve">
+    <value>Путь файла выходит за пределы папки данных или содержит ссылку.</value>
+  </data>
+  <data name="DataManagementText.Unsaved" xml:space="preserve">
+    <value>Сначала устраните ошибку сохранения текущей истории.</value>
+  </data>
+  <data name="DatabaseText.LegacyFailedFormat" xml:space="preserve">
+    <value>Не удалось перенести {0} в SQLite. Исходный файл сохранён; исправьте его и повторите запуск.</value>
+  </data>
+  <data name="DatabaseText.MigrationOrder" xml:space="preserve">
+    <value>Нарушена последовательность обновлений базы данных.</value>
+  </data>
+  <data name="DatabaseText.NewerSchema" xml:space="preserve">
+    <value>База создана более новой версией программы. Установите эту версию или новее.</value>
+  </data>
+  <data name="DatabaseText.SkippedFormat" xml:space="preserve">
+    <value>При переносе пропущено некорректных записей: {0}. Исходные JSON сохранены.</value>
+  </data>
+  <data name="DatabaseText.Unavailable" xml:space="preserve">
+    <value>Не удалось открыть базу истории. Сохраните её копию и проверьте доступ.</value>
+  </data>
+  <data name="DatabaseText.WriteFailed" xml:space="preserve">
+    <value>Не удалось сохранить историю в SQLite. Проверьте доступ и свободное место.</value>
+  </data>
+  <data name="DateFormats.CalendarDate" xml:space="preserve">
+    <value>dd.MM.yyyy</value>
+  </data>
+  <data name="DateFormats.FullDateTime" xml:space="preserve">
+    <value>dd.MM.yyyy HH:mm:ss</value>
+  </data>
+  <data name="DateFormats.HistoryDetails" xml:space="preserve">
+    <value>dd.MM.yyyy  ·  HH:mm:ss</value>
+  </data>
+  <data name="DateFormats.HistoryRow" xml:space="preserve">
+    <value>dd.MM  HH:mm:ss</value>
+  </data>
+  <data name="LanguageText.Choose" xml:space="preserve">
+    <value>Выберите язык интерфейса.</value>
+  </data>
+  <data name="LanguageText.English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageText.InvalidSaved" xml:space="preserve">
+    <value>Сохранённый язык не поддерживается. Выбран английский.</value>
+  </data>
+  <data name="LanguageText.Language" xml:space="preserve">
+    <value>Язык интерфейса</value>
+  </data>
+  <data name="LanguageText.Restart" xml:space="preserve">
+    <value>Перезапустите программу, чтобы применить выбранный язык.</value>
+  </data>
+  <data name="LanguageText.Russian" xml:space="preserve">
+    <value>Русский</value>
+  </data>
+  <data name="LanguageText.Scroll" xml:space="preserve">
+    <value>Прокрутка языков</value>
+  </data>
+  <data name="Messages.ActivityCacheFailedPrefix" xml:space="preserve">
+    <value>Не удалось сохранить историю активности: </value>
+  </data>
+  <data name="Messages.ActivityHistoryUnreadable" xml:space="preserve">
+    <value>История активности недоступна или повреждена. Новые данные продолжают собираться.</value>
+  </data>
+  <data name="Messages.AlreadyRunning" xml:space="preserve">
+    <value>Программа уже работает. Открой историю через значок в трее.</value>
+  </data>
+  <data name="Messages.CopyFailedPrefix" xml:space="preserve">
+    <value>Не удалось сохранить снимок </value>
+  </data>
+  <data name="Messages.IconResourceMissing" xml:space="preserve">
+    <value>Не найден встроенный значок программы.</value>
+  </data>
+  <data name="Messages.ImageUnavailable" xml:space="preserve">
+    <value>Копия изображения недоступна</value>
+  </data>
+  <data name="Messages.ImageUnavailablePrefix" xml:space="preserve">
+    <value>Копия недоступна: </value>
+  </data>
+  <data name="Messages.IncompleteImage" xml:space="preserve">
+    <value>Файл ещё записывается.</value>
+  </data>
+  <data name="Messages.IndexSaveFailedPrefix" xml:space="preserve">
+    <value>Копии сохранены, но не удалось записать историю и отметки: </value>
+  </data>
+  <data name="Messages.InvalidOptionPrefix" xml:space="preserve">
+    <value>Неизвестный или неполный параметр: </value>
+  </data>
+  <data name="Messages.MissingCopiesFormat" xml:space="preserve">
+    <value>В папке данных не найдены копии снимков: {0}. Возможно, файлы перемещены или удалены.</value>
+  </data>
+  <data name="Messages.MonitoringAccountsFormat" xml:space="preserve">
+    <value>Наблюдение включено · аккаунтов: {0}</value>
+  </data>
+  <data name="Messages.OpenFailedPrefix" xml:space="preserve">
+    <value>Не удалось открыть копию: </value>
+  </data>
+  <data name="Messages.PreviewUnavailablePrefix" xml:space="preserve">
+    <value>Копия сохранена, но превью недоступно: </value>
+  </data>
+  <data name="Messages.RecoveredHistory" xml:space="preserve">
+    <value>История восстановлена из файлов; сохранённые отметки могли быть потеряны.</value>
+  </data>
+  <data name="Messages.RestoringMonitor" xml:space="preserve">
+    <value>Восстановление наблюдения за папкой…</value>
+  </data>
+  <data name="Messages.SaveFailedPrefix" xml:space="preserve">
+    <value>Ошибка сохранения снимка: </value>
+  </data>
+  <data name="Messages.SourceUnavailablePrefix" xml:space="preserve">
+    <value>Не удалось прочитать папку Hubstaff: </value>
+  </data>
+  <data name="Messages.StartupFailedPrefix" xml:space="preserve">
+    <value>Не удалось запустить программу:
+</value>
+  </data>
+  <data name="Messages.WaitingForScreens" xml:space="preserve">
+    <value>Ожидание папок screens в Hubstaff.</value>
+  </data>
+  <data name="Messages.WaitingForSource" xml:space="preserve">
+    <value>Ожидание папки Hubstaff. Наблюдение включится автоматически.</value>
+  </data>
+  <data name="PrivacyInstallText.ArchiveError" xml:space="preserve">
+    <value>Архив Ollama повреждён или содержит неподдерживаемые файлы.</value>
+  </data>
+  <data name="PrivacyInstallText.BusyError" xml:space="preserve">
+    <value>Установка уже запущена в другом экземпляре программы.</value>
+  </data>
+  <data name="PrivacyInstallText.Cancel" xml:space="preserve">
+    <value>Отменить загрузку</value>
+  </data>
+  <data name="PrivacyInstallText.CancelOperation" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="PrivacyInstallText.Cancelled" xml:space="preserve">
+    <value>Операция отменена. Можно повторить её.</value>
+  </data>
+  <data name="PrivacyInstallText.DownloadError" xml:space="preserve">
+    <value>Не удалось скачать файлы. Проверьте интернет и повторите установку.</value>
+  </data>
+  <data name="PrivacyInstallText.DownloadHint" xml:space="preserve">
+    <value>Размеры моделей указаны без Ollama. Снимки обрабатываются локально.</value>
+  </data>
+  <data name="PrivacyInstallText.Failed" xml:space="preserve">
+    <value>Установка не завершена</value>
+  </data>
+  <data name="PrivacyInstallText.Gemma4B" xml:space="preserve">
+    <value>Gemma 3 4B · 3,4 ГБ</value>
+  </data>
+  <data name="PrivacyInstallText.Install" xml:space="preserve">
+    <value>Скачать и установить</value>
+  </data>
+  <data name="PrivacyInstallText.Installed" xml:space="preserve">
+    <value>Выбранная модель установлена</value>
+  </data>
+  <data name="PrivacyInstallText.IntegrityError" xml:space="preserve">
+    <value>Загруженные файлы не прошли проверку целостности.</value>
+  </data>
+  <data name="PrivacyInstallText.InvalidSavedModel" xml:space="preserve">
+    <value>Сохранённая модель не поддерживается. Выбрана Qwen3-VL 4B Instruct.</value>
+  </data>
+  <data name="PrivacyInstallText.Missing" xml:space="preserve">
+    <value>Выбранная модель не установлена</value>
+  </data>
+  <data name="PrivacyInstallText.Model" xml:space="preserve">
+    <value>Модель для анализа снимков</value>
+  </data>
+  <data name="PrivacyInstallText.ModelDownload" xml:space="preserve">
+    <value>Загрузка модели</value>
+  </data>
+  <data name="PrivacyInstallText.ModelError" xml:space="preserve">
+    <value>Не удалось установить выбранную модель. Повторите загрузку.</value>
+  </data>
+  <data name="PrivacyInstallText.ModelScroll" xml:space="preserve">
+    <value>Прокрутка моделей</value>
+  </data>
+  <data name="PrivacyInstallText.ModelVerify" xml:space="preserve">
+    <value>Проверка файлов модели</value>
+  </data>
+  <data name="PrivacyInstallText.NoModel" xml:space="preserve">
+    <value>Выберите модель</value>
+  </data>
+  <data name="PrivacyInstallText.ProgressFormat" xml:space="preserve">
+    <value>{0} · {1:N1} / {2:N1} ГБ</value>
+  </data>
+  <data name="PrivacyInstallText.Qwen2B" xml:space="preserve">
+    <value>Qwen3-VL 2B Instruct · 1,9 ГБ</value>
+  </data>
+  <data name="PrivacyInstallText.Qwen4B" xml:space="preserve">
+    <value>Qwen3-VL 4B Instruct · 3,3 ГБ</value>
+  </data>
+  <data name="PrivacyInstallText.Qwen8B" xml:space="preserve">
+    <value>Qwen3-VL 8B Instruct · 6,1 ГБ</value>
+  </data>
+  <data name="PrivacyInstallText.Ready" xml:space="preserve">
+    <value>Модель готова к работе</value>
+  </data>
+  <data name="PrivacyInstallText.RemovalIncomplete" xml:space="preserve">
+    <value>Удаление не завершено. Нажмите «Удалить модель».</value>
+  </data>
+  <data name="PrivacyInstallText.Remove" xml:space="preserve">
+    <value>Удалить модель</value>
+  </data>
+  <data name="PrivacyInstallText.RemoveError" xml:space="preserve">
+    <value>Не удалось удалить модель. Повторите попытку.</value>
+  </data>
+  <data name="PrivacyInstallText.Removed" xml:space="preserve">
+    <value>Модель удалена. Её можно скачать снова.</value>
+  </data>
+  <data name="PrivacyInstallText.Removing" xml:space="preserve">
+    <value>Удаление выбранной модели</value>
+  </data>
+  <data name="PrivacyInstallText.RuntimeDownload" xml:space="preserve">
+    <value>Загрузка Ollama</value>
+  </data>
+  <data name="PrivacyInstallText.RuntimeExtract" xml:space="preserve">
+    <value>Распаковка Ollama</value>
+  </data>
+  <data name="PrivacyInstallText.RuntimeVerify" xml:space="preserve">
+    <value>Проверка архива Ollama</value>
+  </data>
+  <data name="PrivacyInstallText.StorageError" xml:space="preserve">
+    <value>Не удалось записать файлы. Проверьте свободное место и доступ к папке программы.</value>
+  </data>
+  <data name="PrivacyText.Acknowledge" xml:space="preserve">
+    <value>Подтвердить риск</value>
+  </data>
+  <data name="PrivacyText.Acknowledged" xml:space="preserve">
+    <value>Риск подтверждён</value>
+  </data>
+  <data name="PrivacyText.AutoScan" xml:space="preserve">
+    <value>Автоматически проверять новые снимки</value>
+  </data>
+  <data name="PrivacyText.Cancel" xml:space="preserve">
+    <value>Отменить проверку</value>
+  </data>
+  <data name="PrivacyText.Cancelled" xml:space="preserve">
+    <value>Проверка отменена</value>
+  </data>
+  <data name="PrivacyText.Completed" xml:space="preserve">
+    <value>Проверено</value>
+  </data>
+  <data name="PrivacyText.ConfidentialData" xml:space="preserve">
+    <value>Конфиденциальные данные</value>
+  </data>
+  <data name="PrivacyText.Context" xml:space="preserve">
+    <value>Обнаружено по содержимому снимка</value>
+  </data>
+  <data name="PrivacyText.CopyUnavailable" xml:space="preserve">
+    <value>Копия снимка недоступна или превышает допустимый размер.</value>
+  </data>
+  <data name="PrivacyText.Credentials" xml:space="preserve">
+    <value>Секреты / пароли</value>
+  </data>
+  <data name="PrivacyText.Disabled" xml:space="preserve">
+    <value>Выключено</value>
+  </data>
+  <data name="PrivacyText.Dismissed" xml:space="preserve">
+    <value>Отмечено как ложная тревога</value>
+  </data>
+  <data name="PrivacyText.Failed" xml:space="preserve">
+    <value>Проверка не выполнена</value>
+  </data>
+  <data name="PrivacyText.FalsePositive" xml:space="preserve">
+    <value>Ложная тревога</value>
+  </data>
+  <data name="PrivacyText.FoundFormat" xml:space="preserve">
+    <value>AI: {0} · {1}</value>
+  </data>
+  <data name="PrivacyText.Game" xml:space="preserve">
+    <value>Игра</value>
+  </data>
+  <data name="PrivacyText.Heading" xml:space="preserve">
+    <value>AI Privacy Scanner · локально</value>
+  </data>
+  <data name="PrivacyText.Hint" xml:space="preserve">
+    <value>OCR + выбранная модель. Снимки обрабатываются на этом компьютере.</value>
+  </data>
+  <data name="PrivacyText.Incomplete" xml:space="preserve">
+    <value>Для сохранённого результата нет подробной причины неполноты. Допроверьте недостающие категории.</value>
+  </data>
+  <data name="PrivacyText.InvalidEvidence" xml:space="preserve">
+    <value>Модель указала недостоверные участки текста. Эти находки не сохранены.</value>
+  </data>
+  <data name="PrivacyText.InvalidResponse" xml:space="preserve">
+    <value>Ответ модели не соответствует формату проверки. Повторите проверку.</value>
+  </data>
+  <data name="PrivacyText.LegacyFailure" xml:space="preserve">
+    <value>Подробная причина прежнего сбоя не сохранена. Повторите проверку.</value>
+  </data>
+  <data name="PrivacyText.Limitations" xml:space="preserve">
+    <value>Экспериментальная проверка может пропустить риск или ошибиться.</value>
+  </data>
+  <data name="PrivacyText.LoadUnavailable" xml:space="preserve">
+    <value>История AI недоступна. Чтение повторится перед следующей записью.</value>
+  </data>
+  <data name="PrivacyText.MissingRuntime" xml:space="preserve">
+    <value>Выбранная модель не установлена. Скачайте её в настройках.</value>
+  </data>
+  <data name="PrivacyText.ModelConnection" xml:space="preserve">
+    <value>Не удалось получить ответ локальной модели. Повторите проверку.</value>
+  </data>
+  <data name="PrivacyText.ModelContext" xml:space="preserve">
+    <value>В снимке слишком много текста для полной проверки AI. Сохранены находки обработанных частей.</value>
+  </data>
+  <data name="PrivacyText.ModelMemory" xml:space="preserve">
+    <value>Модели не хватило памяти. Закройте тяжёлые приложения и повторите проверку.</value>
+  </data>
+  <data name="PrivacyText.ModelRequest" xml:space="preserve">
+    <value>Модель отклонила запрос. Повторите проверку; если сбой повторяется, сообщите о нём.</value>
+  </data>
+  <data name="PrivacyText.ModelServer" xml:space="preserve">
+    <value>Локальная модель вернула ошибку сервера. Повторите проверку.</value>
+  </data>
+  <data name="PrivacyText.ModelTimeout" xml:space="preserve">
+    <value>Модель не ответила за 2 минуты. Повторите проверку или закройте тяжёлые приложения.</value>
+  </data>
+  <data name="PrivacyText.ModelUnavailable" xml:space="preserve">
+    <value>Выбранная модель не найдена или не совпадает с установленной.</value>
+  </data>
+  <data name="PrivacyText.NoCategories" xml:space="preserve">
+    <value>Выберите хотя бы одну категорию для проверки AI.</value>
+  </data>
+  <data name="PrivacyText.NoFindings" xml:space="preserve">
+    <value>В выбранных категориях риски не найдены; это не гарантия отсутствия риска.</value>
+  </data>
+  <data name="PrivacyText.NoRiskMatches" xml:space="preserve">
+    <value>Нет находок AI по выбранным фильтрам</value>
+  </data>
+  <data name="PrivacyText.NoRiskMatchesHint" xml:space="preserve">
+    <value>Проверьте снимок или период вручную, либо измените фильтры.</value>
+  </data>
+  <data name="PrivacyText.NotChecked" xml:space="preserve">
+    <value>Не проверено</value>
+  </data>
+  <data name="PrivacyText.OcrFailed" xml:space="preserve">
+    <value>Не удалось распознать текст. Проверьте файл снимка и установку OCR.</value>
+  </data>
+  <data name="PrivacyText.Outdated" xml:space="preserve">
+    <value>Нужна повторная проверка</value>
+  </data>
+  <data name="PrivacyText.Partial" xml:space="preserve">
+    <value>Неполная проверка</value>
+  </data>
+  <data name="PrivacyText.PartialHint" xml:space="preserve">
+    <value>Проверка неполная. Сохранены только подтверждённые результаты этапов.</value>
+  </data>
+  <data name="PrivacyText.Password" xml:space="preserve">
+    <value>Показан пароль</value>
+  </data>
+  <data name="PrivacyText.PersonalChat" xml:space="preserve">
+    <value>Личный чат</value>
+  </data>
+  <data name="PrivacyText.PersonalData" xml:space="preserve">
+    <value>Личные данные</value>
+  </data>
+  <data name="PrivacyText.PrivateKey" xml:space="preserve">
+    <value>Виден закрытый ключ</value>
+  </data>
+  <data name="PrivacyText.QueueFormat" xml:space="preserve">
+    <value>AI: в очереди {0} · {1}</value>
+  </data>
+  <data name="PrivacyText.Queued" xml:space="preserve">
+    <value>Ожидает проверки</value>
+  </data>
+  <data name="PrivacyText.Readiness" xml:space="preserve">
+    <value>Модель установлена. Первая проверка может занять около минуты.</value>
+  </data>
+  <data name="PrivacyText.RecoveryError" xml:space="preserve">
+    <value>История AI повреждена. Сохраним её копию перед созданием новой.</value>
+  </data>
+  <data name="PrivacyText.RescanSelected" xml:space="preserve">
+    <value>Перепроверить</value>
+  </data>
+  <data name="PrivacyText.ResetDisposition" xml:space="preserve">
+    <value>Сбросить решение</value>
+  </data>
+  <data name="PrivacyText.ResultsAction" xml:space="preserve">
+    <value>Результат AI</value>
+  </data>
+  <data name="PrivacyText.Risk" xml:space="preserve">
+    <value>Возможный риск</value>
+  </data>
+  <data name="PrivacyText.RiskFilter" xml:space="preserve">
+    <value>Риски AI</value>
+  </data>
+  <data name="PrivacyText.RuntimePortUnavailable" xml:space="preserve">
+    <value>Не удалось открыть локальный порт AI. Перезапустите программу.</value>
+  </data>
+  <data name="PrivacyText.RuntimeStopped" xml:space="preserve">
+    <value>Процесс локальной модели неожиданно завершился. Повторите проверку.</value>
+  </data>
+  <data name="PrivacyText.RuntimeUnavailable" xml:space="preserve">
+    <value>Локальная модель недоступна. Проверьте её установку.</value>
+  </data>
+  <data name="PrivacyText.ScanRange" xml:space="preserve">
+    <value>Допроверить период</value>
+  </data>
+  <data name="PrivacyText.ScanSelected" xml:space="preserve">
+    <value>Допроверить</value>
+  </data>
+  <data name="PrivacyText.Scanning" xml:space="preserve">
+    <value>Проверяется</value>
+  </data>
+  <data name="PrivacyText.SearchConfidentialData" xml:space="preserve">
+    <value>Искать конфиденциальные данные</value>
+  </data>
+  <data name="PrivacyText.SearchGames" xml:space="preserve">
+    <value>Искать игры</value>
+  </data>
+  <data name="PrivacyText.SearchPersonalChats" xml:space="preserve">
+    <value>Искать личные чаты</value>
+  </data>
+  <data name="PrivacyText.SensitiveDocument" xml:space="preserve">
+    <value>Частный документ</value>
+  </data>
+  <data name="PrivacyText.Stale" xml:space="preserve">
+    <value>Нужна допроверка выбранных категорий</value>
+  </data>
+  <data name="PrivacyText.StaleBadge" xml:space="preserve">
+    <value>Нужна допроверка</value>
+  </data>
+  <data name="PrivacyText.StorageError" xml:space="preserve">
+    <value>Не удалось сохранить состояние AI. Проверьте доступ к папке данных.</value>
+  </data>
+  <data name="PrivacyText.Token" xml:space="preserve">
+    <value>Распознан формат токена</value>
+  </data>
+  <data name="PrivacyText.TruncatedResponse" xml:space="preserve">
+    <value>Ответ модели обрезан по лимиту. Полная проверка не завершена.</value>
+  </data>
+  <data name="PrivacyText.Unscanned" xml:space="preserve">
+    <value>AI: не проверено</value>
+  </data>
+  <data name="PrivacyText.VisionFailed" xml:space="preserve">
+    <value>Сбой AI-анализа. Повторите проверку; подробную причину получить не удалось.</value>
+  </data>
+  <data name="SettingsText.Description" xml:space="preserve">
+    <value>Запуск программы, уведомления, язык и проверка AI</value>
+  </data>
+  <data name="SettingsText.Heading" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SettingsText.HistoryTab" xml:space="preserve">
+    <value>История</value>
+  </data>
+  <data name="SettingsText.LoadFailed" xml:space="preserve">
+    <value>Не удалось прочитать настройки. Используются значения по умолчанию.</value>
+  </data>
+  <data name="SettingsText.NotificationsEnabled" xml:space="preserve">
+    <value>Показывать уведомления с превью</value>
+  </data>
+  <data name="SettingsText.NotificationsHint" xml:space="preserve">
+    <value>Копии сохраняются в истории, даже когда уведомления отключены.</value>
+  </data>
+  <data name="SettingsText.SaveFailedPrefix" xml:space="preserve">
+    <value>Настройки применены, но не сохранены: </value>
+  </data>
+  <data name="SettingsText.Saved" xml:space="preserve">
+    <value>Изменения сохраняются автоматически.</value>
+  </data>
+  <data name="SettingsText.Seconds" xml:space="preserve">
+    <value>секунд</value>
+  </data>
+  <data name="SettingsText.SessionDisabled" xml:space="preserve">
+    <value>Уведомления отключены параметром --no-previews для этого запуска.</value>
+  </data>
+  <data name="SettingsText.SettingsTab" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SettingsText.StartWithHubstaff" xml:space="preserve">
+    <value>Запускать вместе с Hubstaff</value>
+  </data>
+  <data name="SettingsText.StartupFailedPrefix" xml:space="preserve">
+    <value>Не удалось настроить автоматический запуск: </value>
+  </data>
+  <data name="SettingsText.StartupHint" xml:space="preserve">
+    <value>Автоматически открывать программу в трее при запуске Hubstaff.</value>
+  </data>
+  <data name="SettingsText.Timeout" xml:space="preserve">
+    <value>Автоматически скрывать через</value>
+  </data>
+  <data name="SettingsText.TimeoutHint" xml:space="preserve">
+    <value>Отсчёт начинается заново при появлении следующего снимка.</value>
+  </data>
+  <data name="UiText.ActivityDetailsFormat" xml:space="preserve">
+    <value>Последняя запись: {0:dd.MM HH:mm:ss}–{1:HH:mm:ss} · {2} сек · Получено: {3:HH:mm:ss}</value>
+  </data>
+  <data name="UiText.ActivityFormat" xml:space="preserve">
+    <value>Hubstaff · Общая: {0:0}% · Мышь: {1:0}% · Клавиатура: {2:0}%</value>
+  </data>
+  <data name="UiText.ActivityUnavailable" xml:space="preserve">
+    <value>Hubstaff: нет данных для выбранного аккаунта</value>
+  </data>
+  <data name="UiText.ActivityWaiting" xml:space="preserve">
+    <value>Hubstaff: ожидание данных активности</value>
+  </data>
+  <data name="UiText.ActivityWaitingDetails" xml:space="preserve">
+    <value>Показатель появится после получения локальной записи Hubstaff</value>
+  </data>
+  <data name="UiText.AllFilter" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="UiText.BackToGallery" xml:space="preserve">
+    <value>← К снимкам</value>
+  </data>
+  <data name="UiText.CaptureScrollBar" xml:space="preserve">
+    <value>Прокрутка снимков</value>
+  </data>
+  <data name="UiText.CapturesHeading" xml:space="preserve">
+    <value>Снимки</value>
+  </data>
+  <data name="UiText.CopiesFolder" xml:space="preserve">
+    <value>Папка копий</value>
+  </data>
+  <data name="UiText.Exit" xml:space="preserve">
+    <value>Завершить программу</value>
+  </data>
+  <data name="UiText.Flag" xml:space="preserve">
+    <value>Отметить</value>
+  </data>
+  <data name="UiText.FlaggedCapturesPlaceholder" xml:space="preserve">
+    <value>Отметьте важный снимок, чтобы быстро найти его позже</value>
+  </data>
+  <data name="UiText.FlaggedFilter" xml:space="preserve">
+    <value>Отмеченные</value>
+  </data>
+  <data name="UiText.FlaggedSuffix" xml:space="preserve">
+    <value> · Отмечен</value>
+  </data>
+  <data name="UiText.FullSizeTitleSuffix" xml:space="preserve">
+    <value> — просмотр снимка</value>
+  </data>
+  <data name="UiText.Gallery" xml:space="preserve">
+    <value>Сетка снимков</value>
+  </data>
+  <data name="UiText.GalleryDescription" xml:space="preserve">
+    <value>Выберите фильтр снимков и период, затем откройте нужный снимок</value>
+  </data>
+  <data name="UiText.HistoryCountsFormat" xml:space="preserve">
+    <value>Новых: {0}  ·  Всего: {1}</value>
+  </data>
+  <data name="UiText.HistoryDescription" xml:space="preserve">
+    <value>Проверяйте новые снимки и отмечайте важные моменты</value>
+  </data>
+  <data name="UiText.HistoryFilters" xml:space="preserve">
+    <value>Фильтр снимков</value>
+  </data>
+  <data name="UiText.HistoryHeading" xml:space="preserve">
+    <value>История скриншотов</value>
+  </data>
+  <data name="UiText.HistoryWindowTitle" xml:space="preserve">
+    <value>TrackMirror</value>
+  </data>
+  <data name="UiText.HorizontalScroll" xml:space="preserve">
+    <value>Горизонтальная прокрутка</value>
+  </data>
+  <data name="UiText.LoadingThumbnail" xml:space="preserve">
+    <value>Загрузка превью…</value>
+  </data>
+  <data name="UiText.MarkReviewed" xml:space="preserve">
+    <value>Просмотрено</value>
+  </data>
+  <data name="UiText.New" xml:space="preserve">
+    <value>Новый</value>
+  </data>
+  <data name="UiText.NewCapturesPlaceholder" xml:space="preserve">
+    <value>Новые скриншоты появятся здесь автоматически</value>
+  </data>
+  <data name="UiText.NoCaptures" xml:space="preserve">
+    <value>Пока нет снимков</value>
+  </data>
+  <data name="UiText.NoFlaggedCaptures" xml:space="preserve">
+    <value>Нет отмеченных снимков</value>
+  </data>
+  <data name="UiText.NoUnreadCaptures" xml:space="preserve">
+    <value>Нет непрочитанных снимков</value>
+  </data>
+  <data name="UiText.Open" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="UiText.OpenFullSize" xml:space="preserve">
+    <value>Открыть крупно</value>
+  </data>
+  <data name="UiText.PreviewHeading" xml:space="preserve">
+    <value>Новый скриншот</value>
+  </data>
+  <data name="UiText.PreviewUnreadFormat" xml:space="preserve">
+    <value>  ·  Непросмотренных: {0}</value>
+  </data>
+  <data name="UiText.PreviewWindowTitle" xml:space="preserve">
+    <value>TrackMirror — новый скриншот</value>
+  </data>
+  <data name="UiText.Reviewed" xml:space="preserve">
+    <value>Просмотрен</value>
+  </data>
+  <data name="UiText.SelectCapture" xml:space="preserve">
+    <value>Выберите снимок</value>
+  </data>
+  <data name="UiText.SelectedCapturePlaceholder" xml:space="preserve">
+    <value>Здесь появится выбранный скриншот</value>
+  </data>
+  <data name="UiText.TrayHistory" xml:space="preserve">
+    <value>История снимков</value>
+  </data>
+  <data name="UiText.TrayUnreadFormat" xml:space="preserve">
+    <value>TrackMirror: непросмотренных снимков — {0}</value>
+  </data>
+  <data name="UiText.TrayWaiting" xml:space="preserve">
+    <value>TrackMirror: ожидание снимков</value>
+  </data>
+  <data name="UiText.TrayWarningFormat" xml:space="preserve">
+    <value>TrackMirror: предупреждение · новых снимков: {0}</value>
+  </data>
+  <data name="UiText.Unflag" xml:space="preserve">
+    <value>Снять отметку</value>
+  </data>
+  <data name="UiText.UnreadFilter" xml:space="preserve">
+    <value>Непрочитанные</value>
+  </data>
+  <data name="UiText.VerticalScroll" xml:space="preserve">
+    <value>Вертикальная прокрутка</value>
+  </data>
+  <data name="UiText.WaitingForCaptures" xml:space="preserve">
+    <value>Ожидание снимков…</value>
+  </data>
+  <data name="UiText.WaitingForFirstCapture" xml:space="preserve">
+    <value>Ожидание первого скриншота</value>
+  </data>
+  <data name="UiText.WarningTitle" xml:space="preserve">
+    <value>TrackMirror</value>
+  </data>
+  <data name="ZoomText.ActualSizeHint" xml:space="preserve">
+    <value>Исходный размер снимка (Ctrl + 1)</value>
+  </data>
+  <data name="ZoomText.Fit" xml:space="preserve">
+    <value>Вписать</value>
+  </data>
+  <data name="ZoomText.FitHint" xml:space="preserve">
+    <value>Показать снимок целиком (Ctrl + 0)</value>
+  </data>
+  <data name="ZoomText.Hint" xml:space="preserve">
+    <value>Ctrl + колёсико · перетаскивание мышью</value>
+  </data>
+  <data name="ZoomText.Image" xml:space="preserve">
+    <value>Просмотр снимка</value>
+  </data>
+  <data name="ZoomText.ZoomInHint" xml:space="preserve">
+    <value>Увеличить (Ctrl + плюс)</value>
+  </data>
+  <data name="ZoomText.ZoomInName" xml:space="preserve">
+    <value>Увеличить</value>
+  </data>
+  <data name="ZoomText.ZoomOutHint" xml:space="preserve">
+    <value>Уменьшить (Ctrl + минус)</value>
+  </data>
+  <data name="ZoomText.ZoomOutName" xml:space="preserve">
+    <value>Уменьшить</value>
+  </data>
+  <data name="PrivacyText.OcrIncomplete" xml:space="preserve">
+    <value>OCR обработал не всё изображение. Подтверждённые результаты сохранены.</value>
+  </data>
+  <data name="PrivacyText.ModelUncertain" xml:space="preserve">
+    <value>Модель не уверена в части изображения. Подтверждённые результаты сохранены.</value>
+  </data>
+  <data name="PrivacyText.AnalysisLimit" xml:space="preserve">
+    <value>Достигнут защитный лимит проверки: не все порции обработаны. Подтверждённые результаты сохранены.</value>
+  </data>
+  <data name="PrivacyText.DiagnosticsFormat" xml:space="preserve">
+    <value>Запросов: {0} · Объём запросов: {1:N0} байт · Токены запроса: {2} · Токены ответа: {3}</value>
+  </data>
+  <data name="PrivacyText.MetricUnavailable" xml:space="preserve">
+    <value>нет данных</value>
+  </data>
+  <data name="HubstaffControlText.Heading" xml:space="preserve">
+    <value>Управление таймером Hubstaff</value>
+  </data>
+  <data name="HubstaffControlText.Enabled" xml:space="preserve">
+    <value>Включить управление таймером при простое</value>
+  </data>
+  <data name="HubstaffControlText.Mode" xml:space="preserve">
+    <value>Режим</value>
+  </data>
+  <data name="HubstaffControlText.PauseMode" xml:space="preserve">
+    <value>Пауза до возвращения активности</value>
+  </data>
+  <data name="HubstaffControlText.RestartMode" xml:space="preserve">
+    <value>Периодический stop/resume при простое</value>
+  </data>
+  <data name="HubstaffControlText.PauseHint" xml:space="preserve">
+    <value>Останавливает учёт после порога простоя. Возобновляет только паузу, сделанную в этом сеансе программы.</value>
+  </data>
+  <data name="HubstaffControlText.RestartHint" xml:space="preserve">
+    <value>Отсчёт начинается после порога простоя. Ввод сбрасывает его; остановленный таймер не запускается.</value>
+  </data>
+  <data name="HubstaffControlText.IdleSeconds" xml:space="preserve">
+    <value>Порог простоя, секунды</value>
+  </data>
+  <data name="HubstaffControlText.RestartSeconds" xml:space="preserve">
+    <value>Интервал перезапуска, секунды</value>
+  </data>
+  <data name="HubstaffControlText.CliPath" xml:space="preserve">
+    <value>Исполняемый файл Hubstaff CLI</value>
+  </data>
+  <data name="HubstaffControlText.AutomaticPath" xml:space="preserve">
+    <value>Автоопределение; или выберите исполняемый файл</value>
+  </data>
+  <data name="HubstaffControlText.Browse" xml:space="preserve">
+    <value>Выбрать…</value>
+  </data>
+  <data name="HubstaffControlText.Detect" xml:space="preserve">
+    <value>Найти CLI</value>
+  </data>
+  <data name="HubstaffControlText.FileFilter" xml:space="preserve">
+    <value>Hubstaff CLI (HubstaffCLI.exe)|HubstaffCLI.exe|Исполняемые файлы (*.exe)|*.exe</value>
+  </data>
+  <data name="HubstaffControlText.PermissionHint" xml:space="preserve">
+    <value>Разрешите Scripted control в Hubstaff и выберите Always allow при первом запросе. Функция работает, пока программа запущена. Отключение не возобновляет уже сделанную паузу.</value>
+  </data>
+  <data name="HubstaffControlText.Retry" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="HubstaffControlText.Disabled" xml:space="preserve">
+    <value>Управление таймером отключено.</value>
+  </data>
+  <data name="HubstaffControlText.WaitingForIdle" xml:space="preserve">
+    <value>Ожидание простоя: осталось {0} с.</value>
+  </data>
+  <data name="HubstaffControlText.WaitingForTracking" xml:space="preserve">
+    <value>Hubstaff остановлен. Ожидание ручного запуска учёта.</value>
+  </data>
+  <data name="HubstaffControlText.WaitingForRestart" xml:space="preserve">
+    <value>Обнаружен простой. Следующий stop/resume через {0} с.</value>
+  </data>
+  <data name="HubstaffControlText.Paused" xml:space="preserve">
+    <value>Остановлен этой программой. Возобновится при активности.</value>
+  </data>
+  <data name="HubstaffControlText.Working" xml:space="preserve">
+    <value>Отправка команды таймеру…</value>
+  </data>
+  <data name="HubstaffControlText.InvalidSettings" xml:space="preserve">
+    <value>Некорректные настройки таймера. Укажите положительные интервалы и полный путь к файлу или оставьте путь пустым.</value>
+  </data>
+  <data name="HubstaffControlText.MissingCli" xml:space="preserve">
+    <value>Hubstaff CLI не найден. Выберите его файл или запустите Hubstaff и повторите поиск.</value>
+  </data>
+  <data name="HubstaffControlText.InvalidStatus" xml:space="preserve">
+    <value>CLI вернул неподдерживаемый статус. Следующие команды отменены; проверьте версию Hubstaff.</value>
+  </data>
+  <data name="HubstaffControlText.CommandFailed" xml:space="preserve">
+    <value>Команда CLI не выполнена. Проверьте Scripted control и Always allow в Hubstaff, затем повторите.</value>
+  </data>
+  <data name="HubstaffControlText.TimedOut" xml:space="preserve">
+    <value>CLI не ответил вовремя. Проверьте Hubstaff и запрос разрешения, затем повторите.</value>
+  </data>
+  <data name="HubstaffControlText.InputUnavailable" xml:space="preserve">
+    <value>Время простоя Windows недоступно. Управление таймером приостановлено.</value>
+  </data>
+  <data name="HubstaffControlText.SelectionChanged" xml:space="preserve">
+    <value>Выбранный проект или задача Hubstaff изменились. Resume отменён; проверьте таймер и повторите.</value>
+  </data>
+  <data name="HubstaffControlText.StopUnconfirmed" xml:space="preserve">
+    <value>Hubstaff не подтвердил остановку. Управление приостановлено; проверьте Hubstaff и повторите.</value>
+  </data>
+  <data name="HubstaffControlText.ResumeUnconfirmed" xml:space="preserve">
+    <value>Hubstaff не подтвердил возобновление. Проверьте таймер перед повтором.</value>
+  </data>
+  <data name="GalleryText.SelectAllFormat" xml:space="preserve">
+    <value>Выбрать все найденные ({0})</value>
+  </data>
+  <data name="GalleryText.SelectedFormat" xml:space="preserve">
+    <value>Выбрано {0} из {1}</value>
+  </data>
+  <data name="GalleryText.SelectCapture" xml:space="preserve">
+    <value>Выбрать снимок</value>
+  </data>
+  <data name="GalleryText.MarkRead" xml:space="preserve">
+    <value>Прочитать</value>
+  </data>
+  <data name="GalleryText.Scan" xml:space="preserve">
+    <value>Проверить AI</value>
+  </data>
+  <data name="GalleryText.Clear" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="GalleryText.More" xml:space="preserve">
+    <value>Другие действия</value>
+  </data>
+  <data name="GalleryText.Undo" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="GalleryText.ReadFormat" xml:space="preserve">
+    <value>Отмечено прочитанными: {0}</value>
+  </data>
+  <data name="GalleryText.UndoCompleted" xml:space="preserve">
+    <value>Статус прочтения восстановлен</value>
+  </data>
+  <data name="GalleryText.ScanTitleFormat" xml:space="preserve">
+    <value>Проверка AI · снимков: {0}</value>
+  </data>
+  <data name="GalleryText.ScanHint" xml:space="preserve">
+    <value>Выберите категории для этого запуска. Сохранённые настройки не изменятся.</value>
+  </data>
+  <data name="GalleryText.Recheck" xml:space="preserve">
+    <value>Повторить готовые проверки</value>
+  </data>
+  <data name="GalleryText.MissingOnly" xml:space="preserve">
+    <value>Готовые проверки по умолчанию используются повторно.</value>
+  </data>
+  <data name="GalleryText.StartScan" xml:space="preserve">
+    <value>Начать проверку</value>
+  </data>
+  <data name="GalleryText.OpenSettings" xml:space="preserve">
+    <value>Открыть настройки</value>
+  </data>
+  <data name="GalleryText.NoCategories" xml:space="preserve">
+    <value>Выберите хотя бы одну категорию.</value>
+  </data>
+  <data name="GalleryText.SelectHint" xml:space="preserve">
+    <value>Выбирайте снимки флажками или пробелом. Enter открывает снимок в фокусе.</value>
+  </data>
+</root>

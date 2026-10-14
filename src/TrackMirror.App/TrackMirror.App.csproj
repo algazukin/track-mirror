@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>TrackMirror</AssemblyName>
+    <RootNamespace>TrackMirror</RootNamespace>
+    <Product>TrackMirror</Product>
+    <Title>TrackMirror</Title>
+    <Description>Privacy-first Hubstaff companion for Windows — instant screenshot previews, activity analytics, local AI privacy scans, and timer controls.</Description>
+    <Version>1.0.0</Version>
+    <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <NeutralLanguage>en</NeutralLanguage>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ApplicationIcon>Resources\Application.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Application.ico" />
+    <EmbeddedResource Include="Resources\PrivacyModels\*.json" />
+    <EmbeddedResource Include="Resources\Storage\*.sql" />
+    <InternalsVisibleTo Include="TrackMirror.IntegrationTests" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RapidOcrNet" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.12" />
+    <Content Include="Resources\Privacy\*" Link="privacy-models\%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\licenses\*" Link="licenses\%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\LICENSE;..\..\NOTICE;..\..\USER_GUIDE.md;..\..\PRIVACY.md;..\..\SECURITY.md;..\..\CHANGELOG.md"
+             Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="..\..\THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md"
+             CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
