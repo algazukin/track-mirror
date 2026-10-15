@@ -98,7 +98,8 @@ needed by other installed models. Substantial disk space and available RAM/VRAM 
 | Gemma 3 4B | 3.4 GB |
 
 Confidential-data checks default on; games, personal chats and automatic scanning default off.
-Check remaining runs missing selected categories; Rescan repeats the categories in that result.
+Check remaining runs missing selected categories; Rescan repeats all categories selected in settings, including newly enabled ones.
+If no categories are selected, Rescan repeats the categories in the saved result.
 For a batch, select thumbnails or all filtered results and choose AI scan categories.
 Completed categories survive selection changes; model/analysis-version changes can
 make them outdated. Queues and confirmed checkpoints survive interruption. Partial scans show saved

@@ -4,6 +4,7 @@ Versions here match tags and release archives.
 
 ## Unreleased
 
+- Include newly selected AI categories when rescanning a saved result.
 - Update SQLite and its native dependencies, Microsoft.NET.Test.Sdk and the xUnit VSTest adapter.
 - Rename the application, solution, namespaces, installation and release assets to TrackMirror.
 
