@@ -1086,4 +1086,23 @@
   <data name="AboutText.RateLimited" xml:space="preserve"><value>GitHub временно ограничил проверки обновлений. Попробуйте позже.</value></data>
   <data name="AboutText.Failed" xml:space="preserve"><value>Не удалось проверить обновления. Проверьте соединение и повторите попытку.</value></data>
   <data name="AboutText.BrowserFailed" xml:space="preserve"><value>Не удалось открыть браузер. Перейдите к релизам по ссылке GitHub выше.</value></data>
+  <data name="CountdownText.Heading" xml:space="preserve"><value>Таймер снимков</value></data>
+  <data name="CountdownText.Enabled" xml:space="preserve"><value>Показывать плавающий таймер снимков (экспериментально)</value></data>
+  <data name="CountdownText.Hint" xml:space="preserve"><value>Тихий таймер по локальному логу Hubstaff. Перетащите для перемещения; правой кнопкой можно выбрать угол или скрыть таймер.</value></data>
+  <data name="CountdownText.Highlight" xml:space="preserve"><value>Выделять последние</value></data>
+  <data name="CountdownText.Scale" xml:space="preserve"><value>Масштаб таймера</value></data>
+  <data name="CountdownText.BackgroundOpacity" xml:space="preserve"><value>Непрозрачность фона</value></data>
+  <data name="CountdownText.Limitation" xml:space="preserve"><value>Расписание может измениться, а захват — быть пропущен. Остановка или смена задачи может сразу создать снимок.</value></data>
+  <data name="CountdownText.Scheduled" xml:space="preserve"><value>Следующий снимок</value></data>
+  <data name="CountdownText.Waiting" xml:space="preserve"><value>Ожидание расписания</value></data>
+  <data name="CountdownText.Unavailable" xml:space="preserve"><value>Расписание недоступно</value></data>
+  <data name="CountdownText.Stopped" xml:space="preserve"><value>Учёт времени остановлен</value></data>
+  <data name="CountdownText.Disabled" xml:space="preserve"><value>Снимки отключены</value></data>
+  <data name="CountdownText.Hide" xml:space="preserve"><value>Скрыть таймер</value></data>
+  <data name="CountdownText.Reset" xml:space="preserve"><value>Сбросить положение</value></data>
+  <data name="CountdownText.TopLeft" xml:space="preserve"><value>Слева сверху</value></data>
+  <data name="CountdownText.TopRight" xml:space="preserve"><value>Справа сверху</value></data>
+  <data name="CountdownText.BottomLeft" xml:space="preserve"><value>Слева снизу</value></data>
+  <data name="CountdownText.BottomRight" xml:space="preserve"><value>Справа снизу</value></data>
+  <data name="CountdownText.InvalidSettings" xml:space="preserve"><value>Некорректные настройки таймера снимков сброшены. Остальные настройки сохранены.</value></data>
 </root>

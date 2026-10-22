@@ -96,6 +96,13 @@ public sealed class SettingsStore
                 InitialWarning ??= AboutText.InvalidChannel;
             }
 
+            if (saved.ScreenshotCountdown is not { IsValid: true })
+            {
+                saved = saved with { ScreenshotCountdown = new ScreenshotCountdownOptions() };
+
+                InitialWarning ??= CountdownText.InvalidSettings;
+            }
+
             Current = saved;
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException)
@@ -123,6 +130,9 @@ public sealed class SettingsStore
             throw new ArgumentOutOfRangeException(nameof(settings));
 
         if (settings.HubstaffControl is not { IsValid: true })
+            throw new ArgumentException(nameof(settings));
+
+        if (settings.ScreenshotCountdown is not { IsValid: true })
             throw new ArgumentException(nameof(settings));
 
         Directory.CreateDirectory(Path.GetDirectoryName(_path)!);

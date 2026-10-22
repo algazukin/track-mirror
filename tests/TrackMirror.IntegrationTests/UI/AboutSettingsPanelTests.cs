@@ -20,6 +20,41 @@ namespace TrackMirror.IntegrationTests.UI;
 public sealed class AboutSettingsPanelTests
 {
     [Theory]
+    [InlineData("en", false)]
+    [InlineData("ru", false)]
+    [InlineData("en", true)]
+    [InlineData("ru", true)]
+    public void The_timer_storage_and_about_cards_keep_separate_rows_in_settings(string language, bool noPreviews)
+    {
+        // Arrange
+        StaThread.Run(() =>
+        {
+            UiLocalization.Initialize(language);
+            using var panel = new SettingsPanel(new AppSettings(), noPreviews);
+
+            // Act
+            var timerCard = UiControls.Descendants<ScreenshotCountdownPanel>(panel).Single().Parent!;
+            var storageCard = UiControls.Descendants<StorageSettingsPanel>(panel).Single().Parent!;
+            var aboutCard = UiControls.Descendants<AboutSettingsPanel>(panel).Single().Parent!;
+            var layout = Assert.IsType<TableLayoutPanel>(aboutCard.Parent);
+
+            // Assert
+            Assert.Same(layout, timerCard.Parent);
+            Assert.Same(layout, storageCard.Parent);
+            Assert.True(layout.GetRow(timerCard) < layout.GetRow(storageCard));
+            Assert.True(layout.GetRow(storageCard) < layout.GetRow(aboutCard),
+                "The About card must have its own row after Storage.");
+
+            if (noPreviews)
+            {
+                var warning = layout.Controls.OfType<Label>().Single(label => label.Text == SettingsText.SessionDisabled);
+
+                Assert.True(layout.GetRow(aboutCard) < layout.GetRow(warning));
+            }
+        });
+    }
+
+    [Theory]
     [InlineData("en")]
     [InlineData("ru")]
     public void The_check_button_fits_its_translated_caption_in_a_narrow_panel(string language)

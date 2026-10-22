@@ -6,6 +6,9 @@ Versions here match tags and release archives.
 
 - Add project, author and MPL-2.0 links in Settings, with manual GitHub update checks and saved
   Stable/Pre-release channels. Pre-release is selected by default.
+- Optional floating screenshot countdown from local Hubstaff logs, with saved position, quiet final-second
+  highlighting, rounded corners, adjustable scale and background opacity, and explicit waiting/unavailable
+  states. No process-memory access or timer commands.
 
 - Include newly selected AI categories when rescanning a saved result.
 - Update SQLite and its native dependencies, Microsoft.NET.Test.Sdk and the xUnit VSTest adapter.

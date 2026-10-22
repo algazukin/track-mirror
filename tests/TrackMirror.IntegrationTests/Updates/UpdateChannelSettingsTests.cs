@@ -36,13 +36,18 @@ public sealed class UpdateChannelSettingsTests
         // Arrange
         using var workspace = new TestWorkspace();
         var store = new SettingsStore(workspace.Root);
+        var countdown = new ScreenshotCountdownOptions
+        {
+            Enabled = true, Left = 320, Top = 100, ScalePercent = 125, BackgroundOpacityPercent = 35
+        };
 
         // Act
-        store.Save(store.Current with { UpdateChannel = channel, PrivacyGames = true });
+        store.Save(store.Current with { UpdateChannel = channel, ScreenshotCountdown = countdown, PrivacyGames = true });
         var restored = new SettingsStore(workspace.Root);
 
         // Assert
         Assert.Equal(channel, restored.Current.UpdateChannel);
+        Assert.Equal(countdown, restored.Current.ScreenshotCountdown);
         Assert.True(restored.Current.PrivacyGames);
     }
 
