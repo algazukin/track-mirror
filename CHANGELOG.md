@@ -4,6 +4,10 @@ Versions here match tags and release archives.
 
 ## Unreleased
 
+- Optional floating screenshot countdown from local Hubstaff logs, with saved position, quiet final-second
+  highlighting, rounded corners, adjustable scale and background opacity, and explicit waiting/unavailable
+  states. No process-memory access or timer commands.
+
 - Include newly selected AI categories when rescanning a saved result.
 - Update SQLite and its native dependencies, Microsoft.NET.Test.Sdk and the xUnit VSTest adapter.
 - Rename the application, solution, namespaces, installation and release assets to TrackMirror.

@@ -29,6 +29,12 @@ The AI database retains category/severity/reason codes and bounding regions, not
 values, raw OCR transcripts or raw model responses. Inference processes images and recognised text
 in memory. Images remain sensitive regardless of findings or false-positive decisions.
 
+The optional floating screenshot timer reads scheduling events from Hubstaff's local log and its most
+recent rotated copy, and task/project identifiers from its XML files. These records are processed in memory; TrackMirror does not
+copy raw Hubstaff logs into its database or upload them. The timer only checks whether the Hubstaff
+client process is running; it does not inspect process memory or control tracking. Its enabled state,
+highlight threshold, appearance and screen position are stored in the existing settings file.
+
 ## Network behaviour
 
 The viewer has no application analytics, advertising, registration, automatic crash upload, Hubstaff
