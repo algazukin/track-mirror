@@ -89,6 +89,13 @@ public sealed class SettingsStore
                 InitialWarning ??= LanguageText.InvalidSaved;
             }
 
+            if (!Enum.IsDefined(saved.UpdateChannel))
+            {
+                saved = saved with { UpdateChannel = UpdateChannel.PreRelease };
+
+                InitialWarning ??= AboutText.InvalidChannel;
+            }
+
             Current = saved;
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException)
@@ -99,6 +106,9 @@ public sealed class SettingsStore
 
     public void Save(AppSettings settings)
     {
+        if (!Enum.IsDefined(settings.UpdateChannel))
+            throw new ArgumentException(nameof(settings));
+
         if (!UiLocalization.Supported(settings.Language))
             throw new ArgumentException(nameof(settings));
 

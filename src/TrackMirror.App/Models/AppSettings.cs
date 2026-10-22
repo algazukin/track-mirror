@@ -12,6 +12,8 @@ public sealed record AppSettings
 {
     public string Language { get; init; } = LocalizationNames.English;
 
+    public UpdateChannel UpdateChannel { get; init; } = UpdateChannel.PreRelease;
+
     public bool StartWithHubstaff { get; init; }
 
     public HubstaffControlOptions HubstaffControl { get; init; } = new();

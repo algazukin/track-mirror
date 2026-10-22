@@ -1067,4 +1067,23 @@ Overall: {3:0}% · Mouse: {4:0}% · Keyboard: {5:0}%</value>
   <data name="GalleryText.SelectHint" xml:space="preserve">
     <value>Use checkboxes or Space to select screenshots. Enter opens the focused screenshot.</value>
   </data>
+  <data name="AboutText.InvalidChannel" xml:space="preserve"><value>The saved update channel was reset to Pre-release. Other preferences were preserved.</value></data>
+  <data name="AboutText.Heading" xml:space="preserve"><value>About TrackMirror</value></data>
+  <data name="AboutText.Version" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="AboutText.Credits" xml:space="preserve"><value>Created by Alexander Gazukin and contributors. Open source under MPL-2.0.</value></data>
+  <data name="AboutText.UpdateChannel" xml:space="preserve"><value>Update channel</value></data>
+  <data name="AboutText.Stable" xml:space="preserve"><value>Stable</value></data>
+  <data name="AboutText.PreRelease" xml:space="preserve"><value>Pre-release</value></data>
+  <data name="AboutText.ChannelHint" xml:space="preserve"><value>Stable includes stable releases only. Pre-release also includes preview builds.</value></data>
+  <data name="AboutText.CheckForUpdates" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="AboutText.UpdateStatus" xml:space="preserve"><value>Update status</value></data>
+  <data name="AboutText.ManualCheck" xml:space="preserve"><value>Checks GitHub for releases in the selected channel when you click the button.</value></data>
+  <data name="AboutText.Checking" xml:space="preserve"><value>Checking for updates...</value></data>
+  <data name="AboutText.Available" xml:space="preserve"><value>Version {0} is available. Its release page has been opened in your browser.</value></data>
+  <data name="AboutText.UpToDate" xml:space="preserve"><value>You are using the latest version available in this channel.</value></data>
+  <data name="AboutText.NoReleases" xml:space="preserve"><value>No published releases are available in this channel yet.</value></data>
+  <data name="AboutText.TimedOut" xml:space="preserve"><value>The update check timed out. Please try again.</value></data>
+  <data name="AboutText.RateLimited" xml:space="preserve"><value>GitHub has temporarily limited update checks. Please try again later.</value></data>
+  <data name="AboutText.Failed" xml:space="preserve"><value>Unable to check for updates. Check your connection and try again.</value></data>
+  <data name="AboutText.BrowserFailed" xml:space="preserve"><value>Unable to open your browser. Use the GitHub link above to visit the releases page.</value></data>
 </root>

@@ -49,7 +49,12 @@ models and `OLLAMA_NO_CLOUD=1`; it refuses to attach to an unknown service occup
 Local processes with sufficient access may observe loopback traffic or read files. Third-party
 runtime/model behaviour has separate upstream terms.
 
-There is no automatic application updater. Normal use does not contact the GitHub Releases workflow.
+Clicking **Check for updates** requests the public GitHub Releases API over HTTPS. The request includes
+the application version in its User-Agent header; GitHub also receives ordinary connection metadata,
+such as IP address. These requests contain no screenshots, OCR, activity records or Hubstaff account
+identifiers. There are no background update checks, authenticated GitHub requests or automatic update
+downloads/installations. Selecting a channel only changes a local setting. Project/license links and
+available updates open GitHub in the system browser, which uses its own privacy and account settings.
 CI handles repository code and synthetic fixtures, not a user's workday.
 
 ## Storage and deletion

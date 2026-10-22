@@ -34,6 +34,8 @@ Output defaults to ignored `artifacts/releases`. The installer and binary ZIP us
 self-contained Windows x64 payload, including runtime/licenses/localisation/OCR/native files.
 Optional downloaded models are excluded. Packaging checks the architecture of the executable and
 native runtime/OCR/image/SQLite libraries, along with the file inventory and hashes.
+The About panel and update checker use the assembly informational version produced by `-Version`;
+keep it aligned with the release tag, including any prerelease suffix.
 The source exporter uses Git's public file list and rejects tracked internal/private files. It contains
 no `.git` or local history. Each EXE/ZIP has a checksum sidecar.
 

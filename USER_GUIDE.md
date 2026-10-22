@@ -45,6 +45,19 @@ Start with Hubstaff is off by default. It creates a Windows Startup shortcut and
 same Hubstaff process run. Language offers English (default) and Russian; exit from the tray and
 restart to apply a selection. Dates remain in the local time zone.
 
+## About and updates
+
+The **About TrackMirror** card at the bottom of Settings shows the installed version, author and
+links to the GitHub repository and MPL-2.0 license.
+
+Choose an **Update channel**: **Stable** checks stable releases only; **Pre-release** also includes
+preview builds and is the default. Click **Check for updates** to contact GitHub. A newer version opens
+its release page in your browser. Otherwise the card reports that your version is up to date, that the
+channel has no releases yet, or that the check failed. Opening Settings does not start a check.
+
+Download the setup EXE or ZIP from the release page and follow the normal update instructions above.
+The application does not download or install updates automatically.
+
 ## Hubstaff timer control
 
 This optional feature is disabled by default. Settings offers two modes:

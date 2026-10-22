@@ -58,6 +58,7 @@ public sealed class SettingsPanel : UserControl
     private readonly HubstaffControlPanel _hubstaff;
     private readonly PrivacySettingsPanel _privacy;
     private readonly StorageSettingsPanel _storage;
+    private readonly AboutSettingsPanel _about;
     private SurfacePanel? optionsCard;
     private readonly bool _noPreviews;
     private AppSettings current;
@@ -93,6 +94,8 @@ public sealed class SettingsPanel : UserControl
         _privacy = new PrivacySettingsPanel(settings);
 
         _storage = new StorageSettingsPanel(settings, dataRoot);
+
+        _about = new AboutSettingsPanel(settings.UpdateChannel);
 
         Dock = DockStyle.Fill;
 
@@ -173,6 +176,13 @@ public sealed class SettingsPanel : UserControl
 
         _storage.CancelRequested += () => DataOperationCancelRequested?.Invoke();
 
+        _about.ChannelChanged += value =>
+        {
+            current = current with { UpdateChannel = value };
+
+            PublishSettings();
+        };
+
         VisibleChanged += (_, _) =>
         {
             if (!Visible)
@@ -192,7 +202,7 @@ public sealed class SettingsPanel : UserControl
             AutoSize = true,
             AutoSizeMode = AutoSizeMode.GrowAndShrink,
             ColumnCount = 1,
-            RowCount = 7,
+            RowCount = 8,
             Margin = Padding.Empty
         };
 
@@ -296,9 +306,20 @@ public sealed class SettingsPanel : UserControl
 
         root.Controls.Add(storageCard, 0, 5);
 
+        var aboutCard = new SurfacePanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Padding = new Padding(20), Margin = new Padding(0, 0, 0, 12)
+        };
+
+        aboutCard.Controls.Add(_about);
+
+        root.Controls.Add(aboutCard, 0, 6);
+        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
         if (noPreviews)
         {
-            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 6);
+            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 7);
         }
 
         return root;
@@ -417,6 +438,8 @@ public sealed class SettingsPanel : UserControl
         _privacy.Enabled = !busy;
 
         _storage.SetBusy(busy);
+
+        _about.Enabled = !busy;
     }
 
     internal void SetHubstaffControlStatus(HubstaffControlStatus value) => _hubstaff.SetStatus(value);

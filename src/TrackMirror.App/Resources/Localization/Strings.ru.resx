@@ -1067,4 +1067,23 @@
   <data name="GalleryText.SelectHint" xml:space="preserve">
     <value>Выбирайте снимки флажками или пробелом. Enter открывает снимок в фокусе.</value>
   </data>
+  <data name="AboutText.InvalidChannel" xml:space="preserve"><value>Сохранённый канал обновлений сброшен на предварительные версии. Остальные настройки сохранены.</value></data>
+  <data name="AboutText.Heading" xml:space="preserve"><value>О TrackMirror</value></data>
+  <data name="AboutText.Version" xml:space="preserve"><value>Версия {0}</value></data>
+  <data name="AboutText.Credits" xml:space="preserve"><value>Автор: Александр Газукин и участники проекта. Открытый исходный код под лицензией MPL-2.0.</value></data>
+  <data name="AboutText.UpdateChannel" xml:space="preserve"><value>Канал обновлений</value></data>
+  <data name="AboutText.Stable" xml:space="preserve"><value>Стабильный</value></data>
+  <data name="AboutText.PreRelease" xml:space="preserve"><value>Предварительный</value></data>
+  <data name="AboutText.ChannelHint" xml:space="preserve"><value>Стабильный канал включает только стабильные релизы. Предварительный — также preview-сборки.</value></data>
+  <data name="AboutText.CheckForUpdates" xml:space="preserve"><value>Проверить обновления</value></data>
+  <data name="AboutText.UpdateStatus" xml:space="preserve"><value>Состояние обновлений</value></data>
+  <data name="AboutText.ManualCheck" xml:space="preserve"><value>Проверка релизов GitHub в выбранном канале выполняется по нажатию кнопки.</value></data>
+  <data name="AboutText.Checking" xml:space="preserve"><value>Проверка обновлений...</value></data>
+  <data name="AboutText.Available" xml:space="preserve"><value>Доступна версия {0}. Страница релиза открыта в браузере.</value></data>
+  <data name="AboutText.UpToDate" xml:space="preserve"><value>У вас установлена последняя версия из выбранного канала.</value></data>
+  <data name="AboutText.NoReleases" xml:space="preserve"><value>В выбранном канале пока нет опубликованных релизов.</value></data>
+  <data name="AboutText.TimedOut" xml:space="preserve"><value>Время ожидания проверки истекло. Попробуйте ещё раз.</value></data>
+  <data name="AboutText.RateLimited" xml:space="preserve"><value>GitHub временно ограничил проверки обновлений. Попробуйте позже.</value></data>
+  <data name="AboutText.Failed" xml:space="preserve"><value>Не удалось проверить обновления. Проверьте соединение и повторите попытку.</value></data>
+  <data name="AboutText.BrowserFailed" xml:space="preserve"><value>Не удалось открыть браузер. Перейдите к релизам по ссылке GitHub выше.</value></data>
 </root>
