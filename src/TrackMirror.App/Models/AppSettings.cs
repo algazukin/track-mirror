@@ -16,6 +16,8 @@ public sealed record AppSettings
 
     public HubstaffControlOptions HubstaffControl { get; init; } = new();
 
+    public ScreenshotCountdownOptions ScreenshotCountdown { get; init; } = new();
+
     public bool RetentionEnabled { get; init; }
 
     public int RetentionDays { get; init; } = DataManagementNames.DefaultDays;

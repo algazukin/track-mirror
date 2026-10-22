@@ -264,6 +264,8 @@ public sealed class HistoryForm : Form
 
     public void SetSettingsStatus(string? error) => _settingsPage.SetSaveStatus(error);
 
+    internal void SetScreenshotCountdown(ScreenshotCountdownOptions value) => _settingsPage.SetScreenshotCountdown(value);
+
     internal void SetModelInstallProgress(PrivacyInstallProgress value) => _settingsPage.SetModelInstallProgress(value);
 
     internal void SetDataBusy(bool busy, bool showSettings = true)

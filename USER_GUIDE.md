@@ -45,6 +45,29 @@ Start with Hubstaff is off by default. It creates a Windows Startup shortcut and
 same Hubstaff process run. Language offers English (default) and Russian; exit from the tray and
 restart to apply a selection. Dates remain in the local time zone.
 
+## Floating screenshot timer (experimental)
+
+Enable **Show floating screenshot timer** in Settings to display a quiet countdown above other windows.
+Drag the timer to move it, or right-click to choose a corner, reset its position, open Settings or hide it.
+Its position is saved. **Highlight the last** controls the final seconds shown in amber; there is no sound
+or advance popup. Screenshot preview notifications remain a separate setting.
+
+The compact timer has rounded corners. **Timer scale** adjusts its size from 50% to 200%, independently
+of Windows display scaling. **Background opacity** ranges from 0% (no background) to 100% (solid), with
+80% as the default. Text remains opaque. With the background hidden, drag or right-click the digits.
+Appearance changes apply immediately and are saved with the timer's position.
+
+The timer reads the next planned attempt from Hubstaff's local log, checks the most recent rotated log
+to restore the session, and resolves task/project IDs from
+its local XML files. It does not read process memory or issue Hubstaff CLI commands. It hides when
+tracking stops or screenshots are disabled. If the schedule is unavailable, expired or cannot be
+reconstructed, it shows a waiting/unavailable state instead of guessing a deadline.
+
+This is a schedule indicator, not a guarantee of every capture. A completed slot can be skipped;
+stopping or switching tasks can capture a screenshot immediately. If the session start is older than
+the retained log window, the timer waits for a new tracking session. Log format support was checked
+against Hubstaff 1.9.8 and may change in later versions. The feature is disabled by default.
+
 ## Hubstaff timer control
 
 This optional feature is disabled by default. Settings offers two modes:
