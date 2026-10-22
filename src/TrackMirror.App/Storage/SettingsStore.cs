@@ -89,9 +89,17 @@ public sealed class SettingsStore
                 InitialWarning ??= LanguageText.InvalidSaved;
             }
 
+            if (!Enum.IsDefined(saved.UpdateChannel))
+            {
+                saved = saved with { UpdateChannel = UpdateChannel.PreRelease };
+
+                InitialWarning ??= AboutText.InvalidChannel;
+            }
+
             if (saved.ScreenshotCountdown is not { IsValid: true })
             {
                 saved = saved with { ScreenshotCountdown = new ScreenshotCountdownOptions() };
+
                 InitialWarning ??= CountdownText.InvalidSettings;
             }
 
@@ -105,6 +113,9 @@ public sealed class SettingsStore
 
     public void Save(AppSettings settings)
     {
+        if (!Enum.IsDefined(settings.UpdateChannel))
+            throw new ArgumentException(nameof(settings));
+
         if (!UiLocalization.Supported(settings.Language))
             throw new ArgumentException(nameof(settings));
 
