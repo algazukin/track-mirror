@@ -12,6 +12,26 @@ internal static class CountdownText
 
     internal static string Enabled => UiLocalization.Get(nameof(CountdownText), nameof(Enabled));
 
+    internal static string MiddleDragUnavailable => UiLocalization.Get(nameof(CountdownText), nameof(MiddleDragUnavailable));
+
+    internal static string Mode => UiLocalization.Get(nameof(CountdownText), nameof(Mode));
+
+    internal static string Default => UiLocalization.Get(nameof(CountdownText), nameof(Default));
+
+    internal static string Detailed => UiLocalization.Get(nameof(CountdownText), nameof(Detailed));
+
+    internal static string BeforeScreenshot => UiLocalization.Get(nameof(CountdownText), nameof(BeforeScreenshot));
+
+    internal static string ShowBefore => UiLocalization.Get(nameof(CountdownText), nameof(ShowBefore));
+
+    internal static string HideBefore => UiLocalization.Get(nameof(CountdownText), nameof(HideBefore));
+
+    internal static string HideSeconds => UiLocalization.Get(nameof(CountdownText), nameof(HideSeconds));
+
+    internal static string MiddleDrag => UiLocalization.Get(nameof(CountdownText), nameof(MiddleDrag));
+
+    internal static string InteractionHint => UiLocalization.Get(nameof(CountdownText), nameof(InteractionHint));
+
     internal static string Hint => UiLocalization.Get(nameof(CountdownText), nameof(Hint));
 
     internal static string Highlight => UiLocalization.Get(nameof(CountdownText), nameof(Highlight));

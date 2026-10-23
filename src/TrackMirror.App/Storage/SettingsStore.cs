@@ -96,6 +96,14 @@ public sealed class SettingsStore
                 InitialWarning ??= AboutText.InvalidChannel;
             }
 
+            if (saved.ScreenshotCountdown is { Enabled: true } legacyCountdown
+                && root.TryGetProperty(nameof(AppSettings.ScreenshotCountdown), out var countdownElement)
+                && countdownElement.ValueKind == JsonValueKind.Object
+                && !countdownElement.TryGetProperty(nameof(ScreenshotCountdownOptions.Mode), out _))
+            {
+                saved = saved with { ScreenshotCountdown = legacyCountdown with { Mode = ScreenshotCountdownMode.Detailed } };
+            }
+
             if (saved.ScreenshotCountdown is not { IsValid: true })
             {
                 saved = saved with { ScreenshotCountdown = new ScreenshotCountdownOptions() };

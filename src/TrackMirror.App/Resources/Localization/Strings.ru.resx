@@ -1087,8 +1087,8 @@
   <data name="AboutText.Failed" xml:space="preserve"><value>Не удалось проверить обновления. Проверьте соединение и повторите попытку.</value></data>
   <data name="AboutText.BrowserFailed" xml:space="preserve"><value>Не удалось открыть браузер. Перейдите к релизам по ссылке GitHub выше.</value></data>
   <data name="CountdownText.Heading" xml:space="preserve"><value>Таймер снимков</value></data>
-  <data name="CountdownText.Enabled" xml:space="preserve"><value>Показывать плавающий таймер снимков (экспериментально)</value></data>
-  <data name="CountdownText.Hint" xml:space="preserve"><value>Тихий таймер по локальному логу Hubstaff. Перетащите для перемещения; правой кнопкой можно выбрать угол или скрыть таймер.</value></data>
+  <data name="CountdownText.Enabled" xml:space="preserve"><value>Включить таймер снимков (экспериментально)</value></data>
+  <data name="CountdownText.Hint" xml:space="preserve"><value>Обычный: только трей и приложение. Постоянный виджет: непрерывный отсчёт. Перед снимком: виджет в последние секунды. Без звука и смены фокуса.</value></data>
   <data name="CountdownText.Highlight" xml:space="preserve"><value>Выделять последние</value></data>
   <data name="CountdownText.Scale" xml:space="preserve"><value>Масштаб таймера</value></data>
   <data name="CountdownText.BackgroundOpacity" xml:space="preserve"><value>Непрозрачность фона</value></data>
@@ -1105,4 +1105,14 @@
   <data name="CountdownText.BottomLeft" xml:space="preserve"><value>Слева снизу</value></data>
   <data name="CountdownText.BottomRight" xml:space="preserve"><value>Справа снизу</value></data>
   <data name="CountdownText.InvalidSettings" xml:space="preserve"><value>Некорректные настройки таймера снимков сброшены. Остальные настройки сохранены.</value></data>
+  <data name="CountdownText.Mode" xml:space="preserve"><value>Режим отображения</value></data>
+  <data name="CountdownText.Default" xml:space="preserve"><value>Обычный</value></data>
+  <data name="CountdownText.Detailed" xml:space="preserve"><value>Постоянный виджет</value></data>
+  <data name="CountdownText.BeforeScreenshot" xml:space="preserve"><value>Перед снимком</value></data>
+  <data name="CountdownText.ShowBefore" xml:space="preserve"><value>Появляться до снимка за</value></data>
+  <data name="CountdownText.HideBefore" xml:space="preserve"><value>Скрывать виджет перед запланированным снимком</value></data>
+  <data name="CountdownText.HideSeconds" xml:space="preserve"><value>Скрывать до снимка за</value></data>
+  <data name="CountdownText.MiddleDrag" xml:space="preserve"><value>Пропускать клики; двигать с зажатой средней кнопкой мыши</value></data>
+  <data name="CountdownText.InteractionHint" xml:space="preserve"><value>Иначе двигайте левой кнопкой, а меню открывайте правой. То же меню всегда доступно в трее. Скрытие следует расписанию и не гарантирует отсутствие виджета на каждом снимке.</value></data>
+  <data name="CountdownText.MiddleDragUnavailable" xml:space="preserve"><value>Перемещение средней кнопкой недоступно. Используйте левую кнопку или меню в трее.</value></data>
 </root>

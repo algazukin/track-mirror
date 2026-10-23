@@ -24,6 +24,7 @@ public sealed class HistoryForm : Form
     private readonly Button _activityTab = CreateTabButton(ActivityText.Tab);
     private readonly Button _historyTab = CreateTabButton(SettingsText.HistoryTab);
     private readonly Button _settingsTab = CreateTabButton(SettingsText.SettingsTab);
+    private readonly Label _countdownStatus = UiTheme.Label(string.Empty, 9, muted: true);
     private readonly CaptureListBox _list = new();
     private readonly CaptureScrollBar _scrollBar;
     private readonly CaptureGallery _gallery;
@@ -195,6 +196,7 @@ public sealed class HistoryForm : Form
         var navigation = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill,
+            AutoSize = true,
             Padding = new Padding(24, 12, 0, 0),
             WrapContents = false,
             Margin = Padding.Empty,
@@ -203,13 +205,26 @@ public sealed class HistoryForm : Form
 
         navigation.Controls.AddRange([_historyTab, _activityTab, _settingsTab]);
 
+        var header = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty
+        };
+        header.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        header.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+        _countdownStatus.TextAlign = ContentAlignment.MiddleRight;
+        _countdownStatus.Margin = new Padding(8, 0, 24, 0);
+        _countdownStatus.AccessibleName = CountdownText.Heading;
+        header.Controls.Add(navigation, 0, 0);
+        header.Controls.Add(_countdownStatus, 1, 0);
+
         var pages = new Panel { Dock = DockStyle.Fill, Margin = Padding.Empty };
 
         _historyPage.Controls.Add(CreateLayout());
 
         pages.Controls.AddRange([_historyPage, _activityPage, _settingsPage]);
 
-        root.Controls.Add(navigation, 0, 0);
+        root.Controls.Add(header, 0, 0);
 
         root.Controls.Add(pages, 0, 1);
 
@@ -856,6 +871,16 @@ public sealed class HistoryForm : Form
     }
 
     public void SetStatus(string text) => _status.Text = UiText.StatusPrefix + text;
+
+    internal void SetCountdownStatus(string? text)
+    {
+        if (_countdownStatus.Text == (text ?? string.Empty))
+            return;
+
+        _countdownStatus.Text = text ?? string.Empty;
+        _countdownStatus.AccessibleDescription = text;
+        _tooltips.SetToolTip(_countdownStatus, text);
+    }
     public void SetWarning(string text)
     {
         warningMessage = text;

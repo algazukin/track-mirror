@@ -16,14 +16,21 @@ namespace TrackMirror.UI.Forms;
 internal sealed class ScreenshotCountdownForm : Form
 {
     private readonly ContextMenuStrip _menu = new();
+    private readonly ToolTip _tooltips = new();
+    private readonly object _dragGate = new();
 
     private ScreenshotCountdownOptions options = new();
 
-    private string caption = CountdownText.Waiting;
     private string countdown = "--:--";
     private int? remainingSeconds;
 
     private Point? dragOffset;
+    private MiddleButtonDragListener? middleListener;
+    private bool middleDragFailed;
+    private bool middleDragging;
+    private (Point Position, bool Completed)? pendingDrag;
+    private bool dragPosted;
+    private int dragGeneration;
 
     internal event Action<ScreenshotCountdownOptions>? OptionsChanged;
 
@@ -37,6 +44,9 @@ internal sealed class ScreenshotCountdownForm : Form
         {
             var parameters = base.CreateParams;
             parameters.ExStyle |= 0x08000000 | 0x00000080 | 0x00080000; // NOACTIVATE | TOOLWINDOW | LAYERED
+
+            if (options.MiddleButtonDrag && !middleDragFailed)
+                parameters.ExStyle |= 0x00000020; // TRANSPARENT: clicks reach windows in other processes too.
 
             return parameters;
         }
@@ -56,32 +66,51 @@ internal sealed class ScreenshotCountdownForm : Form
         FormBorderStyle = FormBorderStyle.None;
         ShowInTaskbar = false;
         StartPosition = FormStartPosition.Manual;
-        ClientSize = new Size(144, 70);
+        ClientSize = new Size(124, 46);
 
         BackColor = UiTheme.Surface;
         ForeColor = UiTheme.Text;
         DoubleBuffered = true;
         Cursor = Cursors.SizeAll;
 
-        _menu.Items.Add(CountdownText.TopLeft, null, (_, _) => MoveToCorner(false, false));
-        _menu.Items.Add(CountdownText.TopRight, null, (_, _) => MoveToCorner(true, false));
-        _menu.Items.Add(CountdownText.BottomLeft, null, (_, _) => MoveToCorner(false, true));
-        _menu.Items.Add(CountdownText.BottomRight, null, (_, _) => MoveToCorner(true, true));
-        _menu.Items.Add(CountdownText.Reset, null, (_, _) =>
-            OptionsChanged?.Invoke(options with { Left = null, Top = null }));
-        _menu.Items.Add(new ToolStripSeparator());
-        _menu.Items.Add(SettingsText.SettingsTab, null, (_, _) => SettingsRequested?.Invoke());
-        _menu.Items.Add(CountdownText.Hide, null, (_, _) => OptionsChanged?.Invoke(options with { Enabled = false }));
+        AddMenuItems(_menu.Items);
         ContextMenuStrip = _menu;
 
         ResumeLayout(false);
     }
 
-    internal void ApplyOptions(ScreenshotCountdownOptions value)
+    internal void AddMenuItems(ToolStripItemCollection items)
     {
+        items.Add(CountdownText.TopLeft, null, (_, _) => MoveToCorner(false, false));
+        items.Add(CountdownText.TopRight, null, (_, _) => MoveToCorner(true, false));
+        items.Add(CountdownText.BottomLeft, null, (_, _) => MoveToCorner(false, true));
+        items.Add(CountdownText.BottomRight, null, (_, _) => MoveToCorner(true, true));
+        items.Add(CountdownText.Reset, null, (_, _) =>
+            OptionsChanged?.Invoke(options with { Left = null, Top = null }));
+        items.Add(new ToolStripSeparator());
+        items.Add(SettingsText.SettingsTab, null, (_, _) => SettingsRequested?.Invoke());
+        items.Add(CountdownText.Hide, null, (_, _) => OptionsChanged?.Invoke(options with { Enabled = false }));
+    }
+
+    internal ScreenshotCountdownOptions ApplyOptions(ScreenshotCountdownOptions value)
+    {
+        var keepPosition = value.Left == options.Left && value.Top == options.Top;
+        // Finish the current gesture before changing options or visibility. This keeps its
+        // final position in the caller's save and prevents nested settings saves from Hide().
+        var finalPosition = StopMiddleDrag(publish: false);
+
+        if (keepPosition && finalPosition.HasValue)
+            value = value with { Left = Left, Top = Top };
+
         options = value;
 
+        if (!value.MiddleButtonDrag)
+            middleDragFailed = false;
+
+        Cursor = value.MiddleButtonDrag && !middleDragFailed ? Cursors.Default : Cursors.SizeAll;
+
         _ = Handle;
+        UpdateStyles();
         ResizeForDisplay();
 
         var primary = Screen.PrimaryScreen?.WorkingArea ?? new Rectangle(0, 0, 1024, 768);
@@ -91,32 +120,33 @@ internal sealed class ScreenshotCountdownForm : Form
             ?.WorkingArea ?? primary;
         Location = ConstrainLocation(requested, Size, area);
 
-        if (!value.Enabled)
+        if (!value.Enabled || value.Mode == ScreenshotCountdownMode.Default)
             Hide();
 
+        UpdateMiddleDrag();
+
         RefreshSurface();
+
+        return options;
     }
 
     internal void UpdateState(ScreenshotScheduleSnapshot snapshot)
     {
         var scheduled = snapshot.Status == ScreenshotScheduleStatus.Scheduled && snapshot.RemainingSeconds > 0;
 
-        caption = scheduled ? CountdownText.Scheduled : snapshot.Status switch
-        {
-            ScreenshotScheduleStatus.Unavailable => CountdownText.Unavailable,
-            ScreenshotScheduleStatus.Stopped => CountdownText.Stopped,
-            ScreenshotScheduleStatus.Disabled => CountdownText.Disabled,
-            _ => CountdownText.Waiting
-        };
-        countdown = scheduled ? TimeSpan.FromSeconds(snapshot.RemainingSeconds!.Value).ToString(@"mm\:ss") : "--:--";
+        countdown = CountdownDisplay.TimeText(snapshot);
         remainingSeconds = scheduled ? snapshot.RemainingSeconds : null;
 
-        var description = caption + ": " + countdown;
+        var description = CountdownDisplay.StatusText(snapshot);
+
+        if (middleDragFailed)
+            description += Environment.NewLine + CountdownText.MiddleDragUnavailable;
 
         if (AccessibleDescription == description)
             return;
 
         AccessibleDescription = description;
+        _tooltips.SetToolTip(this, description);
 
         RefreshSurface();
     }
@@ -145,13 +175,15 @@ internal sealed class ScreenshotCountdownForm : Form
 
         if (Visible)
             RefreshSurface();
+
+        UpdateMiddleDrag();
     }
 
     private void ResizeForDisplay()
     {
         var scale = DeviceDpi / 96f * options.ScalePercent / 100f;
 
-        ClientSize = new Size((int)Math.Ceiling(144 * scale), (int)Math.Ceiling(70 * scale));
+        ClientSize = new Size((int)Math.Ceiling(124 * scale), (int)Math.Ceiling(46 * scale));
     }
 
     private void RefreshSurface()
@@ -187,7 +219,7 @@ internal sealed class ScreenshotCountdownForm : Form
     {
         base.OnMouseDown(e);
 
-        if (e.Button == MouseButtons.Left)
+        if (e.Button == MouseButtons.Left && (!options.MiddleButtonDrag || middleDragFailed))
         {
             dragOffset = e.Location;
             Capture = true;
@@ -240,6 +272,127 @@ internal sealed class ScreenshotCountdownForm : Form
         Math.Clamp(location.X, area.Left, Math.Max(area.Left, area.Right - size.Width)),
         Math.Clamp(location.Y, area.Top, Math.Max(area.Top, area.Bottom - size.Height)));
 
+    protected override void OnLocationChanged(EventArgs e)
+    {
+        base.OnLocationChanged(e);
+
+        middleListener?.SetTarget(Bounds);
+    }
+
+    protected override void OnSizeChanged(EventArgs e)
+    {
+        base.OnSizeChanged(e);
+
+        middleListener?.SetTarget(Bounds);
+    }
+
+    private void UpdateMiddleDrag()
+    {
+        if (!Visible || !options.Enabled || !options.MiddleButtonDrag)
+        {
+            StopMiddleDrag();
+
+            return;
+        }
+
+        if (middleListener != null)
+        {
+            middleListener.SetTarget(Bounds);
+
+            return;
+        }
+
+        middleListener = MiddleButtonDragListener.Start(Bounds, QueueMiddleDrag);
+        middleDragFailed = middleListener == null;
+        Cursor = middleDragFailed ? Cursors.SizeAll : Cursors.Default;
+        UpdateStyles();
+
+        if (middleDragFailed)
+        {
+            AccessibleDescription = CountdownText.MiddleDragUnavailable;
+            _tooltips.SetToolTip(this, AccessibleDescription);
+        }
+    }
+
+    private void QueueMiddleDrag(Point position, bool completed)
+    {
+        lock (_dragGate)
+        {
+            pendingDrag = (position, completed || pendingDrag?.Completed == true);
+
+            if (dragPosted)
+                return;
+
+            dragPosted = true;
+            var generation = dragGeneration;
+
+            try
+            {
+                BeginInvoke(() => ApplyMiddleDrag(generation));
+            }
+            catch (InvalidOperationException)
+            {
+                dragPosted = false;
+                pendingDrag = null;
+            }
+        }
+    }
+
+    private void ApplyMiddleDrag(int generation)
+    {
+        (Point Position, bool Completed)? update;
+
+        lock (_dragGate)
+        {
+            if (generation != dragGeneration)
+                return;
+
+            update = pendingDrag;
+            pendingDrag = null;
+            dragPosted = false;
+        }
+
+        if (update is not { } drag || !Visible || IsDisposed || middleListener == null)
+            return;
+
+        middleDragging = !drag.Completed;
+        Location = ConstrainLocation(drag.Position, Size, Screen.FromRectangle(new Rectangle(drag.Position, Size)).WorkingArea);
+
+        if (drag.Completed)
+            OptionsChanged?.Invoke(options with { Left = Left, Top = Top });
+    }
+
+    private Point? StopMiddleDrag(bool publish = true)
+    {
+        middleListener?.Dispose();
+        middleListener = null;
+
+        (Point Position, bool Completed)? final;
+
+        lock (_dragGate)
+        {
+            dragGeneration++;
+            final = pendingDrag;
+            pendingDrag = null;
+            dragPosted = false;
+        }
+
+        if (final is { } drag)
+            Location = ConstrainLocation(drag.Position, Size, Screen.FromRectangle(new Rectangle(drag.Position, Size)).WorkingArea);
+
+        if (middleDragging || final != null)
+        {
+            middleDragging = false;
+
+            if (publish)
+                OptionsChanged?.Invoke(options with { Left = Left, Top = Top });
+
+            return Location;
+        }
+
+        return null;
+    }
+
     internal Bitmap RenderSurface()
     {
         var surface = new Bitmap(ClientSize.Width, ClientSize.Height, PixelFormat.Format32bppPArgb);
@@ -258,22 +411,16 @@ internal sealed class ScreenshotCountdownForm : Form
         graphics.FillPath(background, shape);
         graphics.DrawPath(border, shape);
 
-        using var captionFont = new Font(Font.FontFamily, 11.33f * scale, FontStyle.Regular, GraphicsUnit.Pixel);
         using var timeFont = new Font("Consolas", 33.33f * scale, FontStyle.Bold, GraphicsUnit.Pixel);
-        using var captionBrush = new SolidBrush(UiTheme.Muted);
         using var timeBrush = new SolidBrush(highlighted ? UiTheme.Amber : UiTheme.AccentText);
         using var format = new StringFormat(StringFormat.GenericTypographic)
         {
             FormatFlags = StringFormatFlags.NoWrap, Trimming = StringTrimming.EllipsisCharacter,
-            LineAlignment = StringAlignment.Center
+            LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center
         };
 
-        var inset = 10 * scale;
-
-        graphics.DrawString(caption, captionFont, captionBrush,
-            new RectangleF(inset, 5 * scale, Width - inset * 2, 18 * scale), format);
         graphics.DrawString(countdown, timeFont, timeBrush,
-            new RectangleF(inset, 24 * scale, Width - inset * 2, Height - 28 * scale), format);
+            new RectangleF(4 * scale, 0, Width - 8 * scale, Height), format);
 
         return surface;
     }
@@ -281,7 +428,11 @@ internal sealed class ScreenshotCountdownForm : Form
     protected override void Dispose(bool disposing)
     {
         if (disposing)
+        {
+            StopMiddleDrag(publish: false);
+            _tooltips.Dispose();
             _menu.Dispose();
+        }
 
         base.Dispose(disposing);
     }
