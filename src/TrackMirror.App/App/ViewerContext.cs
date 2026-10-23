@@ -18,6 +18,7 @@ using TrackMirror.Storage.Management;
 using TrackMirror.UI.Forms;
 using TrackMirror.UI.Theme;
 using TrackMirror.UI.Interop;
+using TrackMirror.UI;
 
 namespace TrackMirror.App;
 
@@ -47,6 +48,8 @@ public sealed class ViewerContext : ApplicationContext
     private bool exiting;
     private bool hasWarning;
     private bool settingsSaved = true;
+    private string trayStatus = string.Empty;
+    private string? countdownStatus;
     private List<string> reviewUndo = [];
     internal string? NextDataRoot { get; private set; }
 
@@ -183,6 +186,10 @@ public sealed class ViewerContext : ApplicationContext
         {
             Process.Start(new ProcessStartInfo(_store.CapturesRoot) { UseShellExecute = true });
         });
+
+        var countdownMenu = new ToolStripMenuItem(CountdownText.Heading);
+        _countdown.AddMenuItems(countdownMenu.DropDownItems);
+        menu.Items.Add(countdownMenu);
 
         menu.Items.Add(new ToolStripSeparator());
 
@@ -325,6 +332,7 @@ public sealed class ViewerContext : ApplicationContext
         _countdown.Hide();
         _countdownTimer.Stop();
         _screenshotSchedule.SetEnabled(false);
+        SetCountdownStatus(null);
 
         if (monitor != null)
         {
@@ -422,7 +430,7 @@ public sealed class ViewerContext : ApplicationContext
     private void ApplySettings(AppSettings value)
     {
         if (!value.ScreenshotCountdown.Enabled)
-            ApplyCountdown(value.ScreenshotCountdown);
+            value = value with { ScreenshotCountdown = ApplyCountdown(value.ScreenshotCountdown) };
 
         if (!value.HubstaffControl.Enabled)
         {
@@ -445,7 +453,15 @@ public sealed class ViewerContext : ApplicationContext
 
             _hubstaffControl.Apply(value.HubstaffControl);
 
-            ApplyCountdown(value.ScreenshotCountdown);
+            var countdown = ApplyCountdown(value.ScreenshotCountdown);
+
+            if (countdown != value.ScreenshotCountdown)
+            {
+                value = value with { ScreenshotCountdown = countdown };
+                _settings.Save(value);
+            }
+
+            _history.SetScreenshotCountdown(value.ScreenshotCountdown);
 
             _privacy.ApplySettings(value);
 
@@ -481,14 +497,19 @@ public sealed class ViewerContext : ApplicationContext
         }
     }
 
-    private void ApplyCountdown(ScreenshotCountdownOptions options)
+    private ScreenshotCountdownOptions ApplyCountdown(ScreenshotCountdownOptions options)
     {
-        _countdown.ApplyOptions(options);
+        var applied = _countdown.ApplyOptions(options);
 
         _screenshotSchedule.SetEnabled(options.Enabled && !_dataOperations.Busy);
         _countdownTimer.Enabled = options.Enabled;
 
+        if (!options.Enabled)
+            SetCountdownStatus(null);
+
         UpdateCountdown();
+
+        return applied;
     }
 
     private void UpdateCountdown()
@@ -496,6 +517,7 @@ public sealed class ViewerContext : ApplicationContext
         if (exiting || !_countdownTimer.Enabled || !_settings.Current.ScreenshotCountdown.Enabled || _dataOperations.Busy)
         {
             _countdown.Hide();
+            SetCountdownStatus(null);
 
             return;
         }
@@ -503,8 +525,9 @@ public sealed class ViewerContext : ApplicationContext
         var snapshot = _screenshotSchedule.Snapshot(DateTimeOffset.UtcNow);
 
         _countdown.UpdateState(snapshot);
+        SetCountdownStatus(CountdownDisplay.StatusText(snapshot));
 
-        if (snapshot.Status is ScreenshotScheduleStatus.Stopped or ScreenshotScheduleStatus.Disabled)
+        if (!CountdownDisplay.ShouldShow(_settings.Current.ScreenshotCountdown, snapshot))
         {
             _countdown.Hide();
         }
@@ -627,7 +650,29 @@ public sealed class ViewerContext : ApplicationContext
 
         var format = hasWarning ? UiText.TrayWarningFormat : UiText.TrayUnreadFormat;
 
-        _tray.Text = string.Format(format, unread);
+        trayStatus = string.Format(format, unread);
+        UpdateTrayText();
+    }
+
+    private void SetCountdownStatus(string? text)
+    {
+        if (countdownStatus == text)
+            return;
+
+        countdownStatus = text;
+        _history.SetCountdownStatus(text);
+        UpdateTrayText();
+    }
+
+    private void UpdateTrayText()
+    {
+        var text = countdownStatus == null ? trayStatus : trayStatus + Environment.NewLine + countdownStatus;
+
+        // NotifyIcon on .NET 6+ supports up to 127 characters.
+        text = text[..Math.Min(127, text.Length)];
+
+        if (_tray.Text != text)
+            _tray.Text = text;
     }
 
     private void ShowWarning(string message)

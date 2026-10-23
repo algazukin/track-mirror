@@ -10,6 +10,9 @@ using TrackMirror.Monitoring;
 using TrackMirror.UI.Forms;
 using TrackMirror.UI.Controls;
 using TrackMirror.Constants;
+using TrackMirror.IntegrationTests.Infrastructure;
+using TrackMirror.Storage;
+using System.Runtime.InteropServices;
 using Xunit;
 
 namespace TrackMirror.IntegrationTests.UI;
@@ -17,6 +20,170 @@ namespace TrackMirror.IntegrationTests.UI;
 [Collection(nameof(LocalizationCollection))]
 public sealed class ScreenshotCountdownTests
 {
+    [Fact]
+    public async Task Disabling_or_changing_mode_during_drag_persists_the_final_position_through_the_application()
+    {
+        // Arrange
+        // The child process owns a synthetic profile; gestures are queued without injecting mouse input.
+
+        // Act
+        var failure = await Record.ExceptionAsync(() => UiScenarioProcess.RunAsync("countdown-settings"));
+
+        // Assert
+        Assert.Null(failure);
+    }
+
+    [Fact]
+    public void Middle_button_mode_updates_native_click_through_without_listening_while_hidden()
+    {
+        // Arrange
+        StaThread.Run(() =>
+        {
+            using var form = new ScreenshotCountdownForm();
+            var options = new ScreenshotCountdownOptions { Enabled = true, Mode = ScreenshotCountdownMode.Detailed };
+
+            // Act
+            form.ApplyOptions(options with { MiddleButtonDrag = true });
+            var transparent = GetWindowLong(form.Handle, -20);
+            var hiddenListener = UiControls.Field<object?>(form, "middleListener");
+            form.ApplyOptions(options);
+            var interactive = GetWindowLong(form.Handle, -20);
+
+            // Assert
+            Assert.NotEqual(0, transparent & 0x20);
+            Assert.Equal(0, interactive & 0x20);
+            Assert.Null(hiddenListener);
+            Assert.False(form.Visible);
+            Assert.Equal(Cursors.SizeAll, form.Cursor);
+        });
+    }
+
+    [DllImport("user32.dll", EntryPoint = "GetWindowLongW")]
+    private static extern int GetWindowLong(IntPtr window, int index);
+
+    [Theory]
+    [InlineData("en")]
+    [InlineData("ru")]
+    public void In_app_status_stays_beside_navigation_and_can_be_cleared(string language)
+    {
+        // Arrange
+        StaThread.Run(() =>
+        {
+            UiLocalization.Initialize(language);
+            using var workspace = new TestWorkspace();
+            var store = new ScreenshotStore(workspace.Root);
+            using var form = new HistoryForm(store);
+            _ = form.Handle;
+            form.ClientSize = new Size(1000 * form.DeviceDpi / 96, 700 * form.DeviceDpi / 96);
+
+            // Act
+            form.SetCountdownStatus(CountdownText.Scheduled + ": 00:30");
+            form.PerformLayout();
+            var status = UiControls.Field<Label>(form, "_countdownStatus");
+            var settingsTab = UiControls.Field<Button>(form, "_settingsTab");
+
+            // Assert
+            Assert.Contains("00:30", status.Text);
+            Assert.True(status.Bounds.Width > 0);
+            Assert.True(status.Left >= settingsTab.Parent!.Left + settingsTab.Right);
+
+            // Act
+            form.MinimumSize = Size.Empty;
+            form.ClientSize = new Size(620 * form.DeviceDpi / 96, 600 * form.DeviceDpi / 96);
+            form.PerformLayout();
+
+            // Assert
+            Assert.True(settingsTab.Parent.ClientRectangle.Contains(settingsTab.Bounds));
+            Assert.True(settingsTab.Parent.Parent!.ClientRectangle.Contains(settingsTab.Parent.Bounds));
+
+            // Act
+            form.SetCountdownStatus(null);
+
+            // Assert
+            Assert.Empty(status.Text);
+        });
+    }
+
+    [Fact]
+    public void Disabling_the_widget_retains_the_latest_queued_drag_position()
+    {
+        // Arrange
+        StaThread.Run(() =>
+        {
+            using var form = new ScreenshotCountdownForm();
+            var options = new ScreenshotCountdownOptions
+            {
+                Enabled = true, Mode = ScreenshotCountdownMode.Detailed, MiddleButtonDrag = true, Left = 80, Top = 80
+            };
+            form.ApplyOptions(options);
+            UiControls.Invoke(form, "QueueMiddleDrag", new Point(320, 200), false);
+
+            // Act
+            var saved = form.ApplyOptions(options with { Enabled = false });
+            Application.DoEvents();
+
+            // Assert
+            Assert.Equal(320, saved.Left);
+            Assert.Equal(200, saved.Top);
+            Assert.Equal(new Point(320, 200), form.Location);
+            Assert.False(form.Visible);
+        });
+    }
+
+    [Fact]
+    public void Display_settings_enable_only_applicable_controls_and_keep_hiding_below_appearance()
+    {
+        // Arrange
+        StaThread.Run(() =>
+        {
+            UiLocalization.Initialize("en");
+            using var panel = new ScreenshotCountdownPanel(new ScreenshotCountdownOptions { Enabled = true });
+            ScreenshotCountdownOptions? saved = null;
+            panel.Changed += value => saved = value;
+            var mode = UiControls.Descendants<OptionSelector>(panel).Single(control => control.AccessibleName == CountdownText.Mode);
+            var show = UiControls.Descendants<NumericUpDown>(panel).Single(control => control.AccessibleName == CountdownText.ShowBefore);
+            var hide = UiControls.Descendants<NumericUpDown>(panel).Single(control => control.AccessibleName == CountdownText.HideSeconds);
+            var hiding = UiControls.Descendants<CheckBox>(panel).Single(control => control.AccessibleName == CountdownText.HideBefore);
+            var middle = UiControls.Descendants<CheckBox>(panel).Single(control => control.AccessibleName == CountdownText.MiddleDrag);
+
+            // Assert
+            Assert.False(show.Enabled);
+            Assert.False(hiding.Enabled);
+            Assert.False(middle.Enabled);
+
+            // Act
+            mode.SelectValue(CountdownText.BeforeScreenshot);
+            hiding.Checked = true;
+            middle.Checked = true;
+            show.Value = 2;
+
+            // Assert
+            Assert.True(show.Enabled);
+            Assert.True(hide.Enabled);
+            Assert.NotNull(saved);
+            Assert.Equal(ScreenshotCountdownMode.BeforeScreenshot, saved.Mode);
+            Assert.True(saved.MiddleButtonDrag);
+            Assert.Equal(1, saved.HideBeforeSeconds);
+            Assert.True(saved.IsValid);
+
+            // Act
+            mode.SelectValue(CountdownText.Detailed);
+
+            // Assert
+            Assert.False(show.Enabled);
+            Assert.True(hide.Enabled);
+
+            // Act
+            mode.SelectValue(CountdownText.BeforeScreenshot);
+            show.Value = 1;
+
+            // Assert
+            Assert.False(hiding.Checked);
+            Assert.False(hiding.Enabled);
+            Assert.True(saved!.IsValid);
+        });
+    }
+
     [Fact]
     public void Settings_enable_the_timer_without_enabling_previews_or_losing_its_saved_position()
     {
@@ -84,7 +251,7 @@ public sealed class ScreenshotCountdownTests
     }
 
     [Fact]
-    public void The_overlay_reserves_its_full_logical_height_at_the_current_display_scale()
+    public void The_digits_fit_inside_a_compact_caption_free_widget_at_the_current_display_scale()
     {
         // Arrange
         StaThread.Run(() =>
@@ -96,8 +263,7 @@ public sealed class ScreenshotCountdownTests
             _ = form.Handle;
 
             // Assert
-            Assert.True(form.ClientSize.Height >= 70 * form.DeviceDpi / 96,
-                $"The timer is clipped at {form.DeviceDpi} DPI: {form.ClientSize}.");
+            Assert.InRange(form.ClientSize.Height, 42 * form.DeviceDpi / 96, 50 * form.DeviceDpi / 96);
 
             Assert.True(Screen.PrimaryScreen!.WorkingArea.Contains(form.Bounds),
                 $"The initial timer position is offscreen after scaling: {form.Bounds}.");
@@ -182,7 +348,7 @@ public sealed class ScreenshotCountdownTests
             UiLocalization.Initialize("en");
             using var panel = new ScreenshotCountdownPanel(new ScreenshotCountdownOptions
             {
-                Enabled = true, Left = 320, Top = 100
+                Enabled = true, Mode = ScreenshotCountdownMode.Detailed, Left = 320, Top = 100
             });
 
             ScreenshotCountdownOptions? saved = null;

@@ -42,7 +42,8 @@ public sealed class ScreenshotCountdownSettingsTests
         var options = new ScreenshotCountdownOptions
         {
             Enabled = true, HighlightSeconds = 25, Left = -500, Top = 150,
-            ScalePercent = 125, BackgroundOpacityPercent = 35
+            ScalePercent = 125, BackgroundOpacityPercent = 35, Mode = ScreenshotCountdownMode.Default,
+            ShowBeforeSeconds = 45, HideBeforeScreenshot = true, HideBeforeSeconds = 5, MiddleButtonDrag = true
         };
 
         workspace.Json("settings.json", new { NotificationsEnabled = false });
@@ -79,12 +80,38 @@ public sealed class ScreenshotCountdownSettingsTests
 
         // Assert
         Assert.True(restored.Current.ScreenshotCountdown.Enabled);
+        Assert.Equal(ScreenshotCountdownMode.Detailed, restored.Current.ScreenshotCountdown.Mode);
         Assert.Equal(100, restored.Current.ScreenshotCountdown.ScalePercent);
         Assert.Equal(80, restored.Current.ScreenshotCountdown.BackgroundOpacityPercent);
 
         Assert.Equal(-500, restored.Current.ScreenshotCountdown.Left);
         Assert.Equal(150, restored.Current.ScreenshotCountdown.Top);
         Assert.Null(restored.InitialWarning);
+    }
+
+    [Theory]
+    [InlineData(0, 3, false, true)]
+    [InlineData(3601, 3, false, true)]
+    [InlineData(30, 0, true, false)]
+    [InlineData(30, 3601, true, false)]
+    [InlineData(30, 30, true, false)]
+    public void Invalid_thresholds_are_rejected_without_replacing_saved_preferences(int show, int hide, bool hiding, bool detailed)
+    {
+        // Arrange
+        using var workspace = new TestWorkspace();
+        var store = new SettingsStore(workspace.Root);
+        var options = new ScreenshotCountdownOptions
+        {
+            Enabled = true, Mode = detailed ? ScreenshotCountdownMode.Detailed : ScreenshotCountdownMode.BeforeScreenshot,
+            ShowBeforeSeconds = show, HideBeforeScreenshot = hiding, HideBeforeSeconds = hide
+        };
+
+        // Act
+        var exception = Record.Exception(() => store.Save(new AppSettings { ScreenshotCountdown = options }));
+
+        // Assert
+        Assert.IsType<ArgumentException>(exception);
+        Assert.False(store.Current.ScreenshotCountdown.Enabled);
     }
 
     [Theory]

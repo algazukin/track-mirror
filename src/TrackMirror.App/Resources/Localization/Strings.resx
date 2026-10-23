@@ -1087,8 +1087,8 @@ Overall: {3:0}% · Mouse: {4:0}% · Keyboard: {5:0}%</value>
   <data name="AboutText.Failed" xml:space="preserve"><value>Unable to check for updates. Check your connection and try again.</value></data>
   <data name="AboutText.BrowserFailed" xml:space="preserve"><value>Unable to open your browser. Use the GitHub link above to visit the releases page.</value></data>
   <data name="CountdownText.Heading" xml:space="preserve"><value>Screenshot timer</value></data>
-  <data name="CountdownText.Enabled" xml:space="preserve"><value>Show floating screenshot timer (experimental)</value></data>
-  <data name="CountdownText.Hint" xml:space="preserve"><value>A quiet countdown from Hubstaff's local log. Drag to move; right-click to choose a corner or hide it.</value></data>
+  <data name="CountdownText.Enabled" xml:space="preserve"><value>Enable screenshot timer (experimental)</value></data>
+  <data name="CountdownText.Hint" xml:space="preserve"><value>Default: tray and app only. Detailed: a continuous widget. Before screenshot: a widget during the final seconds. No sound or focus changes.</value></data>
   <data name="CountdownText.Highlight" xml:space="preserve"><value>Highlight the last</value></data>
   <data name="CountdownText.Scale" xml:space="preserve"><value>Timer scale</value></data>
   <data name="CountdownText.BackgroundOpacity" xml:space="preserve"><value>Background opacity</value></data>
@@ -1105,4 +1105,14 @@ Overall: {3:0}% · Mouse: {4:0}% · Keyboard: {5:0}%</value>
   <data name="CountdownText.BottomLeft" xml:space="preserve"><value>Bottom left</value></data>
   <data name="CountdownText.BottomRight" xml:space="preserve"><value>Bottom right</value></data>
   <data name="CountdownText.InvalidSettings" xml:space="preserve"><value>Invalid screenshot timer settings were reset. Other preferences were preserved.</value></data>
+  <data name="CountdownText.Mode" xml:space="preserve"><value>Display mode</value></data>
+  <data name="CountdownText.Default" xml:space="preserve"><value>Default</value></data>
+  <data name="CountdownText.Detailed" xml:space="preserve"><value>Detailed</value></data>
+  <data name="CountdownText.BeforeScreenshot" xml:space="preserve"><value>Before screenshot</value></data>
+  <data name="CountdownText.ShowBefore" xml:space="preserve"><value>Appear before screenshot</value></data>
+  <data name="CountdownText.HideBefore" xml:space="preserve"><value>Hide widget before the scheduled screenshot</value></data>
+  <data name="CountdownText.HideSeconds" xml:space="preserve"><value>Hide before screenshot</value></data>
+  <data name="CountdownText.MiddleDrag" xml:space="preserve"><value>Pass clicks through; hold the middle mouse button to move</value></data>
+  <data name="CountdownText.InteractionHint" xml:space="preserve"><value>Otherwise, drag with the left button and right-click for the menu. The same menu is always available from the tray. Hiding follows the planned time and cannot exclude the widget from every capture.</value></data>
+  <data name="CountdownText.MiddleDragUnavailable" xml:space="preserve"><value>Middle-button dragging is unavailable. Use the left button to move or the tray menu.</value></data>
 </root>
