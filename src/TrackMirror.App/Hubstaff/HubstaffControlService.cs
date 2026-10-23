@@ -4,6 +4,8 @@
 
 using TrackMirror.Constants;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Hubstaff;
 
 internal sealed class HubstaffControlService : IAsyncDisposable
@@ -86,11 +88,13 @@ internal sealed class HubstaffControlService : IAsyncDisposable
                     var next = _controller.Status;
 
                     var changed = false;
+                    var stateChanged = false;
 
                     lock (_gate)
                     {
                         if (!token.IsCancellationRequested && status != next)
                         {
+                            stateChanged = status.State != next.State;
                             status = next;
 
                             changed = true;
@@ -99,6 +103,10 @@ internal sealed class HubstaffControlService : IAsyncDisposable
 
                     if (changed)
                     {
+                        if (stateChanged)
+                            AppDiagnostics.Write(DiagnosticComponent.TimerControl, DiagnosticEvent.StateChanged,
+                                metrics: new DiagnosticMetrics { Code = (int)next.State });
+
                         Changed?.Invoke();
                     }
                 }

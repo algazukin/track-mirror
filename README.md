@@ -47,6 +47,7 @@ on the destination computer; the ordinary .NET Runtime is insufficient.
 - Pinned model selection, download/removal, cancellation and resumable downloads.
 - SQLite metadata, recoverable legacy JSON import, folder transfer, backups/restores and retention.
 - Saved English/Russian interface selection.
+- Bounded local technical logs and manual diagnostic ZIP export, without screenshots, OCR text or personal paths.
 
 Hubstaff can remove originals quickly; the viewer cannot guarantee capture of every screenshot.
 **Deleting a viewer copy does not delete a screenshot already stored by Hubstaff.** AI suggestions

@@ -58,6 +58,9 @@ internal static class UiScenarioHost
 
             Application.EnableVisualStyles();
 
+            if (args[1].StartsWith("diagnostics-", StringComparison.Ordinal))
+                return DiagnosticScenario.Run(root, args[1]);
+
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
 
             UiLocalization.Initialize(args[3]);

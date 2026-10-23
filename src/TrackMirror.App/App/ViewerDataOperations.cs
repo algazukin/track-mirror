@@ -11,6 +11,8 @@ using TrackMirror.Storage;
 using TrackMirror.Storage.Management;
 using TrackMirror.UI.Forms;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.App;
 
 internal sealed class ViewerDataOperations : IAsyncDisposable
@@ -153,6 +155,8 @@ internal sealed class ViewerDataOperations : IAsyncDisposable
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.DataOperations, DiagnosticEvent.OperationFailed, ex);
+
             _history.SetDataStatus(DataManagementText.FailedPrefix + ex.Message, error: true);
 
             return;
@@ -185,6 +189,9 @@ internal sealed class ViewerDataOperations : IAsyncDisposable
         try
         {
             await _pauseMonitors();
+
+            AppDiagnostics.Write(DiagnosticComponent.DataOperations, DiagnosticEvent.OperationStarted,
+                metrics: new DiagnosticMetrics { Code = (int)kind });
 
             await _privacy.PauseAsync(token);
 
@@ -228,9 +235,14 @@ internal sealed class ViewerDataOperations : IAsyncDisposable
                         result.Removed, result.PendingFiles));
                     break;
             }
+
+            AppDiagnostics.Write(DiagnosticComponent.DataOperations, DiagnosticEvent.OperationCompleted,
+                metrics: new DiagnosticMetrics { Code = (int)kind });
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested)
         {
+            AppDiagnostics.Write(DiagnosticComponent.DataOperations, DiagnosticEvent.OperationCancelled);
+
             if (!stopping)
             {
                 _history.SetDataStatus(cleanupStarted
@@ -239,6 +251,8 @@ internal sealed class ViewerDataOperations : IAsyncDisposable
         }
         catch (Exception ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.DataOperations, DiagnosticEvent.OperationFailed, ex);
+
             if (!stopping)
             {
                 var message = ex is JsonException or InvalidDataException or OverflowException
@@ -255,8 +269,10 @@ internal sealed class ViewerDataOperations : IAsyncDisposable
                 {
                     _resumeWorkers(cleanupStarted);
                 }
-                catch (Exception)
+                catch (Exception error)
                 {
+                    AppDiagnostics.Write(DiagnosticComponent.DataOperations, DiagnosticEvent.OperationFailed, error);
+
                     _history.SetDataStatus(DataManagementText.Unsaved, error: true);
                 }
 

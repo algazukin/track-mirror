@@ -203,9 +203,26 @@ Exit from the tray before replacing binaries and create a backup first. Preserve
 folder, preferences, `privacy-runtime` and the `ru` satellite directory. Keep an older build until
 verification. If extracting to a new application directory, explicitly point it to your existing data.
 
+## Diagnostics and error reports
+
+Open **Settings → Diagnostics → Export diagnostics** and choose where to save the ZIP. Attach it to
+your bug report with the problem, approximate time and steps to reproduce it. Export is manual and
+does not send files anywhere.
+
+The archive contains safe technical logs and basic system information. It excludes screenshots,
+OCR text, AI prompts/responses, account details, settings, personal paths and the history database.
+Events include UTC timestamps, application version, component, numeric error codes and application
+stack frames without source paths or arguments. Timestamps still describe application use.
+
+Local logs stay under `%LOCALAPPDATA%\TrackMirror\installations\<installation-id>\diagnostics`,
+independently of history folder moves and backups. Serilog rolls files daily and by size, with a limit
+of five 2 MiB files and 14-day retention. Cleanup runs when opening/rolling a log; export excludes
+expired records. Native crashes or unavailable storage can prevent logging.
+An older `startup-error.log` may remain in the data folder; it is not included in the export.
+
 For missing previews, check source paths and available files; Hubstaff originals can disappear before
 being opened. For AI failures, check installation, selected model and memory. For storage failures,
-check access/free space/removable disks. Startup diagnostics may be written to `startup-error.log` in
-an existing data folder. Treat diagnostics as private. Report synthetic/redacted examples only;
+check access/free space/removable disks. Use diagnostic export instead of sharing your data folder.
+Report synthetic/redacted examples only;
 read [PRIVACY.md](PRIVACY.md) and [SECURITY.md](SECURITY.md) before sharing files.
 

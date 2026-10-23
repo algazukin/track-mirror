@@ -9,6 +9,8 @@ using TrackMirror.Models;
 using TrackMirror.Localization;
 using TrackMirror.Privacy.Installation;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Storage;
 
 public sealed class SettingsStore
@@ -112,9 +114,13 @@ public sealed class SettingsStore
             }
 
             Current = saved;
+            AppDiagnostics.Write(DiagnosticComponent.Storage, InitialWarning == null
+                ? DiagnosticEvent.SettingsLoaded : DiagnosticEvent.SettingsRejected);
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, ex);
+
             InitialWarning = SettingsText.LoadFailed;
         }
     }
@@ -159,5 +165,6 @@ public sealed class SettingsStore
         }
 
         Current = settings;
+        AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.SettingsSaved);
     }
 }

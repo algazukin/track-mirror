@@ -8,6 +8,7 @@ using TrackMirror.Storage.Management;
 using TrackMirror.Monitoring;
 using TrackMirror.Localization;
 using TrackMirror.Storage;
+using TrackMirror.Diagnostics;
 
 namespace TrackMirror;
 
@@ -17,6 +18,27 @@ internal static class Program
     private static void Main(string[] args)
     {
         UiLocalization.Initialize(LocalizationNames.English);
+
+        AppDiagnostics.Initialize();
+        using var diagnosticLog = AppDiagnostics.Current;
+        ViewerContext? activeContext = null;
+        var fatalUIReported = false;
+        using var exceptionHandlers = new DiagnosticExceptionHandlers(diagnosticLog, () =>
+        {
+            if (!fatalUIReported)
+            {
+                fatalUIReported = true;
+                MessageBox.Show(DiagnosticsText.UnexpectedError, ApplicationConstants.DisplayName,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (activeContext != null)
+                activeContext.ExitAfterError();
+            else
+                Application.Exit();
+        });
+
+        AppDiagnostics.Write(DiagnosticComponent.Application, DiagnosticEvent.Started);
 
         var source = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -115,7 +137,9 @@ internal static class Program
                     using var context = new ViewerContext(source, data, background, noPreviews, locations, showSettings,
                         retainedMonitor, sessionStartedUtc);
 
+                    activeContext = context;
                     Application.Run(context);
+                    activeContext = null;
 
                     if (context.NextDataRoot == null)
                         return;
@@ -138,18 +162,8 @@ internal static class Program
         }
         catch (Exception ex)
         {
-            try
-            {
-                if (Directory.Exists(data))
-                {
-                    File.WriteAllText(Path.Combine(data, StorageNames.StartupErrorFile), ex.ToString());
-                }
-            }
-            catch (Exception loggingError) when (loggingError is IOException
-                or UnauthorizedAccessException
-                or ArgumentException)
-            {
-            }
+            AppDiagnostics.Write(DiagnosticComponent.Application, DiagnosticEvent.OperationFailed, ex,
+                level: DiagnosticLevel.Fatal);
 
             if (quiet)
                 return;
@@ -160,6 +174,10 @@ internal static class Program
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error
             );
+        }
+        finally
+        {
+            AppDiagnostics.Write(DiagnosticComponent.Application, DiagnosticEvent.Stopped);
         }
     }
 }

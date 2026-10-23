@@ -5,6 +5,8 @@
 using Microsoft.Data.Sqlite;
 using TrackMirror.Constants;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Storage.Sqlite;
 
 internal sealed class ViewerDatabase
@@ -56,6 +58,8 @@ internal sealed class ViewerDatabase
         }
         catch (SqliteException ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, ex);
+
             throw new IOException(DatabaseText.Unavailable, ex);
         }
     }
@@ -81,6 +85,8 @@ internal sealed class ViewerDatabase
         }
         catch (SqliteException ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, ex);
+
             connection.Dispose();
 
             throw new IOException(DatabaseText.Unavailable, ex);
@@ -101,6 +107,8 @@ internal sealed class ViewerDatabase
         }
         catch (SqliteException ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, ex);
+
             throw new IOException(DatabaseText.WriteFailed, ex);
         }
     }

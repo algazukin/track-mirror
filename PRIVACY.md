@@ -17,7 +17,7 @@ your employer's software, third-party runtime internals or changes in a modified
 | Folder records | LocalAppData preferences and transfer markers/redirects store paths and IDs. |
 | Legacy metadata | Imported JSON remains in the data folder and can contain earlier metadata. |
 | Backups | User-created ZIPs contain database, settings, legacy metadata and image copies. |
-| Diagnostics | Startup errors can contain exception details and local paths. |
+| Diagnostics | Bounded local JSONL events: UTC time, application version, random session ID, component/event/severity, numeric metrics/error codes and application method frames. No exception messages or personal paths. |
 
 Activity reads Hubstaff's local `TrackedActivity.xml`. The viewer does not record keystrokes or
 install keyboard hooks. Opt-in timer control reads Windows last-input timing and uses CLI status
@@ -41,6 +41,32 @@ while that widget is visible. It uses pointer coordinates and button events in m
 a middle press inside the widget and its matching release; other clicks pass through. It does not
 store input history or send synthetic input. The hook is removed when the widget hides, the option
 is disabled or the application exits. Normal dragging requires no global mouse hook.
+
+## Local diagnostics and export
+
+Technical logs are written under the installation profile's `diagnostics` folder in LocalAppData,
+separately from the selected history folder. Serilog rolls files daily and by size, with defaults of
+five files of 2 MiB each and 14-day retention. Cleanup runs when opening/rolling a log, and export
+excludes expired records. Log failures must not interrupt
+normal application work. Abrupt termination, native crashes and unwritable storage may prevent a final
+record. Managed UI errors request shutdown; background/task exception recording is best effort.
+
+The logger accepts fixed event/component names and numeric metrics, including AI request/token/OCR
+counts. Exception messages, Data, arbitrary text and full exception strings are excluded. Application
+stack frames contain method metadata/IL offsets and names derived from the application assembly,
+without source-file paths or arguments. Unknown provider failure text maps to a fixed unknown code.
+No screenshot, OCR text, prompt/response, account/project/task ID, CLI output, URL, filename, command-line
+argument, machine/user name or raw Hubstaff log is recorded.
+
+**Settings → Diagnostics → Export diagnostics** creates a user-selected ZIP containing only
+`diagnostics.jsonl` and `system.json`. Export rebuilds a closed record schema, ignores unknown fields
+and unrelated files, and resolves frame names from application metadata instead of trusting file text.
+The technical manifest contains app/runtime/OS versions, architecture, processor count, available
+memory, storage limits and dropped-record count. It excludes settings, paths and the history database.
+Older-build frames retain numeric metadata instead of trusting unresolved method-name text.
+Nothing is sent automatically. Timestamps and technical events still describe application use; review
+the archive before sharing it. Legacy `startup-error.log` files from older builds are neither written
+nor included in diagnostic exports; they may still contain private paths in the old data folder.
 
 ## Network behaviour
 
