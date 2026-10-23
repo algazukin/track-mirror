@@ -1067,4 +1067,52 @@ Overall: {3:0}% · Mouse: {4:0}% · Keyboard: {5:0}%</value>
   <data name="GalleryText.SelectHint" xml:space="preserve">
     <value>Use checkboxes or Space to select screenshots. Enter opens the focused screenshot.</value>
   </data>
+  <data name="AboutText.InvalidChannel" xml:space="preserve"><value>The saved update channel was reset to Pre-release. Other preferences were preserved.</value></data>
+  <data name="AboutText.Heading" xml:space="preserve"><value>About TrackMirror</value></data>
+  <data name="AboutText.Version" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="AboutText.Credits" xml:space="preserve"><value>Created by Alexander Gazukin and contributors. Open source under MPL-2.0.</value></data>
+  <data name="AboutText.UpdateChannel" xml:space="preserve"><value>Update channel</value></data>
+  <data name="AboutText.Stable" xml:space="preserve"><value>Stable</value></data>
+  <data name="AboutText.PreRelease" xml:space="preserve"><value>Pre-release</value></data>
+  <data name="AboutText.ChannelHint" xml:space="preserve"><value>Stable includes stable releases only. Pre-release also includes preview builds.</value></data>
+  <data name="AboutText.CheckForUpdates" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="AboutText.UpdateStatus" xml:space="preserve"><value>Update status</value></data>
+  <data name="AboutText.ManualCheck" xml:space="preserve"><value>Checks GitHub for releases in the selected channel when you click the button.</value></data>
+  <data name="AboutText.Checking" xml:space="preserve"><value>Checking for updates...</value></data>
+  <data name="AboutText.Available" xml:space="preserve"><value>Version {0} is available. Its release page has been opened in your browser.</value></data>
+  <data name="AboutText.UpToDate" xml:space="preserve"><value>You are using the latest version available in this channel.</value></data>
+  <data name="AboutText.NoReleases" xml:space="preserve"><value>No published releases are available in this channel yet.</value></data>
+  <data name="AboutText.TimedOut" xml:space="preserve"><value>The update check timed out. Please try again.</value></data>
+  <data name="AboutText.RateLimited" xml:space="preserve"><value>GitHub has temporarily limited update checks. Please try again later.</value></data>
+  <data name="AboutText.Failed" xml:space="preserve"><value>Unable to check for updates. Check your connection and try again.</value></data>
+  <data name="AboutText.BrowserFailed" xml:space="preserve"><value>Unable to open your browser. Use the GitHub link above to visit the releases page.</value></data>
+  <data name="CountdownText.Heading" xml:space="preserve"><value>Screenshot timer</value></data>
+  <data name="CountdownText.Enabled" xml:space="preserve"><value>Enable screenshot timer (experimental)</value></data>
+  <data name="CountdownText.Hint" xml:space="preserve"><value>Default: tray and app only. Detailed: a continuous widget. Before screenshot: a widget during the final seconds. No sound or focus changes.</value></data>
+  <data name="CountdownText.Highlight" xml:space="preserve"><value>Highlight the last</value></data>
+  <data name="CountdownText.Scale" xml:space="preserve"><value>Timer scale</value></data>
+  <data name="CountdownText.BackgroundOpacity" xml:space="preserve"><value>Background opacity</value></data>
+  <data name="CountdownText.Limitation" xml:space="preserve"><value>The schedule can change or skip a capture. Stopping or switching tasks can capture a screenshot immediately.</value></data>
+  <data name="CountdownText.Scheduled" xml:space="preserve"><value>Next screenshot</value></data>
+  <data name="CountdownText.Waiting" xml:space="preserve"><value>Waiting for schedule</value></data>
+  <data name="CountdownText.Unavailable" xml:space="preserve"><value>Schedule unavailable</value></data>
+  <data name="CountdownText.Stopped" xml:space="preserve"><value>Tracking stopped</value></data>
+  <data name="CountdownText.Disabled" xml:space="preserve"><value>Screenshots disabled</value></data>
+  <data name="CountdownText.Hide" xml:space="preserve"><value>Hide timer</value></data>
+  <data name="CountdownText.Reset" xml:space="preserve"><value>Reset position</value></data>
+  <data name="CountdownText.TopLeft" xml:space="preserve"><value>Top left</value></data>
+  <data name="CountdownText.TopRight" xml:space="preserve"><value>Top right</value></data>
+  <data name="CountdownText.BottomLeft" xml:space="preserve"><value>Bottom left</value></data>
+  <data name="CountdownText.BottomRight" xml:space="preserve"><value>Bottom right</value></data>
+  <data name="CountdownText.InvalidSettings" xml:space="preserve"><value>Invalid screenshot timer settings were reset. Other preferences were preserved.</value></data>
+  <data name="CountdownText.Mode" xml:space="preserve"><value>Display mode</value></data>
+  <data name="CountdownText.Default" xml:space="preserve"><value>Default</value></data>
+  <data name="CountdownText.Detailed" xml:space="preserve"><value>Detailed</value></data>
+  <data name="CountdownText.BeforeScreenshot" xml:space="preserve"><value>Before screenshot</value></data>
+  <data name="CountdownText.ShowBefore" xml:space="preserve"><value>Appear before screenshot</value></data>
+  <data name="CountdownText.HideBefore" xml:space="preserve"><value>Hide widget before the scheduled screenshot</value></data>
+  <data name="CountdownText.HideSeconds" xml:space="preserve"><value>Hide before screenshot</value></data>
+  <data name="CountdownText.MiddleDrag" xml:space="preserve"><value>Pass clicks through; hold the middle mouse button to move</value></data>
+  <data name="CountdownText.InteractionHint" xml:space="preserve"><value>Otherwise, drag with the left button and right-click for the menu. The same menu is always available from the tray. Hiding follows the planned time and cannot exclude the widget from every capture.</value></data>
+  <data name="CountdownText.MiddleDragUnavailable" xml:space="preserve"><value>Middle-button dragging is unavailable. Use the left button to move or the tray menu.</value></data>
 </root>

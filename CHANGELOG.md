@@ -4,6 +4,17 @@ Versions here match tags and release archives.
 
 ## Unreleased
 
+- Add Default, Detailed and Before screenshot display modes, configurable appearance/hiding thresholds,
+  countdown in the app and tray, and a compact digits-only desktop widget.
+- Add optional middle-button dragging with click-through for other buttons and timer positioning from
+  the tray menu. Preserve Detailed mode for existing enabled timers.
+
+- Add project, author and MPL-2.0 links in Settings, with manual GitHub update checks and saved
+  Stable/Pre-release channels. Pre-release is selected by default.
+- Optional floating screenshot countdown from local Hubstaff logs, with saved position, quiet final-second
+  highlighting, rounded corners, adjustable scale and background opacity, and explicit waiting/unavailable
+  states. No process-memory access or timer commands.
+
 - Include newly selected AI categories when rescanning a saved result.
 - Update SQLite and its native dependencies, Microsoft.NET.Test.Sdk and the xUnit VSTest adapter.
 - Rename the application, solution, namespaces, installation and release assets to TrackMirror.

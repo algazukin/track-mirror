@@ -56,8 +56,10 @@ public sealed class SettingsPanel : UserControl
     private readonly Label _secondsLabel = UiTheme.Label(SettingsText.Seconds, 10);
     private readonly Label _saveStatus = UiTheme.Label(SettingsText.Saved, 9, muted: true, wrap: true);
     private readonly HubstaffControlPanel _hubstaff;
+    private readonly ScreenshotCountdownPanel _countdown;
     private readonly PrivacySettingsPanel _privacy;
     private readonly StorageSettingsPanel _storage;
+    private readonly AboutSettingsPanel _about;
     private SurfacePanel? optionsCard;
     private readonly bool _noPreviews;
     private AppSettings current;
@@ -90,9 +92,13 @@ public sealed class SettingsPanel : UserControl
 
         _hubstaff = new HubstaffControlPanel(settings.HubstaffControl);
 
+        _countdown = new ScreenshotCountdownPanel(settings.ScreenshotCountdown);
+
         _privacy = new PrivacySettingsPanel(settings);
 
         _storage = new StorageSettingsPanel(settings, dataRoot);
+
+        _about = new AboutSettingsPanel(settings.UpdateChannel);
 
         Dock = DockStyle.Fill;
 
@@ -136,6 +142,13 @@ public sealed class SettingsPanel : UserControl
 
         _hubstaff.RetryRequested += () => HubstaffControlRetryRequested?.Invoke();
 
+        _countdown.Changed += value =>
+        {
+            current = current with { ScreenshotCountdown = value };
+
+            PublishSettings();
+        };
+
         _privacy.Changed += value =>
         {
             current = current with
@@ -173,6 +186,13 @@ public sealed class SettingsPanel : UserControl
 
         _storage.CancelRequested += () => DataOperationCancelRequested?.Invoke();
 
+        _about.ChannelChanged += value =>
+        {
+            current = current with { UpdateChannel = value };
+
+            PublishSettings();
+        };
+
         VisibleChanged += (_, _) =>
         {
             if (!Visible)
@@ -192,7 +212,7 @@ public sealed class SettingsPanel : UserControl
             AutoSize = true,
             AutoSizeMode = AutoSizeMode.GrowAndShrink,
             ColumnCount = 1,
-            RowCount = 7,
+            RowCount = 9,
             Margin = Padding.Empty
         };
 
@@ -261,6 +281,17 @@ public sealed class SettingsPanel : UserControl
 
         root.Controls.Add(card, 0, 2);
 
+        var countdownCard = new SurfacePanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Padding = new Padding(20), Margin = new Padding(0, 0, 0, 12)
+        };
+
+        countdownCard.Controls.Add(_countdown);
+
+        root.Controls.Add(countdownCard, 0, 3);
+        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
         var hubstaffCard = new SurfacePanel
         {
             Dock = DockStyle.Top,
@@ -272,7 +303,7 @@ public sealed class SettingsPanel : UserControl
 
         hubstaffCard.Controls.Add(_hubstaff);
 
-        root.Controls.Add(hubstaffCard, 0, 3);
+        root.Controls.Add(hubstaffCard, 0, 4);
 
         var privacyCard = new SurfacePanel
         {
@@ -283,7 +314,7 @@ public sealed class SettingsPanel : UserControl
 
         privacyCard.Controls.Add(_privacy);
 
-        root.Controls.Add(privacyCard, 0, 4);
+        root.Controls.Add(privacyCard, 0, 5);
 
         var storageCard = new SurfacePanel
         {
@@ -294,11 +325,22 @@ public sealed class SettingsPanel : UserControl
 
         storageCard.Controls.Add(_storage);
 
-        root.Controls.Add(storageCard, 0, 5);
+        root.Controls.Add(storageCard, 0, 6);
+
+        var aboutCard = new SurfacePanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Padding = new Padding(20), Margin = new Padding(0, 0, 0, 12)
+        };
+
+        aboutCard.Controls.Add(_about);
+
+        root.Controls.Add(aboutCard, 0, 7);
+        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
         if (noPreviews)
         {
-            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 6);
+            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 8);
         }
 
         return root;
@@ -414,12 +456,22 @@ public sealed class SettingsPanel : UserControl
 
         _hubstaff.Enabled = !busy;
 
+        _countdown.Enabled = !busy;
+
         _privacy.Enabled = !busy;
 
         _storage.SetBusy(busy);
+
+        _about.Enabled = !busy;
     }
 
     internal void SetHubstaffControlStatus(HubstaffControlStatus value) => _hubstaff.SetStatus(value);
+
+    internal void SetScreenshotCountdown(ScreenshotCountdownOptions value)
+    {
+        current = current with { ScreenshotCountdown = value };
+        _countdown.Apply(value);
+    }
 
     internal void SetDataProgress(DataOperationProgress value) => _storage.SetProgress(value);
 

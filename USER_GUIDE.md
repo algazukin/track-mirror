@@ -45,6 +45,59 @@ Start with Hubstaff is off by default. It creates a Windows Startup shortcut and
 same Hubstaff process run. Language offers English (default) and Russian; exit from the tray and
 restart to apply a selection. Dates remain in the local time zone.
 
+## About and updates
+
+The **About TrackMirror** card at the bottom of Settings shows the installed version, author and
+links to the GitHub repository and MPL-2.0 license.
+
+Choose an **Update channel**: **Stable** checks stable releases only; **Pre-release** also includes
+preview builds and is the default. Click **Check for updates** to contact GitHub. A newer version opens
+its release page in your browser. Otherwise the card reports that your version is up to date, that the
+channel has no releases yet, or that the check failed. Opening Settings does not start a check.
+
+Download the setup EXE or ZIP from the release page and follow the normal update instructions above.
+The application does not download or install updates automatically.
+
+## Screenshot timer (experimental)
+
+Enable **Enable screenshot timer** in Settings and choose a display mode:
+
+- **Default:** countdown on tray hover and beside the application's navigation, without a desktop widget.
+- **Detailed:** a continuous desktop widget containing only the countdown digits.
+- **Before screenshot:** the widget appears during the last configured seconds (initially 30).
+
+**Hide widget before the scheduled screenshot** optionally hides either floating mode ahead of its
+deadline (initially 3 seconds). Its threshold must be less than the appearance threshold in Before
+screenshot mode. Unknown schedules keep the widget hidden in Before screenshot mode and whenever
+scheduled hiding is enabled. Other statuses remain available in the app and tray.
+
+Normally, drag the widget with the left mouse button and right-click for its menu. With **Pass clicks
+through; hold the middle mouse button to move** enabled, other clicks reach the window underneath.
+Hold the middle button over the widget to drag it. The same positioning/settings menu is available
+from the tray. If Windows cannot enable middle-button dragging, normal dragging remains available
+and the widget tooltip explains why. Position is saved. **Highlight the last** controls the final
+seconds shown in amber; there is no sound or focus change. Screenshot preview notifications remain
+a separate setting.
+
+The compact timer has rounded corners. **Timer scale** adjusts its size from 50% to 200%, independently
+of Windows display scaling. **Background opacity** ranges from 0% (no background) to 100% (solid), with
+80% as the default. Text remains opaque. With the background hidden, drag or right-click the digits.
+Appearance changes apply immediately and are saved with the timer's position.
+
+The timer reads the next planned attempt from Hubstaff's local log, checks the most recent rotated log
+to restore the session, and resolves task/project IDs from
+its local XML files. It does not read process memory or issue Hubstaff CLI commands. It hides when
+tracking stops or screenshots are disabled. If the schedule is unavailable, expired or cannot be
+reconstructed, the app and tray show a waiting/unavailable state instead of guessing a deadline.
+Detailed mode also shows `--:--` unless scheduled hiding is enabled.
+
+This is a schedule indicator, not a guarantee of every capture. A completed slot can be skipped;
+stopping or switching tasks can capture a screenshot immediately. If the session start is older than
+the retained log window, the timer waits for a new tracking session. Log format support was checked
+against Hubstaff 1.9.8 and may change in later versions. Scheduled hiding cannot guarantee that the
+widget stays out of every screenshot. The feature is disabled by default; new profiles use Default
+mode when enabled. Existing enabled timers retain Detailed mode when upgrading.
+
 ## Hubstaff timer control
 
 This optional feature is disabled by default. Settings offers two modes:

@@ -89,6 +89,28 @@ public sealed class SettingsStore
                 InitialWarning ??= LanguageText.InvalidSaved;
             }
 
+            if (!Enum.IsDefined(saved.UpdateChannel))
+            {
+                saved = saved with { UpdateChannel = UpdateChannel.PreRelease };
+
+                InitialWarning ??= AboutText.InvalidChannel;
+            }
+
+            if (saved.ScreenshotCountdown is { Enabled: true } legacyCountdown
+                && root.TryGetProperty(nameof(AppSettings.ScreenshotCountdown), out var countdownElement)
+                && countdownElement.ValueKind == JsonValueKind.Object
+                && !countdownElement.TryGetProperty(nameof(ScreenshotCountdownOptions.Mode), out _))
+            {
+                saved = saved with { ScreenshotCountdown = legacyCountdown with { Mode = ScreenshotCountdownMode.Detailed } };
+            }
+
+            if (saved.ScreenshotCountdown is not { IsValid: true })
+            {
+                saved = saved with { ScreenshotCountdown = new ScreenshotCountdownOptions() };
+
+                InitialWarning ??= CountdownText.InvalidSettings;
+            }
+
             Current = saved;
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException)
@@ -99,6 +121,9 @@ public sealed class SettingsStore
 
     public void Save(AppSettings settings)
     {
+        if (!Enum.IsDefined(settings.UpdateChannel))
+            throw new ArgumentException(nameof(settings));
+
         if (!UiLocalization.Supported(settings.Language))
             throw new ArgumentException(nameof(settings));
 
@@ -113,6 +138,9 @@ public sealed class SettingsStore
             throw new ArgumentOutOfRangeException(nameof(settings));
 
         if (settings.HubstaffControl is not { IsValid: true })
+            throw new ArgumentException(nameof(settings));
+
+        if (settings.ScreenshotCountdown is not { IsValid: true })
             throw new ArgumentException(nameof(settings));
 
         Directory.CreateDirectory(Path.GetDirectoryName(_path)!);

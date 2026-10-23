@@ -362,17 +362,17 @@ internal sealed class OptionSelector : Control
         SetFirstIndex(firstIndex - steps * (lines < 0 ? pageCount : lines));
     }
 
-    internal void SelectValue(string value)
+    internal void SelectValue(string value, bool focus = true)
     {
         var index = choices.IndexOf(value);
 
         if (index >= 0)
         {
-            SelectChoice(index);
+            SelectChoice(index, focus);
         }
     }
 
-    private void SelectChoice(int index)
+    private void SelectChoice(int index, bool focus = true)
     {
         var changed = SelectedValue != choices[index];
 
@@ -384,7 +384,8 @@ internal sealed class OptionSelector : Control
 
         ClosePopup();
 
-        Focus();
+        if (focus)
+            Focus();
 
         Invalidate();
 

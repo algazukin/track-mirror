@@ -20,7 +20,7 @@ your employer's software, third-party runtime internals or changes in a modified
 | Diagnostics | Startup errors can contain exception details and local paths. |
 
 Activity reads Hubstaff's local `TrackedActivity.xml`. The viewer does not record keystrokes or
-install keyboard/mouse hooks. Opt-in timer control reads Windows last-input timing and uses CLI status
+install keyboard hooks. Opt-in timer control reads Windows last-input timing and uses CLI status
 project/task identifiers only in memory to avoid resuming a different selection. CLI output is not logged.
 App names, URLs, project/task IDs and raw XML are not persisted by
 the activity store. Screenshots can contain any visible desktop text/windows.
@@ -28,6 +28,19 @@ the activity store. Screenshots can contain any visible desktop text/windows.
 The AI database retains category/severity/reason codes and bounding regions, not recognised secret
 values, raw OCR transcripts or raw model responses. Inference processes images and recognised text
 in memory. Images remain sensitive regardless of findings or false-positive decisions.
+
+The optional floating screenshot timer reads scheduling events from Hubstaff's local log and its most
+recent rotated copy, and task/project identifiers from its XML files. These records are processed in memory; TrackMirror does not
+copy raw Hubstaff logs into its database or upload them. The timer only checks whether the Hubstaff
+client process is running; it does not inspect process memory or control tracking. Its enabled state,
+display mode, appearance/hiding/highlight thresholds, mouse interaction preference and screen position
+are stored in the existing settings file.
+
+Optional middle-button widget dragging installs a Windows mouse hook on a dedicated thread only
+while that widget is visible. It uses pointer coordinates and button events in memory to recognize
+a middle press inside the widget and its matching release; other clicks pass through. It does not
+store input history or send synthetic input. The hook is removed when the widget hides, the option
+is disabled or the application exits. Normal dragging requires no global mouse hook.
 
 ## Network behaviour
 
@@ -49,7 +62,12 @@ models and `OLLAMA_NO_CLOUD=1`; it refuses to attach to an unknown service occup
 Local processes with sufficient access may observe loopback traffic or read files. Third-party
 runtime/model behaviour has separate upstream terms.
 
-There is no automatic application updater. Normal use does not contact the GitHub Releases workflow.
+Clicking **Check for updates** requests the public GitHub Releases API over HTTPS. The request includes
+the application version in its User-Agent header; GitHub also receives ordinary connection metadata,
+such as IP address. These requests contain no screenshots, OCR, activity records or Hubstaff account
+identifiers. There are no background update checks, authenticated GitHub requests or automatic update
+downloads/installations. Selecting a channel only changes a local setting. Project/license links and
+available updates open GitHub in the system browser, which uses its own privacy and account settings.
 CI handles repository code and synthetic fixtures, not a user's workday.
 
 ## Storage and deletion

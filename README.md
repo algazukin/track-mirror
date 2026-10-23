@@ -38,6 +38,7 @@ on the destination computer; the ordinary .NET Runtime is insufficient.
 - Thumbnail selection, bulk Mark as read with Undo, and per-run AI categories.
 - Full-image fit, zoom, panning, keyboard controls and shared custom scrollbars.
 - Focus-preserving preview notifications with configurable timeout and an off switch.
+- Experimental screenshot countdown from local Hubstaff logs, with tray/app status and configurable desktop widgets.
 - Tray controls and optional startup alongside Hubstaff.
 - Opt-in idle-triggered Hubstaff CLI control: pause/resume or periodic stop/resume, with configurable timing.
 - Locally received activity intervals, account selection and daily graphs.
@@ -51,6 +52,23 @@ Hubstaff can remove originals quickly; the viewer cannot guarantee capture of ev
 **Deleting a viewer copy does not delete a screenshot already stored by Hubstaff.** AI suggestions
 need manual review; an empty result is not proof that an image is safe.
 
+## Screenshot timer (experimental)
+
+Enable the screenshot timer in Settings and choose a display mode:
+
+- **Default:** countdown on tray hover and beside the application's navigation.
+- **Detailed:** a continuous, compact desktop widget showing only the countdown digits.
+- **Before screenshot:** the widget appears during the last configured seconds before a planned capture.
+
+Configure appearance/hiding thresholds, scale, background opacity and final-second highlighting.
+The widget saves its position and supports optional click-through with middle-button dragging.
+Positioning controls are also available from the tray. There is no sound or focus change.
+
+The timer is disabled by default and follows planned capture attempts from Hubstaff's local logs.
+Schedules can change, captures can be skipped, and stopping or switching tasks may trigger an immediate
+screenshot. Scheduled hiding cannot guarantee that the widget stays out of every capture.
+See [USER_GUIDE.md](USER_GUIDE.md#screenshot-timer-experimental) for details.
+
 ## Getting started
 
 1. Start the viewer; it discovers `%APPDATA%\Hubstaff\data\hubstaff.com` automatically.
@@ -59,7 +77,8 @@ need manual review; an empty result is not proof that an image is safe.
 4. Use Reviewed or Flag to record your decision. Thumbnail viewing alone does not mark it reviewed.
 5. Close the main window to keep monitoring in the tray; use Exit application to stop it.
 
-Settings contains language, notifications, startup, Hubstaff timer control, AI and storage options. A language change applies
+Settings contains language, notifications, startup, the screenshot timer, Hubstaff timer control, AI and
+storage options. A language change applies
 after exiting from the tray and restarting. Automatic AI scanning, timer control and cleanup are off by default.
 Retention defaults to 30 days, with flagged/unread screenshots protected by default.
 See [USER_GUIDE.md](USER_GUIDE.md) for detailed instructions.

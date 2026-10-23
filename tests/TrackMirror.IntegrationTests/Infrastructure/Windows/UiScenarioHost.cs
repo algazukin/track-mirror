@@ -21,6 +21,7 @@ using TrackMirror.Storage;
 using TrackMirror.Storage.Management;
 
 using TrackMirror.UI.Controls;
+using TrackMirror.UI.Interop;
 
 using TrackMirror.UI.Forms;
 
@@ -200,6 +201,49 @@ internal static class UiScenarioHost
     {
         switch (scenario)
         {
+            case "countdown-settings":
+                // Arrange
+                var overlay = UiControls.Field<ScreenshotCountdownForm>(context, "_countdown");
+                var preferences = UiControls.Field<SettingsStore>(context, "_settings");
+                var initial = new ScreenshotCountdownOptions
+                {
+                    Enabled = true, Mode = ScreenshotCountdownMode.Detailed,
+                    MiddleButtonDrag = true, Left = 80, Top = 80
+                };
+
+                foreach (var next in new[]
+                {
+                    initial with { Enabled = false }, initial with { Mode = ScreenshotCountdownMode.Default },
+                    initial with { Mode = ScreenshotCountdownMode.BeforeScreenshot }
+                })
+                {
+                    preferences.Save(preferences.Current with { ScreenshotCountdown = initial });
+                    overlay.ApplyOptions(initial);
+
+                    if (next.Mode == ScreenshotCountdownMode.BeforeScreenshot)
+                    {
+                        overlay.Show();
+                        UiControls.Field<MiddleButtonDragListener?>(overlay, "middleListener")?.SetTarget(Rectangle.Empty);
+                        UiControls.Invoke(overlay, "QueueMiddleDrag", new Point(200, 100), false);
+                        await UiControls.NextTurn(history);
+                    }
+
+                    UiControls.Invoke(overlay, "QueueMiddleDrag", new Point(320, 200), false);
+
+                    // Act
+                    UiControls.Invoke(context, "ApplySettings", preferences.Current with { ScreenshotCountdown = next });
+                    await UiControls.NextTurn(history);
+                    var restored = new SettingsStore(store.DataRoot).Current.ScreenshotCountdown;
+
+                    // Assert
+                    Assert.Equal(320, restored.Left);
+                    Assert.Equal(200, restored.Top);
+                    Assert.Equal(next.Enabled, restored.Enabled);
+                    Assert.Equal(next.Mode, restored.Mode);
+                    Assert.Equal(new Point(320, 200), overlay.Location);
+                    Assert.False(overlay.Visible);
+                }
+                break;
             case "shutdown":
                 TestWindow.Show(history);
                 break;
