@@ -20,6 +20,8 @@ using TrackMirror.UI.Theme;
 using TrackMirror.UI.Interop;
 using TrackMirror.UI;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.App;
 
 public sealed class ViewerContext : ApplicationContext
@@ -50,6 +52,7 @@ public sealed class ViewerContext : ApplicationContext
     private bool settingsSaved = true;
     private string trayStatus = string.Empty;
     private string? countdownStatus;
+    private ScreenshotScheduleStatus? previousCountdownState;
     private List<string> reviewUndo = [];
     internal string? NextDataRoot { get; private set; }
 
@@ -385,6 +388,8 @@ public sealed class ViewerContext : ApplicationContext
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or SecurityException
             or Win32Exception or InvalidOperationException or COMException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.UI, DiagnosticEvent.OperationFailed, ex);
+
             _history.SetDataStatus(DataManagementText.FailedPrefix + ex.Message, error: true);
         }
 
@@ -401,6 +406,8 @@ public sealed class ViewerContext : ApplicationContext
 
     private void OnCaptureSaved(CaptureEntry entry, bool notify)
     {
+        AppDiagnostics.Write(DiagnosticComponent.Screenshots, DiagnosticEvent.OperationCompleted);
+
         if (notify && entry.CapturedUtc >= _startedUtc && _settings.Current.PrivacyAutoScan
             && LocalModelRuntime.IsInstalled(_settings.Current.PrivacyModel))
         {
@@ -423,6 +430,8 @@ public sealed class ViewerContext : ApplicationContext
             or ArgumentException
             or OutOfMemoryException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.UI, DiagnosticEvent.OperationFailed, ex);
+
             ShowWarning(Messages.PreviewUnavailablePrefix + ex.Message);
         }
     }
@@ -473,6 +482,8 @@ public sealed class ViewerContext : ApplicationContext
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.UI, DiagnosticEvent.OperationFailed, ex);
+
             settingsSaved = false;
 
             _history.SetSettingsStatus(SettingsText.SaveFailedPrefix + ex.Message);
@@ -493,6 +504,8 @@ public sealed class ViewerContext : ApplicationContext
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or SecurityException
             or Win32Exception or InvalidOperationException or COMException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.UI, DiagnosticEvent.OperationFailed, ex);
+
             _history.SetSettingsStatus(SettingsText.StartupFailedPrefix + ex.Message);
         }
     }
@@ -523,6 +536,13 @@ public sealed class ViewerContext : ApplicationContext
         }
 
         var snapshot = _screenshotSchedule.Snapshot(DateTimeOffset.UtcNow);
+
+        if (previousCountdownState != snapshot.Status)
+        {
+            previousCountdownState = snapshot.Status;
+            AppDiagnostics.Write(DiagnosticComponent.Countdown, DiagnosticEvent.StateChanged,
+                metrics: new DiagnosticMetrics { Code = (int)snapshot.Status });
+        }
 
         _countdown.UpdateState(snapshot);
         SetCountdownStatus(CountdownDisplay.StatusText(snapshot));
@@ -592,6 +612,8 @@ public sealed class ViewerContext : ApplicationContext
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.UI, DiagnosticEvent.OperationFailed, ex);
+
             ShowWarning(DatabaseText.WriteFailed);
         }
     }
@@ -616,6 +638,8 @@ public sealed class ViewerContext : ApplicationContext
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.UI, DiagnosticEvent.OperationFailed, ex);
+
             ShowWarning(DatabaseText.WriteFailed);
         }
     }
@@ -703,6 +727,14 @@ public sealed class ViewerContext : ApplicationContext
         hasWarning = false;
 
         UpdateTray();
+    }
+
+    internal void ExitAfterError()
+    {
+        if (exiting)
+            base.ExitThreadCore();
+        else
+            ExitThread();
     }
 
     protected override async void ExitThreadCore()

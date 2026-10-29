@@ -4,6 +4,9 @@ Versions here match tags and release archives.
 
 ## Unreleased
 
+- Add bounded, privacy-safe local technical logs, managed exception handlers and manual diagnostic ZIP
+  export in Settings. Exclude screenshots, OCR/prompts/responses, user identifiers and personal paths.
+
 - Add Default, Detailed and Before screenshot display modes, configurable appearance/hiding thresholds,
   countdown in the app and tray, and a compact digits-only desktop widget.
 - Add optional middle-button dragging with click-through for other buttons and timer positioning from

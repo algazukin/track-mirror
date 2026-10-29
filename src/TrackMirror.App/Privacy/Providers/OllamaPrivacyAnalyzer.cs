@@ -14,6 +14,8 @@ using TrackMirror.Constants;
 using TrackMirror.Privacy.Models;
 using TrackMirror.Privacy.Analysis;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Privacy.Providers;
 
 internal sealed class OllamaPrivacyAnalyzer : IAiPrivacyAnalyzer, IDisposable
@@ -359,6 +361,13 @@ internal sealed class OllamaPrivacyAnalyzer : IAiPrivacyAnalyzer, IDisposable
         finally
         {
             diagnostics.Add(diagnostic with { DurationMilliseconds = timer.Elapsed.TotalMilliseconds });
+            AppDiagnostics.Write(DiagnosticComponent.AI, DiagnosticEvent.RequestCompleted, metrics: new DiagnosticMetrics
+            {
+                Bytes = diagnostic.RequestBytes, PromptTokens = diagnostic.PromptTokens, ReplyTokens = diagnostic.ReplyTokens,
+                OcrBlocks = diagnostic.OcrBlocks, OcrCharacters = diagnostic.OcrCharacters,
+                DurationMilliseconds = timer.Elapsed.TotalMilliseconds,
+                Code = (int)DiagnosticException.PrivacyFailure(diagnostic.FailureCode)
+            });
         }
     }
 

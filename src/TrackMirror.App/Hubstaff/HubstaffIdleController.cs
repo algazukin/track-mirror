@@ -4,6 +4,8 @@
 
 using TrackMirror.Constants;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Hubstaff;
 
 internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservation?> idle, TimeProvider? clock = null)
@@ -105,8 +107,9 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
                 await RestartAsync(options, token);
             }
         }
-        catch (OperationCanceledException) when (!token.IsCancellationRequested)
+        catch (OperationCanceledException error) when (!token.IsCancellationRequested)
         {
+            AppDiagnostics.Write(DiagnosticComponent.TimerControl, DiagnosticEvent.OperationFailed, error);
             paused = null;
 
             faulted = true;
@@ -115,6 +118,7 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
         }
         catch (HubstaffControlException error)
         {
+            AppDiagnostics.Write(DiagnosticComponent.TimerControl, DiagnosticEvent.OperationFailed, error);
             paused = null;
 
             faulted = true;

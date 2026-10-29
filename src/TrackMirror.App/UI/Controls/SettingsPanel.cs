@@ -60,6 +60,7 @@ public sealed class SettingsPanel : UserControl
     private readonly PrivacySettingsPanel _privacy;
     private readonly StorageSettingsPanel _storage;
     private readonly AboutSettingsPanel _about;
+    private readonly DiagnosticsSettingsPanel _diagnostics;
     private SurfacePanel? optionsCard;
     private readonly bool _noPreviews;
     private AppSettings current;
@@ -99,6 +100,8 @@ public sealed class SettingsPanel : UserControl
         _storage = new StorageSettingsPanel(settings, dataRoot);
 
         _about = new AboutSettingsPanel(settings.UpdateChannel);
+
+        _diagnostics = new DiagnosticsSettingsPanel();
 
         Dock = DockStyle.Fill;
 
@@ -212,7 +215,7 @@ public sealed class SettingsPanel : UserControl
             AutoSize = true,
             AutoSizeMode = AutoSizeMode.GrowAndShrink,
             ColumnCount = 1,
-            RowCount = 9,
+            RowCount = 10,
             Margin = Padding.Empty
         };
 
@@ -335,12 +338,21 @@ public sealed class SettingsPanel : UserControl
 
         aboutCard.Controls.Add(_about);
 
-        root.Controls.Add(aboutCard, 0, 7);
+        var diagnosticsCard = new SurfacePanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Padding = new Padding(20), Margin = new Padding(0, 0, 0, 12)
+        };
+        diagnosticsCard.Controls.Add(_diagnostics);
+        root.Controls.Add(diagnosticsCard, 0, 7);
+        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+        root.Controls.Add(aboutCard, 0, 8);
         root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
         if (noPreviews)
         {
-            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 8);
+            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 9);
         }
 
         return root;
@@ -463,6 +475,8 @@ public sealed class SettingsPanel : UserControl
         _storage.SetBusy(busy);
 
         _about.Enabled = !busy;
+
+        _diagnostics.Enabled = !busy;
     }
 
     internal void SetHubstaffControlStatus(HubstaffControlStatus value) => _hubstaff.SetStatus(value);

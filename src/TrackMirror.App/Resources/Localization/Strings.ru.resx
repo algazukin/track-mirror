@@ -1115,4 +1115,12 @@
   <data name="CountdownText.MiddleDrag" xml:space="preserve"><value>Пропускать клики; двигать с зажатой средней кнопкой мыши</value></data>
   <data name="CountdownText.InteractionHint" xml:space="preserve"><value>Иначе двигайте левой кнопкой, а меню открывайте правой. То же меню всегда доступно в трее. Скрытие следует расписанию и не гарантирует отсутствие виджета на каждом снимке.</value></data>
   <data name="CountdownText.MiddleDragUnavailable" xml:space="preserve"><value>Перемещение средней кнопкой недоступно. Используйте левую кнопку или меню в трее.</value></data>
+  <data name="DiagnosticsText.Heading" xml:space="preserve"><value>Диагностика</value></data>
+  <data name="DiagnosticsText.Hint" xml:space="preserve"><value>Локальные технические журналы помогают разбирать ошибки. ZIP содержит логи и основные сведения о системе, без снимков, OCR-текста, истории, настроек, данных аккаунтов и личных путей. Автоматической отправки нет. Лимиты журналов: 5 файлов по 2 МБ, срок хранения 14 дней.</value></data>
+  <data name="DiagnosticsText.Export" xml:space="preserve"><value>Экспорт диагностики...</value></data>
+  <data name="DiagnosticsText.Exporting" xml:space="preserve"><value>Подготовка диагностического архива...</value></data>
+  <data name="DiagnosticsText.Completed" xml:space="preserve"><value>Архив диагностики сохранён. Его можно приложить к сообщению об ошибке.</value></data>
+  <data name="DiagnosticsText.Failed" xml:space="preserve"><value>Не удалось экспортировать диагностику. Проверьте права доступа к папке и свободное место, затем повторите попытку.</value></data>
+  <data name="DiagnosticsText.Unavailable" xml:space="preserve"><value>Локальная диагностика недоступна в этом сеансе.</value></data>
+  <data name="DiagnosticsText.UnexpectedError" xml:space="preserve"><value>Произошла непредвиденная ошибка. TrackMirror завершит работу. После перезапуска откройте Настройки → Диагностика для экспорта отчёта.</value></data>
 </root>

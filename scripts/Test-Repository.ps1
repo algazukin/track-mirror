@@ -26,7 +26,7 @@ foreach ($taskName in $taskRequired) {
 
 $taskForbidden = '(^|/)(docs|plans|specs|work|data|captures|publish|artifacts|bin|obj|privacy-runtime|privacy-downloads|\.git|\.codex|\.agents|\.superpowers)(/|$)|' +
     '(^|/)(viewer\.db.*|settings\.json|index\.json|privacy-results\.json|activity-history\.json|hubstaff-activity(?:-history)?\.json|data-location\.json|startup-error\.txt|\.env(?:\..*)?)$|' +
-    '\.(zip|7z|log|tmp|part|trx)$'
+    '\.(zip|7z|log|tmp|part|trx)$|(^|/)trackmirror[^/]*\.jsonl$'
 foreach ($taskRelative in $taskFiles | Sort-Object -Unique) {
     if ($taskRelative -match $taskForbidden) { throw "Private/internal file in Git's public list: $taskRelative" }
     $taskPath = [IO.Path]::GetFullPath((Join-Path $taskRoot $taskRelative))
