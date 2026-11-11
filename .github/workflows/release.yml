@@ -51,7 +51,7 @@ jobs:
           git merge-base --is-ancestor $tagCommit $mainCommit
           if ($LASTEXITCODE -eq 1) { throw 'The release tag must point to a commit in the history of origin/main. Merge the changes into main before releasing.' }
           if ($LASTEXITCODE -ne 0) { throw 'Cannot verify that the release tag belongs to origin/main.' }
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+      - uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
           dotnet-version: 10.0.x
       - name: Check public repository
