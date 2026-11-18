@@ -13,15 +13,19 @@ your employer's software, third-party runtime internals or changes in a modified
 | AI request diagnostics | Opaque request IDs, numeric request bytes, OCR counts, token counts when supplied, duration and safe failure codes; stored per category in SQLite. No request text, image bytes or raw model response. |
 | AI state | Image hashes, queue/request IDs, per-category versions/checkpoints, structured findings/regions and decisions. |
 | Preferences | Language, notifications, startup, timer mode/intervals/CLI path, model/categories and retention in `settings.json`. |
+| Timer-stop notes (optional) | UTC observation time, associated project/task IDs, idle threshold and reason text in SQLite. Editable presets and prompt preferences are stored in settings. No notes are sent to Hubstaff or included in diagnostics. |
 | Input idle state | Last-input timestamp and elapsed idle time for the current Windows session, in memory for optional timer control. No key contents are read or stored. |
 | Folder records | LocalAppData preferences and transfer markers/redirects store paths and IDs. |
 | Legacy metadata | Imported JSON remains in the data folder and can contain earlier metadata. |
 | Backups | User-created ZIPs contain database, settings, legacy metadata and image copies. |
-| Diagnostics | Startup errors can contain exception details and local paths. |
+| Diagnostics | Bounded local JSONL events: UTC time, application version, random session ID, component/event/severity, numeric metrics/error codes and application method frames. No exception messages or personal paths. |
 
 Activity reads Hubstaff's local `TrackedActivity.xml`. The viewer does not record keystrokes or
 install keyboard hooks. Opt-in timer control reads Windows last-input timing and uses CLI status
 project/task identifiers only in memory to avoid resuming a different selection. CLI output is not logged.
+When the separate local timer-notes option is enabled, the project's/task's identifiers for the stopped
+interval are retained with the note. This option polls CLI status every five seconds while TrackMirror
+is running, even if automatic timer control is disabled. It does not add timer-control commands.
 App names, URLs, project/task IDs and raw XML are not persisted by
 the activity store. Screenshots can contain any visible desktop text/windows.
 
@@ -42,6 +46,32 @@ a middle press inside the widget and its matching release; other clicks pass thr
 store input history or send synthetic input. The hook is removed when the widget hides, the option
 is disabled or the application exits. Normal dragging requires no global mouse hook.
 
+## Local diagnostics and export
+
+Technical logs are written under the installation profile's `diagnostics` folder in LocalAppData,
+separately from the selected history folder. Serilog rolls files daily and by size, with defaults of
+five files of 2 MiB each and 14-day retention. Cleanup runs when opening/rolling a log, and export
+excludes expired records. Log failures must not interrupt
+normal application work. Abrupt termination, native crashes and unwritable storage may prevent a final
+record. Managed UI errors request shutdown; background/task exception recording is best effort.
+
+The logger accepts fixed event/component names and numeric metrics, including AI request/token/OCR
+counts. Exception messages, Data, arbitrary text and full exception strings are excluded. Application
+stack frames contain method metadata/IL offsets and names derived from the application assembly,
+without source-file paths or arguments. Unknown provider failure text maps to a fixed unknown code.
+No screenshot, OCR text, prompt/response, account/project/task ID, CLI output, URL, filename, command-line
+argument, machine/user name or raw Hubstaff log is recorded.
+
+**Settings → Diagnostics → Export diagnostics** creates a user-selected ZIP containing only
+`diagnostics.jsonl` and `system.json`. Export rebuilds a closed record schema, ignores unknown fields
+and unrelated files, and resolves frame names from application metadata instead of trusting file text.
+The technical manifest contains app/runtime/OS versions, architecture, processor count, available
+memory, storage limits and dropped-record count. It excludes settings, paths and the history database.
+Older-build frames retain numeric metadata instead of trusting unresolved method-name text.
+Nothing is sent automatically. Timestamps and technical events still describe application use; review
+the archive before sharing it. Legacy `startup-error.log` files from older builds are neither written
+nor included in diagnostic exports; they may still contain private paths in the old data folder.
+
 ## Network behaviour
 
 The viewer has no application analytics, advertising, registration, automatic crash upload, Hubstaff
@@ -50,6 +80,8 @@ Optional timer control sends local `status`, `stop` and `resume` commands throug
 Hubstaff CLI after the user enables it and grants Scripted control permission. This can change tracked
 time and future capture activity. Hubstaff manages its own uploads and server records; the viewer
 does not replace or delete them. Hubstaff may contact its service as part of normal timer operation.
+Local timer notes only read status and write the viewer's own database/settings; no Hubstaff note API
+is called. Presets, note text and associated identifiers are excluded from technical logs and exports.
 
 Optional installation performs HTTPS downloads of the pinned Ollama Windows runtime from GitHub and
 models from Ollama registry/blob infrastructure. Those services may see ordinary download metadata,

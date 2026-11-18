@@ -11,6 +11,7 @@ using TrackMirror.IntegrationTests.Infrastructure.TestDoubles;
 using TrackMirror.Localization;
 
 using TrackMirror.Models;
+using TrackMirror.Monitoring;
 
 using TrackMirror.Privacy;
 
@@ -58,6 +59,9 @@ internal static class UiScenarioHost
 
             Application.EnableVisualStyles();
 
+            if (args[1].StartsWith("diagnostics-", StringComparison.Ordinal))
+                return DiagnosticScenario.Run(root, args[1]);
+
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
 
             UiLocalization.Initialize(args[3]);
@@ -78,7 +82,18 @@ internal static class UiScenarioHost
     private static void Run(string root, string scenario)
     {
         // Arrange
-        var source = Path.Combine(root, "empty-source");
+        var notesTarget = Path.Combine(root, "moved-notes");
+
+        if (scenario == "notes-move-during-exit")
+        {
+            root = Path.Combine(root, "notes-source");
+            Directory.CreateDirectory(root);
+        }
+
+        var countdownStartup = scenario is "countdown-startup" or "countdown-startup-before";
+        var source = countdownStartup
+            ? Path.Combine(root, "hubstaff", "empty-source")
+            : Path.Combine(root, "empty-source");
 
         var application = Path.Combine(root, "application");
 
@@ -87,6 +102,45 @@ internal static class UiScenarioHost
         Directory.CreateDirectory(application);
 
         var settings = new AppSettings { PrivacyGames = true, PrivacyConfidentialData = false };
+
+        if (scenario == "countdown-after-cleanup")
+        {
+            settings = settings with
+            {
+                ScreenshotCountdown = new ScreenshotCountdownOptions
+                {
+                    Enabled = true, Mode = ScreenshotCountdownMode.BeforeScreenshot,
+                    ShowBeforeSeconds = 20, HideBeforeScreenshot = true, HideBeforeSeconds = 1
+                }
+            };
+        }
+
+        if (countdownStartup)
+        {
+            var mode = scenario == "countdown-startup-before"
+                ? ScreenshotCountdownMode.BeforeScreenshot
+                : ScreenshotCountdownMode.Detailed;
+            var logs = Directory.CreateDirectory(Path.Combine(root, "logs"));
+            var account = Directory.CreateDirectory(Path.Combine(source, "fixture"));
+            File.WriteAllText(Path.Combine(account.FullName, "Task.xml"),
+                "<root><item><id>11</id><project>1</project></item></root>");
+
+            var now = DateTime.UtcNow;
+            var timestamp = FormattableString.Invariant($"{now:yyyy-MM-dd HH:mm:ss.ffffff}+0000");
+            File.WriteAllText(Path.Combine(logs.FullName, "hubstaff.log"), FormattableString.Invariant($"""
+                {timestamp} [DEBUG] [fixture:main] ScreenshotExtension.h:47  Screen Frequency: 2 Screen Slot: {now:yyyy-MM-dd HH:mm:ss}Z Screen Next: {now.AddSeconds(90):yyyy-MM-dd HH:mm:ss}Z
+                {timestamp} [AUDIT] [fixture:main] ActivityTracker.cpp:2406  (START_TRACKING) Tracking Started: [Example:11] by [USER]
+                """) + "\n");
+
+            settings = settings with
+            {
+                ScreenshotCountdown = new ScreenshotCountdownOptions
+                {
+                    Enabled = true, Mode = mode, ShowBeforeSeconds = 120,
+                    HideBeforeScreenshot = mode == ScreenshotCountdownMode.BeforeScreenshot
+                }
+            };
+        }
 
         new SettingsStore(root).Save(settings);
 
@@ -139,11 +193,19 @@ internal static class UiScenarioHost
 
         var tray = UiControls.Field<NotifyIcon>(context, "_tray");
 
+        if (countdownStartup)
+        {
+            var schedule = UiControls.Field<ScreenshotScheduleMonitor>(context, "_screenshotSchedule");
+            typeof(ScreenshotScheduleMonitor).GetField("_running",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+                .SetValue(schedule, (Func<bool>)(() => true));
+        }
+
         history.Opacity = preview.Opacity = 0;
 
         history.ShowInTaskbar = false;
 
-        if (scenario != "preview-startup")
+        if (scenario != "preview-startup" && !countdownStartup)
         {
             context.MainForm = history;
         }
@@ -185,6 +247,12 @@ internal static class UiScenarioHost
 
         Assert.All(owned, window => Assert.True(window.IsDisposed));
 
+        if (scenario == "notes-move-during-exit")
+        {
+            Assert.Equal("queued-during-move", Assert.Single(
+                new TimerNoteStore(notesTarget).Snapshot()).Id);
+        }
+
         if (scenario is "shutdown-scan" or "shutdown-download")
         {
             Assert.True(gate.Cancelled.Task.IsCompletedSuccessfully);
@@ -201,6 +269,86 @@ internal static class UiScenarioHost
     {
         switch (scenario)
         {
+            case "countdown-startup":
+            case "countdown-startup-before":
+                // Arrange
+                var startupOverlay = UiControls.Field<ScreenshotCountdownForm>(context, "_countdown");
+
+                // Act
+                using (var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(8)))
+                {
+                    await UiControls.NextTurn(history);
+
+                    while (!startupOverlay.Visible)
+                    {
+                        await Task.Delay(20, deadline.Token);
+                    }
+                }
+
+                // Assert
+                Assert.False(history.Visible);
+                Assert.True(TestWindow.IsWindowVisible(startupOverlay.Handle),
+                    $"The timer was not shown by Windows (WinForms Visible: {startupOverlay.Visible}).");
+                Assert.True(TestWindow.IsTopmost(startupOverlay), "Windows showed the startup timer below its topmost layer.");
+                Assert.False(startupOverlay.ContainsFocus);
+                break;
+            case "countdown-after-cleanup":
+                // Arrange
+                await UiControls.NextTurn(history);
+                var schedule = UiControls.Field<ScreenshotScheduleMonitor>(context, "_screenshotSchedule");
+                Assert.True(UiControls.Field<bool>(schedule, "enabled"));
+                File.WriteAllBytes(Path.Combine(store.CapturesRoot, "fixture", "expired.jpg"), TestImages.Jpeg());
+                var expired = store.Add("fixture", "expired.jpg", DateTime.UtcNow.AddDays(-90), true);
+                store.MarkViewed(expired.Id);
+                store.FlushPending();
+                var cleanup = UiControls.Field<ViewerDataOperations>(context, "_dataOperations");
+                Assert.Single(new CaptureRetention(store.DataRoot).Candidates(
+                    UiControls.Field<SettingsStore>(context, "_settings").Current, DateTime.UtcNow));
+
+                // Act
+                cleanup.Start(DataOperationKind.Cleanup, automatic: true);
+                Assert.True(cleanup.Busy, "The synthetic cleanup did not start.");
+                using (var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(8)))
+                {
+                    while (cleanup.Busy)
+                    {
+                        await Task.Delay(10, deadline.Token);
+                    }
+                }
+
+                await UiControls.NextTurn(history);
+
+                // Assert
+                Assert.DoesNotContain(new ScreenshotStore(store.DataRoot).Snapshot(), capture => capture.Id == expired.Id);
+                Assert.True(UiControls.Field<bool>(schedule, "enabled"),
+                    "Cleanup left the saved screenshot timer enabled but its schedule observer stopped.");
+                break;
+            case "notes-move-during-exit":
+                // Arrange
+                await (Task)UiControls.Invoke(context, "PauseMonitorsAsync")!;
+                var queuedNote = new TimerStopNote("queued-during-move", DateTime.UtcNow, "project", null);
+                UiControls.Invoke(context, "RecordTimerNote", queuedNote, false);
+                var moved = await DataFolderTransfer.MoveAsync(store.DataRoot,
+                    Path.Combine(Directory.GetParent(store.DataRoot)!.FullName, "moved-notes"), default);
+                var closingOperation = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+                var operations = UiControls.Field<ViewerDataOperations>(context, "_dataOperations");
+                typeof(ViewerDataOperations).GetField("operation",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+                    .SetValue(operations, closingOperation.Task);
+
+                try
+                {
+                    // Act
+                    UiControls.Invoke(context, "SwitchDataFolder", moved);
+                    UiControls.Invoke(context, "ResumeDataWorkers", false);
+                }
+                finally
+                {
+                    closingOperation.TrySetResult();
+                }
+
+                // Assert: the destination is checked after the asynchronous application shutdown above.
+                break;
             case "countdown-settings":
                 // Arrange
                 var overlay = UiControls.Field<ScreenshotCountdownForm>(context, "_countdown");

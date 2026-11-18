@@ -5,6 +5,8 @@
 using Microsoft.Data.Sqlite;
 using TrackMirror.Constants;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Storage.Sqlite;
 
 internal sealed class ViewerDatabase
@@ -43,7 +45,8 @@ internal sealed class ViewerDatabase
             [
                 new SchemaMigration(1, ReadSchema(DatabaseNames.InitialSchema)),
                 new SchemaMigration(2, ReadSchema(DatabaseNames.RetentionSchema)),
-                new SchemaMigration(3, ReadSchema(DatabaseNames.PrivacyDiagnosticsSchema))
+                new SchemaMigration(3, ReadSchema(DatabaseNames.PrivacyDiagnosticsSchema)),
+                new SchemaMigration(4, ReadSchema(DatabaseNames.TimerNotesSchema))
             ]);
 
             LegacyImporter.Import(this, connection);
@@ -56,6 +59,8 @@ internal sealed class ViewerDatabase
         }
         catch (SqliteException ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, ex);
+
             throw new IOException(DatabaseText.Unavailable, ex);
         }
     }
@@ -81,6 +86,8 @@ internal sealed class ViewerDatabase
         }
         catch (SqliteException ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, ex);
+
             connection.Dispose();
 
             throw new IOException(DatabaseText.Unavailable, ex);
@@ -101,6 +108,8 @@ internal sealed class ViewerDatabase
         }
         catch (SqliteException ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, ex);
+
             throw new IOException(DatabaseText.WriteFailed, ex);
         }
     }

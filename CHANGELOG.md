@@ -4,6 +4,19 @@ Versions here match tags and release archives.
 
 ## Unreleased
 
+- Size timer-note editors to their content and show the themed scrollbar only on overflow.
+- Suppress Windows launch-feedback cursors when polling the Hubstaff CLI, and restore screenshot
+  countdown monitoring after automatic cleanup and other data operations without toggling settings.
+- Keep the screenshot countdown above ordinary windows without taking keyboard focus.
+
+- Add optional, local-only timer-stop notes with confirmed idle-pause reasons, editable presets,
+  a quiet tray-side prompt, custom reasons, Skip and an editable history tab in English/Russian.
+  Exclude internal stop/resume cycles, avoid startup duplicates, and include notes in local backups
+  and data-folder transfers with SQLite schema 4. No notes are submitted to Hubstaff or diagnostic exports.
+
+- Add bounded, privacy-safe local technical logs, managed exception handlers and manual diagnostic ZIP
+  export in Settings. Exclude screenshots, OCR/prompts/responses, user identifiers and personal paths.
+
 - Add Default, Detailed and Before screenshot display modes, configurable appearance/hiding thresholds,
   countdown in the app and tray, and a compact digits-only desktop widget.
 - Add optional middle-button dragging with click-through for other buttons and timer positioning from
@@ -25,7 +38,8 @@ Versions here match tags and release archives.
 - Per-user Windows x64 installer, upgrade/uninstall support and installer assets in CI and draft Releases.
 - Preserve personal data and downloaded models when uninstalling; validate packaged native x64 libraries.
 - Add thumbnail selection, filtered bulk review with Undo, and per-run AI checks with category selection.
-- Optional idle-triggered Hubstaff CLI timer control with two modes, configurable timing and executable path.
+- Optional Hubstaff CLI timer control pauses until activity returns, with a configurable idle threshold and
+  executable path. Profiles that used periodic stop/resume start with timer control off after upgrading.
 - Keep Hubstaff timer settings editable after initial window layout and display scaling.
 - Size settings cards to their content and keep AI result actions spaced and reachable in smaller windows.
 

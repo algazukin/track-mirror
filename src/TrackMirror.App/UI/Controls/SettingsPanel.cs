@@ -56,10 +56,12 @@ public sealed class SettingsPanel : UserControl
     private readonly Label _secondsLabel = UiTheme.Label(SettingsText.Seconds, 10);
     private readonly Label _saveStatus = UiTheme.Label(SettingsText.Saved, 9, muted: true, wrap: true);
     private readonly HubstaffControlPanel _hubstaff;
+    private readonly TimerNotesSettingsPanel _timerNotes;
     private readonly ScreenshotCountdownPanel _countdown;
     private readonly PrivacySettingsPanel _privacy;
     private readonly StorageSettingsPanel _storage;
     private readonly AboutSettingsPanel _about;
+    private readonly DiagnosticsSettingsPanel _diagnostics;
     private SurfacePanel? optionsCard;
     private readonly bool _noPreviews;
     private AppSettings current;
@@ -92,6 +94,8 @@ public sealed class SettingsPanel : UserControl
 
         _hubstaff = new HubstaffControlPanel(settings.HubstaffControl);
 
+        _timerNotes = new TimerNotesSettingsPanel(settings.TimerNotes);
+
         _countdown = new ScreenshotCountdownPanel(settings.ScreenshotCountdown);
 
         _privacy = new PrivacySettingsPanel(settings);
@@ -99,6 +103,8 @@ public sealed class SettingsPanel : UserControl
         _storage = new StorageSettingsPanel(settings, dataRoot);
 
         _about = new AboutSettingsPanel(settings.UpdateChannel);
+
+        _diagnostics = new DiagnosticsSettingsPanel();
 
         Dock = DockStyle.Fill;
 
@@ -141,6 +147,12 @@ public sealed class SettingsPanel : UserControl
         };
 
         _hubstaff.RetryRequested += () => HubstaffControlRetryRequested?.Invoke();
+
+        _timerNotes.Changed += value =>
+        {
+            current = current with { TimerNotes = value };
+            PublishSettings();
+        };
 
         _countdown.Changed += value =>
         {
@@ -212,7 +224,7 @@ public sealed class SettingsPanel : UserControl
             AutoSize = true,
             AutoSizeMode = AutoSizeMode.GrowAndShrink,
             ColumnCount = 1,
-            RowCount = 9,
+            RowCount = 10,
             Margin = Padding.Empty
         };
 
@@ -301,7 +313,17 @@ public sealed class SettingsPanel : UserControl
             Margin = new Padding(0, 0, 0, 12)
         };
 
-        hubstaffCard.Controls.Add(_hubstaff);
+        var hubstaffSections = new TableLayoutPanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, ColumnCount = 1, RowCount = 2, Margin = Padding.Empty
+        };
+        hubstaffSections.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        hubstaffSections.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        hubstaffSections.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _timerNotes.Margin = new Padding(0, 20, 0, 0);
+        hubstaffSections.Controls.Add(_hubstaff, 0, 0);
+        hubstaffSections.Controls.Add(_timerNotes, 0, 1);
+        hubstaffCard.Controls.Add(hubstaffSections);
 
         root.Controls.Add(hubstaffCard, 0, 4);
 
@@ -335,12 +357,21 @@ public sealed class SettingsPanel : UserControl
 
         aboutCard.Controls.Add(_about);
 
-        root.Controls.Add(aboutCard, 0, 7);
+        var diagnosticsCard = new SurfacePanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Padding = new Padding(20), Margin = new Padding(0, 0, 0, 12)
+        };
+        diagnosticsCard.Controls.Add(_diagnostics);
+        root.Controls.Add(diagnosticsCard, 0, 7);
+        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+        root.Controls.Add(aboutCard, 0, 8);
         root.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
         if (noPreviews)
         {
-            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 8);
+            root.Controls.Add(UiTheme.Label(SettingsText.SessionDisabled, 9, muted: true, wrap: true), 0, 9);
         }
 
         return root;
@@ -463,6 +494,8 @@ public sealed class SettingsPanel : UserControl
         _storage.SetBusy(busy);
 
         _about.Enabled = !busy;
+
+        _diagnostics.Enabled = !busy;
     }
 
     internal void SetHubstaffControlStatus(HubstaffControlStatus value) => _hubstaff.SetStatus(value);

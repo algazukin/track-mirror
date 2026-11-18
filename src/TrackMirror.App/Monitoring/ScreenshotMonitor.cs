@@ -8,6 +8,8 @@ using TrackMirror.Constants;
 using TrackMirror.Models;
 using TrackMirror.Storage;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Monitoring;
 
 public sealed class ScreenshotMonitor : IAsyncDisposable
@@ -177,6 +179,8 @@ public sealed class ScreenshotMonitor : IAsyncDisposable
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Screenshots, DiagnosticEvent.OperationFailed, ex);
+
             SetStatus(Messages.SourceUnavailablePrefix + ex.Message);
         }
         finally
@@ -243,6 +247,8 @@ public sealed class ScreenshotMonitor : IAsyncDisposable
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Screenshots, DiagnosticEvent.OperationFailed, ex);
+
         }
 
         if (!_jobs.Writer.TryWrite(new CaptureJob(path, parts[0], parts[2], timestamp, notify, input)))
@@ -351,6 +357,8 @@ public sealed class ScreenshotMonitor : IAsyncDisposable
                             or ArgumentException
                             or OutOfMemoryException)
                         {
+                            AppDiagnostics.Write(DiagnosticComponent.Screenshots, DiagnosticEvent.OperationFailed, ex);
+
                             failure = ex;
 
                             if (input == null && !File.Exists(job.Path))
@@ -384,6 +392,8 @@ public sealed class ScreenshotMonitor : IAsyncDisposable
                 }
                 catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                 {
+                    AppDiagnostics.Write(DiagnosticComponent.Screenshots, DiagnosticEvent.OperationFailed, ex);
+
                     _retryAfter[id] = DateTime.UtcNow.AddMinutes(1);
 
                     Warning?.Invoke(Messages.SaveFailedPrefix + ex.Message);
@@ -406,6 +416,8 @@ public sealed class ScreenshotMonitor : IAsyncDisposable
                     }
                     catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
                     {
+                        AppDiagnostics.Write(DiagnosticComponent.Screenshots, DiagnosticEvent.OperationFailed, ex);
+
                     }
 
                     _pending.TryRemove(id, out _);

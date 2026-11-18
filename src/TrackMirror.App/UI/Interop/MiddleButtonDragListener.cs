@@ -3,6 +3,8 @@
 // If a copy of the MPL was not distributed with this file, obtain one at https://mozilla.org/MPL/2.0.
 
 using System.Runtime.InteropServices;
+using System.ComponentModel;
+using TrackMirror.Diagnostics;
 
 namespace TrackMirror.UI.Interop;
 
@@ -19,6 +21,7 @@ internal sealed class MiddleButtonDragListener : IDisposable
     private IntPtr hook;
     private uint threadId;
     private int disposed;
+    private int failureCode;
 
     private MiddleButtonDragListener(Rectangle target, Action<Point, bool> changed)
     {
@@ -37,6 +40,8 @@ internal sealed class MiddleButtonDragListener : IDisposable
             return listener;
 
         listener.Dispose();
+        AppDiagnostics.Write(DiagnosticComponent.Countdown, DiagnosticEvent.OperationFailed,
+            listener.failureCode == 0 ? new TimeoutException() : new Win32Exception(listener.failureCode));
 
         return null;
     }
@@ -54,6 +59,7 @@ internal sealed class MiddleButtonDragListener : IDisposable
             threadId = GetCurrentThreadId();
             _ = PeekMessage(out _, IntPtr.Zero, 0, 0, 0); // Create the thread's message queue before signaling readiness.
             hook = SetWindowsHookEx(14, _callback, GetModuleHandle(null), 0); // WH_MOUSE_LL
+            failureCode = hook == IntPtr.Zero ? Marshal.GetLastWin32Error() : 0;
             _ready.Set();
 
             if (hook != IntPtr.Zero && Volatile.Read(ref disposed) == 0)

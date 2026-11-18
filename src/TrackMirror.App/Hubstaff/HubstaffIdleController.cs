@@ -4,6 +4,8 @@
 
 using TrackMirror.Constants;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Hubstaff;
 
 internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservation?> idle, TimeProvider? clock = null)
@@ -19,6 +21,12 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
     private bool faulted;
 
     internal HubstaffControlStatus Status { get; private set; } = new(HubstaffControlState.Disabled);
+
+    internal event Action<HubstaffTrackingStatus, int>? IdleStopped;
+
+    internal event Action<HubstaffTrackingStatus>? InternalStopped;
+
+    internal event Action<HubstaffTrackingStatus>? TrackingResumed;
 
     internal void Reset()
     {
@@ -105,8 +113,9 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
                 await RestartAsync(options, token);
             }
         }
-        catch (OperationCanceledException) when (!token.IsCancellationRequested)
+        catch (OperationCanceledException error) when (!token.IsCancellationRequested)
         {
+            AppDiagnostics.Write(DiagnosticComponent.TimerControl, DiagnosticEvent.OperationFailed, error);
             paused = null;
 
             faulted = true;
@@ -115,6 +124,7 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
         }
         catch (HubstaffControlException error)
         {
+            AppDiagnostics.Write(DiagnosticComponent.TimerControl, DiagnosticEvent.OperationFailed, error);
             paused = null;
 
             faulted = true;
@@ -162,6 +172,8 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
 
                 throw new HubstaffControlException(HubstaffControlNames.StopUnconfirmed);
             }
+
+            IdleStopped?.Invoke(current, options.IdleSeconds);
         }
 
         Status = new(HubstaffControlState.Paused);
@@ -236,13 +248,20 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
 
         if (!current.Tracking)
         {
+            if (requireStopped)
+            {
+                InternalStopped?.Invoke(expected);
+            }
+
             if (!requireStopped)
             {
                 var latest = Observe();
 
                 if (latest.InputTimestamp == pausedInputTimestamp
                     || latest.Duration.TotalSeconds >= options.IdleSeconds)
+                {
                     return false;
+                }
             }
 
             await _cli.ExecuteAsync(options.CliPath, HubstaffControlNames.Resume, token);
@@ -250,7 +269,11 @@ internal sealed class HubstaffIdleController(IHubstaffCli cli, Func<IdleObservat
             var resumed = await _cli.StatusAsync(options.CliPath, token);
 
             if (!resumed.Tracking || !expected.SameSelection(resumed))
+            {
                 throw new HubstaffControlException(HubstaffControlNames.ResumeUnconfirmed);
+            }
+
+            TrackingResumed?.Invoke(resumed);
         }
         else if (requireStopped)
         {

@@ -33,7 +33,7 @@ public sealed class SchemaMigrationTests
         Assert.Throws<SqliteException>(
             () => SchemaMigrator.Apply(
                 connection,
-                [original, new SchemaMigration(4,
+                [original, new SchemaMigration(5,
                     "CREATE TABLE upgrade_probe(id INTEGER); INSERT INTO absent VALUES(1);")]
             )
         );
@@ -42,14 +42,14 @@ public sealed class SchemaMigrationTests
 
         command.CommandText = "PRAGMA user_version;";
 
-        Assert.Equal(3L, command.ExecuteScalar());
+        Assert.Equal(4L, command.ExecuteScalar());
 
         command.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE name='upgrade_probe';";
 
         Assert.Equal(0L, command.ExecuteScalar());
 
         // Act
-        SchemaMigrator.Apply(connection, [original, new SchemaMigration(4, "CREATE TABLE upgrade_probe(id INTEGER);")]);
+        SchemaMigrator.Apply(connection, [original, new SchemaMigration(5, "CREATE TABLE upgrade_probe(id INTEGER);")]);
 
         command.CommandText = "SELECT version FROM schema_migrations ORDER BY version;";
 
@@ -71,6 +71,10 @@ public sealed class SchemaMigrationTests
         Assert.True(reader.Read());
 
         Assert.Equal(4, reader.GetInt32(0));
+
+        Assert.True(reader.Read());
+
+        Assert.Equal(5, reader.GetInt32(0));
     }
 
     [Fact]

@@ -7,6 +7,8 @@ using TrackMirror.Constants;
 using TrackMirror.Models;
 using TrackMirror.Storage;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Monitoring;
 
 public sealed class HubstaffActivityMonitor : IAsyncDisposable
@@ -97,6 +99,8 @@ public sealed class HubstaffActivityMonitor : IAsyncDisposable
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Activity, DiagnosticEvent.OperationFailed, ex);
+
             // The next scan retries folders that are temporarily unavailable.
         }
         finally
@@ -142,6 +146,8 @@ public sealed class HubstaffActivityMonitor : IAsyncDisposable
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or XmlException)
             {
+                AppDiagnostics.Write(DiagnosticComponent.Activity, DiagnosticEvent.OperationFailed, ex);
+
                 // Hubstaff can rewrite or clear a record while it is being read.
             }
         }
@@ -166,6 +172,8 @@ public sealed class HubstaffActivityMonitor : IAsyncDisposable
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Activity, DiagnosticEvent.OperationFailed, ex);
+
             if (!cacheWarningShown)
             {
                 cacheWarningShown = true;

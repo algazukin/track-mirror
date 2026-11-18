@@ -53,6 +53,7 @@
 *.sln.docstates
 *.DotSettings.user
 *.log
+trackmirror*.jsonl
 *.tmp
 *.part
 startup-error.txt

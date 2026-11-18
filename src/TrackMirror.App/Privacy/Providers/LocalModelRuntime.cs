@@ -10,6 +10,9 @@ using TrackMirror.Constants;
 using TrackMirror.Privacy.Installation;
 using TrackMirror.Privacy.Models;
 
+using TrackMirror.Diagnostics;
+using TrackMirror.App;
+
 namespace TrackMirror.Privacy.Providers;
 
 internal sealed class LocalModelRuntime : IDisposable
@@ -80,8 +83,9 @@ internal sealed class LocalModelRuntime : IDisposable
 
             listener.Bind(new IPEndPoint(IPAddress.Loopback, _port));
         }
-        catch (SocketException)
+        catch (SocketException error)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Runtime, DiagnosticEvent.OperationFailed, error);
             throw new PrivacyScanException(PrivacyNames.RuntimePortUnavailable);
         }
 
@@ -111,16 +115,18 @@ internal sealed class LocalModelRuntime : IDisposable
 
         try
         {
-            process = Process.Start(start) ?? throw new PrivacyScanException(PrivacyNames.RuntimeUnavailable);
+            process = ChildProcessLaunch.Start(start) ?? throw new PrivacyScanException(PrivacyNames.RuntimeUnavailable);
         }
-        catch (System.ComponentModel.Win32Exception)
+        catch (System.ComponentModel.Win32Exception error)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Runtime, DiagnosticEvent.OperationFailed, error);
             throw new PrivacyScanException(PrivacyNames.RuntimeUnavailable);
         }
 
         process.BeginOutputReadLine();
 
         process.BeginErrorReadLine();
+        AppDiagnostics.Write(DiagnosticComponent.Runtime, DiagnosticEvent.Started);
 
         for (var attempt = 0; attempt < 80; attempt++)
         {

@@ -18,6 +18,7 @@ public sealed class SchemaUpgradePathTests
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(3)]
+    [InlineData(4)]
     public void Every_released_schema_upgrades_once_and_preserves_capture_marks_and_queued_categories(int version)
     {
         // Arrange
@@ -27,7 +28,8 @@ public sealed class SchemaUpgradePathTests
 
         var schemaNames = new[]
         {
-            DatabaseNames.InitialSchema, DatabaseNames.RetentionSchema, DatabaseNames.PrivacyDiagnosticsSchema
+            DatabaseNames.InitialSchema, DatabaseNames.RetentionSchema, DatabaseNames.PrivacyDiagnosticsSchema,
+            DatabaseNames.TimerNotesSchema
         };
 
         using var connection = new SqliteConnection(
@@ -84,11 +86,11 @@ public sealed class SchemaUpgradePathTests
 
         command.CommandText = "PRAGMA user_version;";
 
-        Assert.Equal(3L, command.ExecuteScalar());
+        Assert.Equal(4L, command.ExecuteScalar());
 
         command.CommandText = "SELECT COUNT(*) FROM schema_migrations;";
 
-        Assert.Equal(3L, command.ExecuteScalar());
+        Assert.Equal(4L, command.ExecuteScalar());
 
         command.CommandText = "PRAGMA foreign_key_check;";
 

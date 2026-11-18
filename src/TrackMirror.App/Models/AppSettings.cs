@@ -18,6 +18,8 @@ public sealed record AppSettings
 
     public HubstaffControlOptions HubstaffControl { get; init; } = new();
 
+    public TimerNotesOptions TimerNotes { get; init; } = new();
+
     public ScreenshotCountdownOptions ScreenshotCountdown { get; init; } = new();
 
     public bool RetentionEnabled { get; init; }

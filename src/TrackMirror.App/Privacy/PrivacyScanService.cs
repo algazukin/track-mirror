@@ -16,6 +16,8 @@ using TrackMirror.Privacy.Providers;
 using TrackMirror.Privacy.Storage;
 using TrackMirror.Storage;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Privacy;
 
 internal sealed class PrivacyScanService : IAsyncDisposable
@@ -299,6 +301,8 @@ internal sealed class PrivacyScanService : IAsyncDisposable
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.AI, DiagnosticEvent.OperationFailed, ex);
+
             Warning = PrivacyText.StorageError;
 
             return false;
@@ -347,6 +351,8 @@ internal sealed class PrivacyScanService : IAsyncDisposable
                         }
                         catch (Exception ex)
                         {
+                            AppDiagnostics.Write(DiagnosticComponent.AI, DiagnosticEvent.OperationFailed, ex);
+
                             release.TrySetException(ex);
                         }
 
@@ -532,6 +538,8 @@ internal sealed class PrivacyScanService : IAsyncDisposable
         }
         catch (Exception ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.AI, DiagnosticEvent.OperationFailed, ex);
+
             // Keep completed checkpoints and persist safe codes, never source text or exception messages.
             return job with
             {
@@ -610,6 +618,8 @@ internal sealed class PrivacyScanService : IAsyncDisposable
         }
         catch (Exception ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.AI, DiagnosticEvent.OperationFailed, ex);
+
             return Outcomes(new AiPrivacyAnalysis(false, [],
                 ex is PrivacyScanException error ? error.Code : stage), true);
         }

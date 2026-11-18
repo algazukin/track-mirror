@@ -13,6 +13,8 @@ using System.Net;
 using System.Security;
 using System.Text.Json;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.UI.Controls;
 
 internal sealed class AboutSettingsPanel : SettingsSection
@@ -146,7 +148,10 @@ internal sealed class AboutSettingsPanel : SettingsSection
 
         try
         {
+            AppDiagnostics.Write(DiagnosticComponent.Updates, DiagnosticEvent.OperationStarted);
             var result = await _checker.CheckAsync(_version, SelectedChannel, token);
+            AppDiagnostics.Write(DiagnosticComponent.Updates, DiagnosticEvent.OperationCompleted,
+                metrics: new DiagnosticMetrics { Code = (int)result.Status });
 
             if (token.IsCancellationRequested || IsDisposed || Disposing)
                 return;
@@ -166,19 +171,23 @@ internal sealed class AboutSettingsPanel : SettingsSection
             }
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested) { }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException error)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Updates, DiagnosticEvent.OperationFailed, error);
             if (!IsDisposed)
                 SetStatus(AboutText.TimedOut, error: true);
         }
         catch (HttpRequestException ex) when (ex.StatusCode is HttpStatusCode.Forbidden or HttpStatusCode.TooManyRequests)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Updates, DiagnosticEvent.OperationFailed, ex);
             if (!IsDisposed)
                 SetStatus(AboutText.RateLimited, error: true);
         }
         catch (Exception ex) when (ex is HttpRequestException or JsonException or IOException
             or ArgumentException or InvalidOperationException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Updates, DiagnosticEvent.OperationFailed, ex);
+
             if (!IsDisposed)
                 SetStatus(AboutText.Failed, error: true);
         }
@@ -225,6 +234,8 @@ internal sealed class AboutSettingsPanel : SettingsSection
         catch (Exception ex) when (ex is Win32Exception or InvalidOperationException or IOException
             or ArgumentException or SecurityException)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Updates, DiagnosticEvent.OperationFailed, ex);
+
             SetStatus(AboutText.BrowserFailed, error: true);
         }
     }

@@ -9,6 +9,8 @@ using TrackMirror.Constants;
 using TrackMirror.Privacy.Models;
 using TrackMirror.Privacy.Providers;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Privacy.Installation;
 
 internal sealed class PrivacyModelInstaller : IAsyncDisposable
@@ -111,6 +113,8 @@ internal sealed class PrivacyModelInstaller : IAsyncDisposable
     private async Task RunAsync(PrivacyModelDefinition model, bool remove,
         Func<CancellationToken, Task>? release, Action? resume, CancellationToken token)
     {
+        AppDiagnostics.Write(DiagnosticComponent.Installation, DiagnosticEvent.OperationStarted);
+
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(_root)!);
@@ -167,13 +171,17 @@ internal sealed class PrivacyModelInstaller : IAsyncDisposable
             token.ThrowIfCancellationRequested();
 
             Publish(new PrivacyInstallProgress(remove ? PrivacyInstallStage.Removed : PrivacyInstallStage.Ready));
+            AppDiagnostics.Write(DiagnosticComponent.Installation, DiagnosticEvent.OperationCompleted);
         }
         catch (OperationCanceledException) when (token.IsCancellationRequested)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Installation, DiagnosticEvent.OperationCancelled);
             Publish(new PrivacyInstallProgress(PrivacyInstallStage.Cancelled));
         }
         catch (Exception ex)
         {
+            AppDiagnostics.Write(DiagnosticComponent.Installation, DiagnosticEvent.OperationFailed, ex);
+
             var code = ex is PrivacyScanException error ? error.Code : remove ? PrivacyInstallNames.RemoveError
                 : ex is HttpRequestException ? PrivacyInstallNames.DownloadError
                 : ex is InvalidDataException ? PrivacyInstallNames.ArchiveError

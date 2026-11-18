@@ -7,6 +7,8 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
+using TrackMirror.Diagnostics;
+
 namespace TrackMirror.Monitoring;
 
 internal sealed class ScreenshotScheduleMonitor : IAsyncDisposable
@@ -145,6 +147,9 @@ internal sealed class ScreenshotScheduleMonitor : IAsyncDisposable
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or XmlException
                 or System.ComponentModel.Win32Exception or System.Security.SecurityException)
             {
+                if (unavailable != ScreenshotScheduleStatus.Unavailable)
+                    AppDiagnostics.Write(DiagnosticComponent.Countdown, DiagnosticEvent.OperationFailed, ex);
+
                 Reset();
 
                 unavailable = ScreenshotScheduleStatus.Unavailable;

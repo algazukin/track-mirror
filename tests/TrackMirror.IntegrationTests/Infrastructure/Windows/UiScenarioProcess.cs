@@ -4,6 +4,7 @@
 
 using System.Diagnostics;
 using Xunit;
+using TrackMirror.App;
 
 namespace TrackMirror.IntegrationTests.Infrastructure.Windows;
 
@@ -33,7 +34,7 @@ internal static class UiScenarioProcess
             info.ArgumentList.Add(argument);
         }
 
-        using var process = Process.Start(info)!;
+        using var process = ChildProcessLaunch.Start(info)!;
 
         var output = process.StandardOutput.ReadToEndAsync();
 
