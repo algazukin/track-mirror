@@ -39,4 +39,3 @@ internal static class TimerNoteText
     internal static string Reason(TimerStopNote note) => note.Reason.Length > 0 ? note.Reason
         : note.IdleSeconds > 0 ? string.Format(IdleFormat, note.IdleSeconds) : Unknown;
 }
-
