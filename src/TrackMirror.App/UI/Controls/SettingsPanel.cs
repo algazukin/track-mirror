@@ -56,6 +56,7 @@ public sealed class SettingsPanel : UserControl
     private readonly Label _secondsLabel = UiTheme.Label(SettingsText.Seconds, 10);
     private readonly Label _saveStatus = UiTheme.Label(SettingsText.Saved, 9, muted: true, wrap: true);
     private readonly HubstaffControlPanel _hubstaff;
+    private readonly TimerNotesSettingsPanel _timerNotes;
     private readonly ScreenshotCountdownPanel _countdown;
     private readonly PrivacySettingsPanel _privacy;
     private readonly StorageSettingsPanel _storage;
@@ -92,6 +93,8 @@ public sealed class SettingsPanel : UserControl
         _noPreviews = noPreviews;
 
         _hubstaff = new HubstaffControlPanel(settings.HubstaffControl);
+
+        _timerNotes = new TimerNotesSettingsPanel(settings.TimerNotes);
 
         _countdown = new ScreenshotCountdownPanel(settings.ScreenshotCountdown);
 
@@ -144,6 +147,12 @@ public sealed class SettingsPanel : UserControl
         };
 
         _hubstaff.RetryRequested += () => HubstaffControlRetryRequested?.Invoke();
+
+        _timerNotes.Changed += value =>
+        {
+            current = current with { TimerNotes = value };
+            PublishSettings();
+        };
 
         _countdown.Changed += value =>
         {
@@ -304,7 +313,17 @@ public sealed class SettingsPanel : UserControl
             Margin = new Padding(0, 0, 0, 12)
         };
 
-        hubstaffCard.Controls.Add(_hubstaff);
+        var hubstaffSections = new TableLayoutPanel
+        {
+            Dock = DockStyle.Top, AutoSize = true, ColumnCount = 1, RowCount = 2, Margin = Padding.Empty
+        };
+        hubstaffSections.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        hubstaffSections.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        hubstaffSections.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        _timerNotes.Margin = new Padding(0, 20, 0, 0);
+        hubstaffSections.Controls.Add(_hubstaff, 0, 0);
+        hubstaffSections.Controls.Add(_timerNotes, 0, 1);
+        hubstaffCard.Controls.Add(hubstaffSections);
 
         root.Controls.Add(hubstaffCard, 0, 4);
 

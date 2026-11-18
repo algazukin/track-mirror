@@ -40,7 +40,8 @@ on the destination computer; the ordinary .NET Runtime is insufficient.
 - Focus-preserving preview notifications with configurable timeout and an off switch.
 - Experimental screenshot countdown from local Hubstaff logs, with tray/app status and configurable desktop widgets.
 - Tray controls and optional startup alongside Hubstaff.
-- Opt-in idle-triggered Hubstaff CLI control: pause/resume or periodic stop/resume, with configurable timing.
+- Optional Hubstaff timer control pauses tracking after a configurable idle threshold and resumes when input returns.
+- Optional local timer-stop notes, editable quick reasons and a quiet tray-side prompt; no notes are sent to Hubstaff.
 - Locally received activity intervals, account selection and daily graphs.
 - Optional local AI checks for secrets/personal data, games and personal chats.
 - Durable AI queue, per-category coverage, partial results and manual additional checks.
@@ -78,10 +79,11 @@ See [USER_GUIDE.md](USER_GUIDE.md#screenshot-timer-experimental) for details.
 4. Use Reviewed or Flag to record your decision. Thumbnail viewing alone does not mark it reviewed.
 5. Close the main window to keep monitoring in the tray; use Exit application to stop it.
 
-Settings contains language, notifications, startup, the screenshot timer, Hubstaff timer control, AI and
+Settings contains language, notifications, startup, the screenshot timer, Hubstaff timer control, local timer notes, AI and
 storage options. A language change applies
 after exiting from the tray and restarting. Automatic AI scanning, timer control and cleanup are off by default.
-Retention defaults to 30 days, with flagged/unread screenshots protected by default.
+Retention defaults to 30 days, with flagged/unread screenshots protected by default. Timer notes are also
+off by default; enable them beside timer control and review their local history on the Timer notes tab.
 See [USER_GUIDE.md](USER_GUIDE.md) for detailed instructions.
 
 ## Privacy and data

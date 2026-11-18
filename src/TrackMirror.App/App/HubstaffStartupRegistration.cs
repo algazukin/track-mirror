@@ -88,12 +88,12 @@ internal sealed class HubstaffStartupRegistration
             return;
         }
 
-        using var process = Process.Start(StartInfo(StartupNames.WatchOption));
+        using var process = ChildProcessLaunch.Start(StartInfo(StartupNames.WatchOption));
     }
 
     internal void StartViewer()
     {
-        using var process = Process.Start(StartInfo(StartupNames.LaunchOption));
+        using var process = ChildProcessLaunch.Start(StartInfo(StartupNames.LaunchOption));
     }
 
     internal ProcessStartInfo StartInfo(string mode)

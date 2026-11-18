@@ -5,6 +5,7 @@
 using TrackMirror.Constants;
 using TrackMirror.UI.Theme;
 using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel;
 
 namespace TrackMirror.UI.Controls;
 
@@ -13,6 +14,11 @@ internal sealed class ScrollableTextField : UserControl
     private readonly TextViewport _text = new();
     private readonly CaptureScrollBar _scrollBar = new() { AccessibleName = UiText.VerticalScroll };
     private bool updating;
+
+    internal TextViewport Editor => _text;
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    internal int MaximumLines { get; init; }
 
     [AllowNull]
     public override string Text
@@ -80,7 +86,9 @@ internal sealed class ScrollableTextField : UserControl
     private void RefreshLayout()
     {
         if (updating || IsDisposed || Disposing || !_text.IsHandleCreated)
+        {
             return;
+        }
 
         var firstCharacter = Math.Max(0, _text.GetFirstCharIndexFromLine(_text.TopLine));
 
@@ -93,7 +101,16 @@ internal sealed class ScrollableTextField : UserControl
             // Measure wrapping at full width before deciding whether the scrollbar is necessary.
             _text.Dock = DockStyle.None;
 
-            _text.SetBounds(0, 0, ClientSize.Width, ClientSize.Height);
+            _text.Bounds = DisplayRectangle;
+
+            if (MaximumLines > 0)
+            {
+                var lines = Math.Clamp(_text.LineCount, 1, MaximumLines);
+                var textMargin = (int)(4 * DeviceDpi / 96f);
+                var borderHeight = Height - ClientSize.Height;
+                Height = lines * _text.Font.Height + textMargin + Padding.Vertical + borderHeight;
+                _text.Bounds = DisplayRectangle;
+            }
 
             _scrollBar.SetViewport(_text.LineCount, _text.PageLines, _text.TopLine);
         }

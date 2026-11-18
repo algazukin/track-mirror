@@ -77,7 +77,7 @@ public sealed class PrivacyDiagnosticStorageTests
 
         query.CommandText = "PRAGMA user_version;";
 
-        Assert.Equal(3L, query.ExecuteScalar());
+        Assert.Equal(4L, query.ExecuteScalar());
 
         query.CommandText = "SELECT viewed+flagged FROM captures;";
 

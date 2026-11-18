@@ -4,6 +4,15 @@ Versions here match tags and release archives.
 
 ## Unreleased
 
+- Size timer-note editors to their content and show the themed scrollbar only on overflow.
+- Suppress Windows launch-feedback cursors when polling the Hubstaff CLI, and restore screenshot
+  countdown monitoring after automatic cleanup and other data operations without toggling settings.
+
+- Add optional, local-only timer-stop notes with confirmed idle-pause reasons, editable presets,
+  a quiet tray-side prompt, custom reasons, Skip and an editable history tab in English/Russian.
+  Exclude internal stop/resume cycles, avoid startup duplicates, and include notes in local backups
+  and data-folder transfers with SQLite schema 4. No notes are submitted to Hubstaff or diagnostic exports.
+
 - Add bounded, privacy-safe local technical logs, managed exception handlers and manual diagnostic ZIP
   export in Settings. Exclude screenshots, OCR/prompts/responses, user identifiers and personal paths.
 

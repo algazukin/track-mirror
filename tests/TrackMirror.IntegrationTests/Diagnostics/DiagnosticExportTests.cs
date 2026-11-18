@@ -8,6 +8,7 @@ using System.Diagnostics;
 using TrackMirror.Diagnostics;
 using TrackMirror.IntegrationTests.Infrastructure;
 using Xunit;
+using TrackMirror.App;
 
 namespace TrackMirror.IntegrationTests.Diagnostics;
 
@@ -31,7 +32,7 @@ public sealed class DiagnosticExportTests
         };
         foreach (var argument in new[] { "/c", "mklink", "/J", link, target })
             start.ArgumentList.Add(argument);
-        using (var process = Process.Start(start)!)
+        using (var process = ChildProcessLaunch.Start(start)!)
         {
             Assert.True(process.WaitForExit(5000));
             Assert.Equal(0, process.ExitCode);

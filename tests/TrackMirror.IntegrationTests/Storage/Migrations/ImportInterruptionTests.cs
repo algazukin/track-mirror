@@ -10,6 +10,7 @@ using TrackMirror.Storage;
 using Microsoft.Data.Sqlite;
 using Xunit;
 using TrackMirror.IntegrationTests.Infrastructure;
+using TrackMirror.App;
 
 namespace TrackMirror.IntegrationTests.Storage.Migrations;
 
@@ -115,7 +116,7 @@ public sealed class ImportInterruptionTests
         }
 
         // Act
-        using var process = Process.Start(configuration)!;
+        using var process = ChildProcessLaunch.Start(configuration)!;
 
         try
         {

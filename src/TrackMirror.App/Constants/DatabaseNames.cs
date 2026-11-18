@@ -11,7 +11,8 @@ internal static class DatabaseNames
     internal const string RetentionSchema = "TrackMirror.Resources.Storage.002_capture_retention.sql";
     internal const string PrivacyDiagnosticsSchema =
         "TrackMirror.Resources.Storage.003_privacy_request_diagnostics.sql";
-    internal const int CurrentVersion = 3;
+    internal const string TimerNotesSchema = "TrackMirror.Resources.Storage.004_timer_stop_notes.sql";
+    internal const int CurrentVersion = 4;
     internal const string Source = "$source";
     internal const string Cutoff = "$cutoff";
     internal const string KeepFlagged = "$keepFlagged";

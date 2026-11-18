@@ -11,6 +11,7 @@ using TrackMirror.Privacy.Installation;
 using TrackMirror.Privacy.Models;
 
 using TrackMirror.Diagnostics;
+using TrackMirror.App;
 
 namespace TrackMirror.Privacy.Providers;
 
@@ -114,7 +115,7 @@ internal sealed class LocalModelRuntime : IDisposable
 
         try
         {
-            process = Process.Start(start) ?? throw new PrivacyScanException(PrivacyNames.RuntimeUnavailable);
+            process = ChildProcessLaunch.Start(start) ?? throw new PrivacyScanException(PrivacyNames.RuntimeUnavailable);
         }
         catch (System.ComponentModel.Win32Exception error)
         {

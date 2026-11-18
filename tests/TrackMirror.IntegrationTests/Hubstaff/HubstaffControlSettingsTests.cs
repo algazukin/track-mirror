@@ -13,15 +13,14 @@ namespace TrackMirror.IntegrationTests.Hubstaff;
 public sealed class HubstaffControlSettingsTests
 {
     [Fact]
-    public void Configurable_intervals_mode_and_cli_path_survive_settings_reload()
+    public void Enabled_idle_pause_threshold_and_cli_path_survive_settings_reload()
     {
         // Arrange
         using var workspace = new TestWorkspace();
 
         var options = new HubstaffControlOptions
         {
-            Enabled = true, Mode = HubstaffControlMode.RestartWhileIdle,
-            IdleSeconds = 123, RestartSeconds = 45, CliPath = Path.Combine(workspace.Root, "custom CLI.exe")
+            Enabled = true, IdleSeconds = 123, CliPath = Path.Combine(workspace.Root, "custom CLI.exe")
         };
 
         var store = new SettingsStore(workspace.Root);
@@ -31,6 +30,41 @@ public sealed class HubstaffControlSettingsTests
 
         // Assert
         Assert.Equal(options, new SettingsStore(workspace.Root).Current.HubstaffControl);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void Saved_periodic_mode_is_disabled_and_keeps_the_idle_threshold_and_cli_path(bool saveThroughStore)
+    {
+        // Arrange
+        using var workspace = new TestWorkspace();
+        var legacy = new HubstaffControlOptions
+        {
+            Enabled = true, Mode = HubstaffControlMode.RestartWhileIdle,
+            IdleSeconds = 123, RestartSeconds = 45, CliPath = Path.Combine(workspace.Root, "custom CLI.exe")
+        };
+        var settings = new AppSettings { HubstaffControl = legacy, NotificationsEnabled = false };
+
+        // Act
+        if (saveThroughStore)
+        {
+            var writer = new SettingsStore(workspace.Root);
+            writer.Save(settings);
+            Assert.False(writer.Current.HubstaffControl.Enabled);
+        }
+        else
+        {
+            workspace.Json("settings.json", settings);
+        }
+
+        var loaded = new SettingsStore(workspace.Root);
+
+        // Assert
+        Assert.Null(loaded.InitialWarning);
+        Assert.False(loaded.Current.NotificationsEnabled);
+        Assert.Equal(legacy with { Enabled = false, Mode = HubstaffControlMode.PauseUntilActive },
+            loaded.Current.HubstaffControl);
     }
 
     [Fact]
