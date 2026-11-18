@@ -17,7 +17,6 @@ using TrackMirror.Storage;
 using TrackMirror.Storage.Management;
 using TrackMirror.UI.Forms;
 using TrackMirror.UI.Theme;
-using TrackMirror.UI.Interop;
 using TrackMirror.UI;
 
 using TrackMirror.Diagnostics;
@@ -29,6 +28,10 @@ public sealed class ViewerContext : ApplicationContext
     private readonly ScreenshotStore _store;
     private readonly SettingsStore _settings;
     private readonly HubstaffControlService _hubstaffControl;
+    private readonly TimerNoteStore _timerNotes;
+    private readonly TimerNotePromptForm _notePrompt;
+    private readonly Queue<TimerStopNote> _pendingNotes = new();
+    private bool notesSuspended;
     private readonly HubstaffStartupRegistration _startup;
     private ScreenshotMonitor? monitor;
     private HubstaffActivityMonitor? activityMonitor;
@@ -82,6 +85,8 @@ public sealed class ViewerContext : ApplicationContext
 
         _store = new ScreenshotStore(dataRoot);
         _settings = new SettingsStore(_store.DataRoot);
+        _timerNotes = new TimerNoteStore(_store.DataRoot);
+        _notePrompt = new TimerNotePromptForm();
         _startup = startup ?? new HubstaffStartupRegistration(sourceRoot, _store.DataRoot);
         _history = new HistoryForm(_store, _settings.Current, noPreviews);
         // Create the UI handle before subscribing to background notifications.
@@ -111,7 +116,8 @@ public sealed class ViewerContext : ApplicationContext
         _privacy = new PrivacyScanService(_store, _settings.Current, analyzer);
         _installer = installer ?? new PrivacyModelInstaller();
 
-        _hubstaffControl = new HubstaffControlService(_settings.Current.HubstaffControl);
+        _hubstaffControl = new HubstaffControlService(_settings.Current.HubstaffControl,
+            notes: _settings.Current.TimerNotes, onNote: note => Post(() => RecordTimerNote(note)));
 
         _tray = new NotifyIcon
         {
@@ -125,6 +131,8 @@ public sealed class ViewerContext : ApplicationContext
             PauseMonitorsAsync, ResumeDataWorkers, SwitchDataFolder, () => settingsSaved);
 
         ConnectEvents();
+
+        RefreshTimerNotes();
 
         UpdatePrivacy();
 
@@ -178,6 +186,12 @@ public sealed class ViewerContext : ApplicationContext
             _history.ShowActivity();
         });
 
+        menu.Items.Add(TimerNoteText.Heading, null, (_, _) =>
+        {
+            ShowHistory();
+            _history.ShowTimerNotes();
+        });
+
         menu.Items.Add(SettingsText.SettingsTab, null, (_, _) =>
         {
             ShowHistory();
@@ -225,7 +239,15 @@ public sealed class ViewerContext : ApplicationContext
             _hubstaffControl.Apply(_settings.Current.HubstaffControl, retry: true);
 
         _hubstaffControl.Changed += () => Post(() =>
-            _history.SetHubstaffControlStatus(_hubstaffControl.Snapshot()));
+        {
+            _history.SetHubstaffControlStatus(_hubstaffControl.Snapshot());
+            UpdateTimerNotesStatus();
+        });
+
+        _history.TimerNoteReasonChanged += (id, reason) => SetTimerNoteReason(id, reason);
+        _history.TimerNoteDeleteRequested += id => DeleteTimerNote(id);
+        _notePrompt.ReasonSelected += SetTimerNoteReason;
+        _notePrompt.Skipped += DeleteTimerNote;
 
         _history.SetHubstaffControlStatus(_hubstaffControl.Snapshot());
 
@@ -324,11 +346,16 @@ public sealed class ViewerContext : ApplicationContext
 
         activityMonitor.Start();
 
-        ApplyCountdown(_settings.Current.ScreenshotCountdown);
+        // A data operation resumes workers before its completion task releases Busy.
+        // Apply the saved timer on the next UI turn, after that operation has finished.
+        PostMonitor(() => ApplyCountdown(_settings.Current.ScreenshotCountdown));
     }
 
     private async Task PauseMonitorsAsync()
     {
+        notesSuspended = true;
+        _notePrompt.Hide();
+
         ++monitorGeneration;
 
         _preview.Hide();
@@ -356,6 +383,23 @@ public sealed class ViewerContext : ApplicationContext
 
     private void ResumeDataWorkers(bool reload)
     {
+        if (exiting)
+        {
+            return;
+        }
+
+        notesSuspended = false;
+
+        var pending = _pendingNotes.ToList();
+        _pendingNotes.Clear();
+
+        foreach (var note in pending)
+        {
+            RecordTimerNote(note, showPrompt: false);
+        }
+
+        RefreshTimerNotes();
+
         if (reload)
         {
             _store.Reload();
@@ -436,8 +480,109 @@ public sealed class ViewerContext : ApplicationContext
         }
     }
 
+    private void RecordTimerNote(TimerStopNote note, bool showPrompt = true)
+    {
+        if (exiting)
+        {
+            return;
+        }
+
+        if (notesSuspended)
+        {
+            _pendingNotes.Enqueue(note);
+            return;
+        }
+
+        try
+        {
+            _timerNotes.Add(note);
+            RefreshTimerNotes();
+
+            var options = _settings.Current.TimerNotes;
+
+            if (showPrompt && note.IdleSeconds == 0 && options.Enabled && options.ShowPrompt)
+            {
+                _notePrompt.Present(note, options);
+            }
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException)
+        {
+            _pendingNotes.Enqueue(note);
+            NoteStorageFailed(error);
+        }
+    }
+
+    private bool SetTimerNoteReason(string id, string reason)
+    {
+        try
+        {
+            _timerNotes.SetReason(id, reason);
+            RefreshTimerNotes();
+            return true;
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException)
+        {
+            NoteStorageFailed(error);
+            return false;
+        }
+    }
+
+    private bool DeleteTimerNote(string id)
+    {
+        try
+        {
+            _timerNotes.Delete(id);
+            _notePrompt.Hide();
+            RefreshTimerNotes();
+            return true;
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException)
+        {
+            NoteStorageFailed(error);
+            return false;
+        }
+    }
+
+    private void RefreshTimerNotes()
+    {
+        try
+        {
+            _history.SetTimerNotes(_timerNotes.Snapshot());
+            UpdateTimerNotesStatus();
+        }
+        catch (Exception error) when (error is IOException or UnauthorizedAccessException
+            or Microsoft.Data.Sqlite.SqliteException)
+        {
+            NoteStorageFailed(error);
+        }
+    }
+
+    private void UpdateTimerNotesStatus()
+    {
+        var enabled = _settings.Current.TimerNotes.Enabled;
+        _history.SetTimerNotesStatus(!enabled ? TimerNoteText.Disabled
+            : _hubstaffControl.NotesAvailable ? TimerNoteText.Available : TimerNoteText.Unavailable,
+            enabled && !_hubstaffControl.NotesAvailable);
+    }
+
+    private void NoteStorageFailed(Exception error)
+    {
+        AppDiagnostics.Write(DiagnosticComponent.Storage, DiagnosticEvent.OperationFailed, error);
+        _history.SetTimerNotesStatus(TimerNoteText.SaveFailed, error: true);
+    }
+
     private void ApplySettings(AppSettings value)
     {
+        if (!value.TimerNotes.Enabled || !value.TimerNotes.ShowPrompt)
+        {
+            _notePrompt.Hide();
+        }
+
+        if (!value.TimerNotes.Enabled)
+        {
+            _hubstaffControl.ApplyNotes(value.TimerNotes);
+        }
+
         if (!value.ScreenshotCountdown.Enabled)
             value = value with { ScreenshotCountdown = ApplyCountdown(value.ScreenshotCountdown) };
 
@@ -460,7 +605,9 @@ public sealed class ViewerContext : ApplicationContext
 
             settingsSaved = true;
 
-            _hubstaffControl.Apply(value.HubstaffControl);
+            _hubstaffControl.Apply(_settings.Current.HubstaffControl);
+            _hubstaffControl.ApplyNotes(value.TimerNotes);
+            UpdateTimerNotesStatus();
 
             var countdown = ApplyCountdown(value.ScreenshotCountdown);
 
@@ -554,7 +701,6 @@ public sealed class ViewerContext : ApplicationContext
         else if (!_countdown.Visible)
         {
             _countdown.Show();
-            WindowPosition.KeepAboveWithoutActivation(_countdown.Handle);
         }
     }
 
@@ -751,6 +897,7 @@ public sealed class ViewerContext : ApplicationContext
         _history.Enabled = false;
         _preview.Hide();
         _retentionTimer.Stop();
+        _notePrompt.Hide();
         _retentionTimer.Dispose();
         _countdown.Hide();
         _countdownTimer.Stop();
@@ -762,6 +909,27 @@ public sealed class ViewerContext : ApplicationContext
         await _hubstaffControl.DisposeAsync();
 
         await _dataOperations.DisposeAsync();
+
+        if (_pendingNotes.Count > 0)
+        {
+            try
+            {
+                var target = NextDataRoot == null ? _timerNotes : new TimerNoteStore(NextDataRoot);
+
+                foreach (var note in _pendingNotes)
+                {
+                    target.Add(note);
+                }
+
+                _pendingNotes.Clear();
+            }
+            catch (Exception error) when (error is IOException or UnauthorizedAccessException)
+            {
+                NoteStorageFailed(error);
+            }
+        }
+
+        _notePrompt.Dispose();
 
         if (NextDataRoot == null && monitor != null)
         {

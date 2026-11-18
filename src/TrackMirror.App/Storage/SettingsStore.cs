@@ -83,6 +83,10 @@ public sealed class SettingsStore
 
                 InitialWarning ??= HubstaffControlText.InvalidSettings;
             }
+            else
+            {
+                saved = saved with { HubstaffControl = saved.HubstaffControl.DisablePeriodicRestart() };
+            }
 
             if (!UiLocalization.Supported(saved.Language))
             {
@@ -113,6 +117,12 @@ public sealed class SettingsStore
                 InitialWarning ??= CountdownText.InvalidSettings;
             }
 
+            if (saved.TimerNotes is not { IsValid: true })
+            {
+                saved = saved with { TimerNotes = new TimerNotesOptions() };
+                InitialWarning ??= SettingsText.LoadFailed;
+            }
+
             Current = saved;
             AppDiagnostics.Write(DiagnosticComponent.Storage, InitialWarning == null
                 ? DiagnosticEvent.SettingsLoaded : DiagnosticEvent.SettingsRejected);
@@ -127,6 +137,11 @@ public sealed class SettingsStore
 
     public void Save(AppSettings settings)
     {
+        if (settings.TimerNotes is not { IsValid: true })
+        {
+            throw new ArgumentException(nameof(settings));
+        }
+
         if (!Enum.IsDefined(settings.UpdateChannel))
             throw new ArgumentException(nameof(settings));
 
@@ -148,6 +163,8 @@ public sealed class SettingsStore
 
         if (settings.ScreenshotCountdown is not { IsValid: true })
             throw new ArgumentException(nameof(settings));
+
+        settings = settings with { HubstaffControl = settings.HubstaffControl.DisablePeriodicRestart() };
 
         Directory.CreateDirectory(Path.GetDirectoryName(_path)!);
 

@@ -21,4 +21,8 @@ public sealed record HubstaffControlOptions
     internal bool IsValid => Enum.IsDefined(Mode) && IdleSeconds is >= 1 and <= HubstaffControlNames.MaximumSeconds
         && RestartSeconds is >= 1 and <= HubstaffControlNames.MaximumSeconds
         && CliPath != null && (CliPath.Length == 0 || Path.IsPathFullyQualified(CliPath));
+
+    internal HubstaffControlOptions DisablePeriodicRestart() => Mode == HubstaffControlMode.RestartWhileIdle
+        ? this with { Enabled = false, Mode = HubstaffControlMode.PauseUntilActive }
+        : this;
 }

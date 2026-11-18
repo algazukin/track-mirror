@@ -58,8 +58,78 @@ public sealed class ScreenshotCountdownTests
         });
     }
 
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void The_widget_restores_its_actual_window_order_on_show_or_settings_change(bool showAgain)
+    {
+        StaThread.Run(() =>
+        {
+            // Arrange
+            using var timer = new ScreenshotCountdownForm();
+            var options = new ScreenshotCountdownOptions { Enabled = true, Mode = ScreenshotCountdownMode.Detailed };
+            timer.ApplyOptions(options);
+            timer.Show();
+
+            using var ordinary = new Form { Bounds = timer.Bounds, Opacity = 0, StartPosition = FormStartPosition.Manual };
+            TestWindow.Show(ordinary);
+
+            if (showAgain)
+            {
+                timer.Hide();
+            }
+
+            const uint keepBoundsAndFocus = 0x0013;
+
+            // Force the native ordering to put an ordinary window above the timer.
+            Assert.True(SetWindowPos(timer.Handle, new IntPtr(-2), 0, 0, 0, 0, keepBoundsAndFocus));
+            Assert.True(SetWindowPos(timer.Handle, ordinary.Handle, 0, 0, 0, 0, keepBoundsAndFocus));
+            Assert.False(IsAbove(timer.Handle, ordinary.Handle));
+
+            // Act
+            if (showAgain)
+            {
+                timer.Show();
+            }
+            else
+            {
+                timer.ApplyOptions(options with { BackgroundOpacityPercent = 100 });
+            }
+
+            // Assert
+            Assert.True(TestWindow.IsWindowVisible(timer.Handle));
+            Assert.True(IsAbove(timer.Handle, ordinary.Handle), "An ordinary window is still above the countdown.");
+
+            Assert.True(SetWindowPos(ordinary.Handle, IntPtr.Zero, 0, 0, 0, 0, keepBoundsAndFocus));
+            Assert.True(IsAbove(timer.Handle, ordinary.Handle), "Moving an ordinary window to the front covered the countdown.");
+            Assert.False(timer.ContainsFocus);
+        });
+    }
+
+    private static bool IsAbove(IntPtr window, IntPtr other)
+    {
+        const uint previousWindow = 3;
+
+        for (var previous = GetWindow(other, previousWindow); previous != IntPtr.Zero; previous = GetWindow(previous, previousWindow))
+        {
+            if (previous == window)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     [DllImport("user32.dll", EntryPoint = "GetWindowLongW")]
     private static extern int GetWindowLong(IntPtr window, int index);
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetWindow(IntPtr window, uint command);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool SetWindowPos(IntPtr window, IntPtr insertAfter, int x, int y, int width, int height, uint flags);
 
     [Theory]
     [InlineData("en")]

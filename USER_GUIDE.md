@@ -100,16 +100,13 @@ mode when enabled. Existing enabled timers retain Detailed mode when upgrading.
 
 ## Hubstaff timer control
 
-This optional feature is disabled by default. Settings offers two modes:
+Enable **Pause until activity returns** in Settings to stop an actively tracking timer after the configured
+idle threshold. When new input arrives, TrackMirror resumes a pause created by the current viewer session
+with the same project and task. This feature is off by default. Profiles that used periodic stop/resume
+start with timer control off after upgrading.
 
-- **Pause until activity returns:** after the configured idle threshold, stop an actively tracking timer.
-  Resume when new input is observed, only for a pause created by this viewer session with the same selection.
-- **Periodic stop/resume while idle:** once the idle threshold is reached, start a separate countdown.
-  At each configured interval, stop and immediately resume an actively tracking timer. New input resets
-  the countdown; timers already stopped before the operation are not started.
-
-Both intervals are in seconds (1–86400) and saved in `settings.json`. The CLI path is editable; leave it
-empty for automatic discovery, use Detect installed CLI, or Browse to the executable in a custom location.
+The idle threshold is saved in `settings.json` in seconds (1–86400). Leave the CLI path empty for automatic
+discovery, use Detect installed CLI, or Browse to the executable in a custom location.
 Discovery checks the running Hubstaff client's directory and Windows-known application folders, without
 assuming a fixed drive or user name. No shell is used and no custom command arguments are accepted.
 
@@ -122,9 +119,32 @@ check the timer after an interrupted command or an external change during contro
 
 Windows supplies the current session's last-input timestamp, without capturing key contents or generating
 input. This idle measurement is separate from Hubstaff's activity percentages. The feature does not run
-when the viewer is closed. Disabling it, changing mode/path or restarting the viewer does not resume an
-existing pause. A confirmed periodic stop finishes its immediate resume with a bounded 15-second budget,
-including during shutdown; pending countdowns are cancelled. Failed resume may leave the timer stopped.
+when the viewer is closed. Disabling it, changing the CLI path or restarting the viewer does not resume an
+existing pause. Failed resume may leave the timer stopped.
+
+## Local timer notes
+
+Enable **Keep a local history of timer stops** in Settings beside Hubstaff timer control. It is off by
+default and works independently of automatic timer control. The installed Hubstaff CLI and Scripted
+control permission are needed to read status. Notes-only mode issues no stop/resume commands.
+
+Confirmed idle pauses made by TrackMirror receive an automatic reason including the idle threshold.
+Other observed running-to-stopped transitions receive **Unknown**. A brief panel near the tray offers
+your quick reasons and **Other…** for custom text. Opening the panel does not take keyboard focus or
+play a sound. The panel switch is independent; its timeout defaults to 15 seconds (5–60).
+Choosing Other pauses auto-dismissal while you write. Closing or ignoring the panel retains Unknown;
+**Skip** deletes that note. Quick reasons are editable in Settings, one per line, with an explicit Save
+button (up to 12 reasons, 80 characters each). Custom notes allow up to 1,000 characters.
+
+Review, edit or delete records on the **Timer notes** tab or open it from the tray. Stored times are UTC
+and displayed in local time. They describe when TrackMirror observed the stop, rather than the exact
+time someone clicked Hubstaff. External status is polled every five seconds while the feature is on;
+very brief stop/resume intervals can be missed. Stops while TrackMirror is closed are not reconstructed.
+Starting or enabling the feature while the timer is already stopped creates no note.
+
+Notes, their associated project/task identifiers and presets stay in the selected local data folder.
+Database backups and folder transfers include them; diagnostics exports do not. Nothing is submitted
+to Hubstaff. Deleting a local note does not change Hubstaff's records or previously created backups.
 
 ## Activity
 

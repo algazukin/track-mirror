@@ -10,14 +10,9 @@ namespace TrackMirror.Constants;
 internal static class HubstaffControlText
 {
     internal static string Heading => UiLocalization.Get(nameof(HubstaffControlText), nameof(Heading));
-    internal static string Enabled => UiLocalization.Get(nameof(HubstaffControlText), nameof(Enabled));
-    internal static string Mode => UiLocalization.Get(nameof(HubstaffControlText), nameof(Mode));
     internal static string PauseMode => UiLocalization.Get(nameof(HubstaffControlText), nameof(PauseMode));
-    internal static string RestartMode => UiLocalization.Get(nameof(HubstaffControlText), nameof(RestartMode));
     internal static string PauseHint => UiLocalization.Get(nameof(HubstaffControlText), nameof(PauseHint));
-    internal static string RestartHint => UiLocalization.Get(nameof(HubstaffControlText), nameof(RestartHint));
     internal static string IdleSeconds => UiLocalization.Get(nameof(HubstaffControlText), nameof(IdleSeconds));
-    internal static string RestartSeconds => UiLocalization.Get(nameof(HubstaffControlText), nameof(RestartSeconds));
     internal static string CliPath => UiLocalization.Get(nameof(HubstaffControlText), nameof(CliPath));
     internal static string AutomaticPath => UiLocalization.Get(nameof(HubstaffControlText), nameof(AutomaticPath));
     internal static string Browse => UiLocalization.Get(nameof(HubstaffControlText), nameof(Browse));

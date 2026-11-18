@@ -8,5 +8,6 @@ internal enum ViewerPage
 {
     History,
     Activity,
+    Notes,
     Settings
 }

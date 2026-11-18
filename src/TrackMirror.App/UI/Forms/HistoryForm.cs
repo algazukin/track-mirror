@@ -21,6 +21,8 @@ public sealed class HistoryForm : Form
     private readonly Panel _historyPage = new() { Dock = DockStyle.Fill };
     private readonly SettingsPanel _settingsPage;
     private readonly ActivityPanel _activityPage = new();
+    private readonly TimerNotesPanel _notesPage = new();
+    private readonly Button _notesTab = CreateTabButton(TimerNoteText.Heading);
     private readonly Button _activityTab = CreateTabButton(ActivityText.Tab);
     private readonly Button _historyTab = CreateTabButton(SettingsText.HistoryTab);
     private readonly Button _settingsTab = CreateTabButton(SettingsText.SettingsTab);
@@ -101,6 +103,10 @@ public sealed class HistoryForm : Form
 
     internal event Action? HubstaffControlRetryRequested;
 
+    internal event Action<string, string>? TimerNoteReasonChanged;
+
+    internal event Action<string>? TimerNoteDeleteRequested;
+
     internal event Action<DataOperationKind>? DataOperationRequested;
 
     internal event Action? DataOperationCancelRequested;
@@ -137,6 +143,9 @@ public sealed class HistoryForm : Form
         Controls.Add(CreatePages());
 
         _settingsPage.Changed += value => SettingsChanged?.Invoke(value);
+
+        _notesPage.ReasonChanged += (id, reason) => TimerNoteReasonChanged?.Invoke(id, reason);
+        _notesPage.DeleteRequested += id => TimerNoteDeleteRequested?.Invoke(id);
 
         _settingsPage.HubstaffControlRetryRequested += () => HubstaffControlRetryRequested?.Invoke();
 
@@ -203,7 +212,7 @@ public sealed class HistoryForm : Form
             AccessibleRole = AccessibleRole.PageTabList
         };
 
-        navigation.Controls.AddRange([_historyTab, _activityTab, _settingsTab]);
+        navigation.Controls.AddRange([_historyTab, _activityTab, _notesTab, _settingsTab]);
 
         var header = new TableLayoutPanel
         {
@@ -222,7 +231,7 @@ public sealed class HistoryForm : Form
 
         _historyPage.Controls.Add(CreateLayout());
 
-        pages.Controls.AddRange([_historyPage, _activityPage, _settingsPage]);
+        pages.Controls.AddRange([_historyPage, _activityPage, _notesPage, _settingsPage]);
 
         root.Controls.Add(header, 0, 0);
 
@@ -239,6 +248,8 @@ public sealed class HistoryForm : Form
 
         _activityTab.Click += (_, _) => SelectPage(ViewerPage.Activity);
 
+        _notesTab.Click += (_, _) => SelectPage(ViewerPage.Notes);
+
         SelectPage(ViewerPage.History);
 
         return root;
@@ -254,6 +265,7 @@ public sealed class HistoryForm : Form
         {
             (_historyPage, _historyTab, ViewerPage.History),
             (_activityPage, _activityTab, ViewerPage.Activity),
+            (_notesPage, _notesTab, ViewerPage.Notes),
             (_settingsPage, _settingsTab, ViewerPage.Settings)
         })
         {
@@ -272,6 +284,12 @@ public sealed class HistoryForm : Form
 
     public void ShowActivity() => SelectPage(ViewerPage.Activity);
 
+    internal void ShowTimerNotes() => SelectPage(ViewerPage.Notes);
+
+    internal void SetTimerNotes(List<TimerStopNote> notes) => _notesPage.SetEntries(notes);
+
+    internal void SetTimerNotesStatus(string text, bool error = false) => _notesPage.SetStatus(text, error);
+
     public void AddHubstaffHistory(IReadOnlyList<HubstaffActivity> entries) => _activityPage.AddEntries(entries);
 
     internal void SetHubstaffControlStatus(HubstaffControlStatus value) =>
@@ -288,6 +306,9 @@ public sealed class HistoryForm : Form
         _historyPage.Enabled = !busy;
 
         _activityPage.Enabled = !busy;
+
+        _notesPage.Enabled = !busy;
+        _notesTab.Enabled = !busy;
 
         _historyTab.Enabled = !busy;
 

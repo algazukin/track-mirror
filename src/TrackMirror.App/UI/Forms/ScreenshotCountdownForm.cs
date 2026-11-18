@@ -15,6 +15,8 @@ namespace TrackMirror.UI.Forms;
 
 internal sealed class ScreenshotCountdownForm : Form
 {
+    private const int TopmostWindowStyle = 0x00000008;
+
     private readonly ContextMenuStrip _menu = new();
     private readonly ToolTip _tooltips = new();
     private readonly object _dragGate = new();
@@ -43,7 +45,9 @@ internal sealed class ScreenshotCountdownForm : Form
         get
         {
             var parameters = base.CreateParams;
-            parameters.ExStyle |= 0x08000000 | 0x00000080 | 0x00080000; // NOACTIVATE | TOOLWINDOW | LAYERED
+
+            // Set topmost at creation so the background launch does not rely on a later Z-order change.
+            parameters.ExStyle |= TopmostWindowStyle | 0x08000000 | 0x00000080 | 0x00080000; // NOACTIVATE | TOOLWINDOW | LAYERED
 
             if (options.MiddleButtonDrag && !middleDragFailed)
                 parameters.ExStyle |= 0x00000020; // TRANSPARENT: clicks reach windows in other processes too.
@@ -127,6 +131,11 @@ internal sealed class ScreenshotCountdownForm : Form
 
         RefreshSurface();
 
+        if (Visible)
+        {
+            WindowPosition.KeepAboveWithoutActivation(Handle);
+        }
+
         return options;
     }
 
@@ -174,9 +183,17 @@ internal sealed class ScreenshotCountdownForm : Form
         base.OnVisibleChanged(e);
 
         if (Visible)
+        {
             RefreshSurface();
+        }
 
         UpdateMiddleDrag();
+
+        if (Visible)
+        {
+            // The extended style can be set even when the window is below ordinary windows.
+            WindowPosition.KeepAboveWithoutActivation(Handle);
+        }
     }
 
     private void ResizeForDisplay()

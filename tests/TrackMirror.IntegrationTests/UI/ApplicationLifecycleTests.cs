@@ -18,6 +18,10 @@ public sealed class ApplicationLifecycleTests
     [InlineData("notification-timeout")]
     [InlineData("notification-replacement")]
     [InlineData("notifications-disabled")]
+    [InlineData("notes-move-during-exit")]
+    [InlineData("countdown-after-cleanup")]
+    [InlineData("countdown-startup")]
+    [InlineData("countdown-startup-before")]
     public async Task Synthetic_application_scenario_finishes_without_hanging_or_changing_real_data(string scenario)
     {
         // Arrange

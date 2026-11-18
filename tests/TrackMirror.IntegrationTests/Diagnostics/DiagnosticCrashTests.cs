@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using TrackMirror.IntegrationTests.Infrastructure;
 using Xunit;
+using TrackMirror.App;
 
 namespace TrackMirror.IntegrationTests.Diagnostics;
 
@@ -72,7 +73,7 @@ public sealed class DiagnosticCrashTests
         })
             start.ArgumentList.Add(argument);
 
-        using var process = Process.Start(start)!;
+        using var process = ChildProcessLaunch.Start(start)!;
         var stdout = process.StandardOutput.ReadToEndAsync();
         var stderr = process.StandardError.ReadToEndAsync();
 

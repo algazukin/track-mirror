@@ -45,7 +45,8 @@ internal sealed class ViewerDatabase
             [
                 new SchemaMigration(1, ReadSchema(DatabaseNames.InitialSchema)),
                 new SchemaMigration(2, ReadSchema(DatabaseNames.RetentionSchema)),
-                new SchemaMigration(3, ReadSchema(DatabaseNames.PrivacyDiagnosticsSchema))
+                new SchemaMigration(3, ReadSchema(DatabaseNames.PrivacyDiagnosticsSchema)),
+                new SchemaMigration(4, ReadSchema(DatabaseNames.TimerNotesSchema))
             ]);
 
             LegacyImporter.Import(this, connection);

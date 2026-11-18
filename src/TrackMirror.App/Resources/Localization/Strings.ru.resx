@@ -923,29 +923,14 @@
   <data name="HubstaffControlText.Heading" xml:space="preserve">
     <value>Управление таймером Hubstaff</value>
   </data>
-  <data name="HubstaffControlText.Enabled" xml:space="preserve">
-    <value>Включить управление таймером при простое</value>
-  </data>
-  <data name="HubstaffControlText.Mode" xml:space="preserve">
-    <value>Режим</value>
-  </data>
   <data name="HubstaffControlText.PauseMode" xml:space="preserve">
     <value>Пауза до возвращения активности</value>
-  </data>
-  <data name="HubstaffControlText.RestartMode" xml:space="preserve">
-    <value>Периодический stop/resume при простое</value>
   </data>
   <data name="HubstaffControlText.PauseHint" xml:space="preserve">
     <value>Останавливает учёт после порога простоя. Возобновляет только паузу, сделанную в этом сеансе программы.</value>
   </data>
-  <data name="HubstaffControlText.RestartHint" xml:space="preserve">
-    <value>Отсчёт начинается после порога простоя. Ввод сбрасывает его; остановленный таймер не запускается.</value>
-  </data>
   <data name="HubstaffControlText.IdleSeconds" xml:space="preserve">
     <value>Порог простоя, секунды</value>
-  </data>
-  <data name="HubstaffControlText.RestartSeconds" xml:space="preserve">
-    <value>Интервал перезапуска, секунды</value>
   </data>
   <data name="HubstaffControlText.CliPath" xml:space="preserve">
     <value>Исполняемый файл Hubstaff CLI</value>
@@ -1123,4 +1108,29 @@
   <data name="DiagnosticsText.Failed" xml:space="preserve"><value>Не удалось экспортировать диагностику. Проверьте права доступа к папке и свободное место, затем повторите попытку.</value></data>
   <data name="DiagnosticsText.Unavailable" xml:space="preserve"><value>Локальная диагностика недоступна в этом сеансе.</value></data>
   <data name="DiagnosticsText.UnexpectedError" xml:space="preserve"><value>Произошла непредвиденная ошибка. TrackMirror завершит работу. После перезапуска откройте Настройки → Диагностика для экспорта отчёта.</value></data>
+  <data name="TimerNoteText.Heading" xml:space="preserve"><value>Заметки таймера</value></data>
+  <data name="TimerNoteText.Description" xml:space="preserve"><value>Причины остановок хранятся локально. В Hubstaff ничего не отправляется.</value></data>
+  <data name="TimerNoteText.Enabled" xml:space="preserve"><value>Сохранять локальную историю остановок таймера</value></data>
+  <data name="TimerNoteText.ShowPrompt" xml:space="preserve"><value>Предлагать выбрать причину возле трея после внешней остановки</value></data>
+  <data name="TimerNoteText.PromptSeconds" xml:space="preserve"><value>Скрывать панель через (секунд)</value></data>
+  <data name="TimerNoteText.Reasons" xml:space="preserve"><value>Быстрые причины</value></data>
+  <data name="TimerNoteText.ReasonsHint" xml:space="preserve"><value>По одной причине на строку: до 12 вариантов, до 80 символов каждый. Нажмите «Сохранить».</value></data>
+  <data name="TimerNoteText.Other" xml:space="preserve"><value>Другое…</value></data>
+  <data name="TimerNoteText.Save" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="TimerNoteText.Skip" xml:space="preserve"><value>Пропустить</value></data>
+  <data name="TimerNoteText.Unknown" xml:space="preserve"><value>Причина не указана</value></data>
+  <data name="TimerNoteText.IdleFormat" xml:space="preserve"><value>Автоматическая пауза после {0} секунд бездействия.</value></data>
+  <data name="TimerNoteText.StoppedHeading" xml:space="preserve"><value>Таймер остановлен</value></data>
+  <data name="TimerNoteText.HistoryEmpty" xml:space="preserve"><value>Заметок об остановках пока нет.</value></data>
+  <data name="TimerNoteText.EditHint" xml:space="preserve"><value>Выберите заметку, чтобы изменить причину. Время соответствует моменту обнаружения остановки.</value></data>
+  <data name="TimerNoteText.Delete" xml:space="preserve"><value>Удалить заметку</value></data>
+  <data name="TimerNoteText.SaveFailed" xml:space="preserve"><value>Не удалось сохранить заметки. Проверьте папку данных и повторите попытку.</value></data>
+  <data name="TimerNoteText.Unavailable" xml:space="preserve"><value>Статус Hubstaff недоступен. Проверьте путь к CLI и разрешение Scripted control.</value></data>
+  <data name="TimerNoteText.Disabled" xml:space="preserve"><value>Заметки таймера отключены.</value></data>
+  <data name="TimerNoteText.Available" xml:space="preserve"><value>Остановки отслеживаются, пока TrackMirror работает.</value></data>
+  <data name="TimerNoteText.NoteColumn" xml:space="preserve"><value>Причина</value></data>
+  <data name="TimerNoteText.TimeColumn" xml:space="preserve"><value>Обнаружено</value></data>
+  <data name="TimerNoteText.LocalHint" xml:space="preserve"><value>Функция только читает статус Hubstaff. Шаблоны и текст заметок хранятся локально и не входят в диагностику.</value></data>
+  <data name="TimerNoteText.DefaultReasons" xml:space="preserve"><value>Закончил работу|Перерыв|Обед|Устал</value></data>
+  <data name="TimerNoteText.InvalidReasons" xml:space="preserve"><value>Введите до 12 непустых причин, до 80 символов каждая.</value></data>
 </root>
